@@ -52,12 +52,12 @@ ActiveRecord::Schema.define(version: 20161121083252) do
   end
 
   create_table "product_knowledges", force: :cascade do |t|
-    t.string   "name",       null: false
-    t.text     "text"
-    t.string   "file_name",  null: false
+    t.string   "name",        null: false
+    t.text     "description"
+    t.string   "file_name",   null: false
     t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "stores", force: :cascade do |t|
@@ -75,16 +75,16 @@ ActiveRecord::Schema.define(version: 20161121083252) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "username",                null: false
-    t.string   "password",                null: false
-    t.integer  "level",      default: 0
-    t.string   "name",       default: ""
-    t.string   "email",                   null: false
-    t.string   "phone",      default: ""
-    t.integer  "gender",     default: 3
+    t.string   "username",                     null: false
+    t.string   "password_digest",              null: false
+    t.integer  "level",           default: 0
+    t.string   "name",            default: ""
+    t.string   "email",                        null: false
+    t.string   "phone",           default: ""
+    t.integer  "gender",          default: 3
     t.datetime "deleted_at"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["username"], name: "index_users_on_username", unique: true, using: :btree
   end
