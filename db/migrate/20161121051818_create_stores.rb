@@ -11,5 +11,6 @@ class CreateStores < ActiveRecord::Migration[5.0]
       t.datetime :deleted_at
       t.timestamps
     end
+    add_index :stores, :store_uid, unique: true
   end
 end
