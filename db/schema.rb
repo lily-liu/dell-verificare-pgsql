@@ -10,17 +10,52 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161121051816) do
+ActiveRecord::Schema.define(version: 20161121073037) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "absences", force: :cascade do |t|
+    t.string   "absence_token"
+    t.integer  "absence_type",  default: 0
+    t.integer  "user_id"
+    t.integer  "store_id"
+    t.float    "latitude",      default: 0.0
+    t.float    "longitude",     default: 0.0
+    t.string   "remark"
+    t.datetime "deleted_at"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.index ["store_id"], name: "index_absences_on_store_id", using: :btree
+    t.index ["user_id"], name: "index_absences_on_user_id", using: :btree
+  end
+
+  create_table "cities", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "stores", force: :cascade do |t|
+    t.string   "store_uid"
+    t.integer  "city_id"
+    t.string   "name"
+    t.string   "address"
+    t.string   "phone"
+    t.string   "email"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["city_id"], name: "index_stores_on_city_id", using: :btree
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "username"
     t.string   "password"
     t.integer  "level",      default: 0
     t.string   "name",       default: ""
-    t.string   "email",      default: ""
+    t.string   "email"
     t.string   "phone",      default: ""
     t.integer  "gender",     default: 3
     t.datetime "deleted_at"
@@ -28,4 +63,7 @@ ActiveRecord::Schema.define(version: 20161121051816) do
     t.datetime "updated_at",              null: false
   end
 
+  add_foreign_key "absences", "stores"
+  add_foreign_key "absences", "users"
+  add_foreign_key "stores", "cities"
 end
