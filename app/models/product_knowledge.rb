@@ -1,0 +1,2 @@
+class ProductKnowledge < ApplicationRecord
+end
