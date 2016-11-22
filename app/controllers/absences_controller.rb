@@ -6,9 +6,9 @@ class AbsencesController < ApplicationController
   # POST /absences.json
   def create
     user = User.find(params.fetch(:user_id))
-    existing_absence_in = Absence.where("created_at > ? AND absence_type = ? AND user_id = ? AND store_id = ?", 2.hour.ago, 1, params.fetch(:user_id), params.fetch(:store_uid))
-    existing_absence_out = Absence.where("created_at > ? AND absence_type = ? AND user_id = ? AND store_id = ?", 2.hour.ago, 2, params.fetch(:user_id), params.fetch(:store_uid))
-    if user.present? && params.fetch(:store_id) != nil && params.fetch(:absence_type) !=nil
+    existing_absence_in = Absence.where("created_at > ? AND absence_type = ? AND user_id = ? AND store_uid = ?", 2.hour.ago, 1, params.fetch(:user_id), params.fetch(:store_uid))
+    existing_absence_out = Absence.where("created_at > ? AND absence_type = ? AND user_id = ? AND store_uid = ?", 2.hour.ago, 2, params.fetch(:user_id), params.fetch(:store_uid))
+    if user.present? && params.fetch(:store_uid) != nil && params.fetch(:absence_type) !=nil
       case params.fetch(:absence_type)
         when 1
           if existing_absence_in.present? && !existing_absence_out.present?
