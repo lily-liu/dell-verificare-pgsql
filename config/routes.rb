@@ -7,4 +7,9 @@ Rails.application.routes.draw do
   #Route for absences
   post 'absences' => 'absences#create'
 
+  #Route For Product Knowledge
+  get 'product_knowledges' => 'product_knowledges#index'
+  post 'product_knowledges' => 'product_knowledges#create'
+
+
 end
