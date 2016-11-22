@@ -1,0 +1,2 @@
+class Sellin < ApplicationRecord
+end

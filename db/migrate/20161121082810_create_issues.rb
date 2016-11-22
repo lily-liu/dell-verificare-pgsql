@@ -10,7 +10,7 @@ class CreateIssues < ActiveRecord::Migration[5.0]
       t.string :remark, null: true
       t.string :photo_name, null: false
 
-      t.datetime :deleted_at
+      t.datetime :deleted_at, null: true
       t.timestamps
     end
   end

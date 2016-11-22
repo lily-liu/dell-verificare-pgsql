@@ -1,0 +1,2 @@
+class Sellout < ApplicationRecord
+end

@@ -8,7 +8,7 @@ class CreateAbsences < ActiveRecord::Migration[5.0]
       t.float :longitude, default: 0
       t.string :remark, null: true
 
-      t.datetime :deleted_at
+      t.datetime :deleted_at, null: true
       t.timestamps
     end
   end
