@@ -16,3 +16,16 @@ User.create!([
         phone: 8989898989,
         gender: 1
       ])
+
+City.create!([
+    name: 'Jakarta'
+  ])
+
+Store.create!([
+      store_uid: 1,
+      city_id: 1,
+      name: 'Test Store',
+      address: 'Cilandak, Jakarta selatan',
+      phone: '081281821',
+      email: 'store@email.com',
+    ])

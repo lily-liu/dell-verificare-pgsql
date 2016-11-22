@@ -42,11 +42,11 @@ class AbsencesController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def absence_params
     user_data = {
-        absence_type: params.fetch(:absence_type),
-        store_id: params.fetch(:store_id),
-        latitude: params.fetch(:latitude, 0),
-        longitude: params.fetch(:longitude, 0),
-        remark: params.fetch(:Remarks)
+        absence_type: params.fetch(:absence_type).to_i,
+        store_id: params.fetch(:store_id).to_i,
+        latitude: params.fetch(:latitude, 0).to_f,
+        longitude: params.fetch(:longitude, 0).to_f,
+        remark: params.fetch(:remark,"").to_s
     }
   end
 
