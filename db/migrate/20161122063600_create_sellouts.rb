@@ -3,6 +3,7 @@ class CreateSellouts < ActiveRecord::Migration[5.0]
     create_table :sellouts do |t|
       t.string :service_tag, null: false, uniqueness: true
       t.belongs_to :user, index: true, foreign_key: true
+      t.belongs_to :inventory, index: true, foreign_key: true
       t.integer :quarter_year, null: false
       t.integer :quarter, null: false
       t.integer :quarter_week, null: false
