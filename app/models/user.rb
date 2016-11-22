@@ -6,15 +6,15 @@ class User < ApplicationRecord
   enum gender: [:male, :female, :other]
 
   # knock auth override
-  # def from_token_request(request)
-  #   # Returns a valid user, `nil` or raise `Knock.not_found_exception_class_name`
-  #   if request.params[:auth].present? && request.params[:auth][:username].present?
-  #     user_name = request.params[:auth][:username]
-  #     find_by username: user_name
-  #   else
-  #     raise Knock.not_found_exception_class_name
-  #   end
-  # end
+  def from_token_request(request)
+    # Returns a valid user, `nil` or raise `Knock.not_found_exception_class_name`
+    if request.params[:auth].present? && request.params[:auth][:username].present?
+      user_name = request.params[:auth][:username]
+      find_by username: user_name
+    else
+      raise Knock.not_found_exception_class_name
+    end
+  end
 
   def to_token_payload
     # Returns a valid user, `nil` or raise
