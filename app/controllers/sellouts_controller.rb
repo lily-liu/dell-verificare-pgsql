@@ -18,13 +18,14 @@ class SelloutsController < ApplicationController
   # POST /sellouts.json
   def create
     inventory_data = Inventory.find_by service_tag: params.fetch(:service_tag)
-    store_data = Store.find_by store_uid: params.fetch(:store_uid)
+    store_data = Store.find_by store_uid: params.fetch(:store_uid).to_s
     photo_proof = params.fetch(:proof, nil)
 
     if inventory_data.present? && store_data.present?
       if photo_proof != nil
         @sellout = Sellout.new(sellout_params)
         proof = params.fetch(:proof)
+        sales_time = Time.now
 
         @sellout.store = store_data
         @sellout.user = current_user
@@ -76,7 +77,7 @@ class SelloutsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def sellout_params
-    params.permit(:user_id, :service_tag, :store_id, :price_idr, :price_usd, :proof)
+    params.permit(:service_tag, :price_idr, :price_usd, :proof, :store_uid)
     user_data = {
         service_tag: params.fetch(:service_tag).to_s,
         price_idr: params.fetch(:price_idr, 0).to_f,
