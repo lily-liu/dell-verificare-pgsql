@@ -1,5 +1,5 @@
 class ProductKnowledgesController < ApplicationController
-  #before_action :set_product_knowledge, only: [:show, :update, :destroy]
+  before_action :set_product_knowledge, only: [:show, :update, :destroy]
 
   # GET /product_knowledges
   # GET /product_knowledges.json
@@ -10,6 +10,10 @@ class ProductKnowledgesController < ApplicationController
   # GET /product_knowledges/1
   # GET /product_knowledges/1.json
   def show
+  end
+
+  def download_file
+    @product_knowledges = ProductKnowledge.find(params[:file_name])
   end
 
   # POST /product_knowledges
