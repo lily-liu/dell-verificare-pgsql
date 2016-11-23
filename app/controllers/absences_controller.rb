@@ -6,10 +6,10 @@ class AbsencesController < ApplicationController
   # POST /absences.json
   def create
     user = current_user
-    if user.present? && params.fetch(:store_id) != nil && params.fetch(:absence_type) !=nil
-      store_data = Store.find_by store_uid: params.fetch(:store_id)
-      existing_absence_in = Absence.where("created_at > ? AND absence_type = ? AND user_id = ? AND store_id = ?", 2.hour.ago, 1, params.fetch(:user_id).to_i, params.fetch(:store_id).to_i)
-      existing_absence_out = Absence.where("created_at > ? AND absence_type = ? AND user_id = ? AND store_id = ?", 2.hour.ago, 2, params.fetch(:user_id).to_i, params.fetch(:store_id).to_i)
+    if user.present? && params.fetch(:store_uid) != nil && params.fetch(:absence_type) !=nil
+      store_data = Store.find_by store_uid: params.fetch(:store_uid)
+      existing_absence_in = Absence.where("created_at > ? AND absence_type = ? AND user_id = ? AND store_id = ?", 2.hour.ago, 1, current_user.id.to_i, store_data.id.to_i)
+      existing_absence_out = Absence.where("created_at > ? AND absence_type = ? AND user_id = ? AND store_id = ?", 2.hour.ago, 2, current_user.id.to_i, store_data.id.to_i)
       case params.fetch(:absence_type).to_i
         when 2
           if existing_absence_in.present? && !existing_absence_out.present?
@@ -51,7 +51,6 @@ class AbsencesController < ApplicationController
     params.permit(:absence_type, :store_uid, :latitude, :longitude, :remark)
     user_data = {
         absence_type: params.fetch(:absence_type).to_i,
-        store_uid: params.fetch(:store_uid).to_s,
         latitude: params.fetch(:latitude, 0).to_f,
         longitude: params.fetch(:longitude, 0).to_f,
         remark: params.fetch(:remark, nil)
