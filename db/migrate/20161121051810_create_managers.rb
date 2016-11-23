@@ -3,6 +3,7 @@ class CreateManagers < ActiveRecord::Migration[5.0]
     create_table :managers do |t|
       t.string :name, null: false
       t.integer :parent_id, null: true
+      t.integer :level, default: 0
 
       t.datetime :deleted_at, null: true
       t.timestamps
