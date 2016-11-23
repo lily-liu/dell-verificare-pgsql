@@ -27,9 +27,10 @@ class User < ApplicationRecord
   #   self.find payload["sub"]
   # end
 
-  # def to_token_payload
-  #   # Returns a valid user, `nil` or raise
-  #   return {user_id: self.id}
-  # end
+  # override jwt payload
+  def to_token_payload
+    # Returns a valid user, `nil` or raise
+    return {sub: self.id, created: Time.now.to_i}
+  end
 
 end
