@@ -1,2 +1,2 @@
-json.extract! absence, :user_id, :absence_type, :created_at
+json.extract! absence, :user_id, :absence_type, :created_at, :store_id
 # json.url absence_url(absence, format: :json)
