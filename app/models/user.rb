@@ -4,6 +4,12 @@ class User < ApplicationRecord
   # enum values
   enum level: [:admin, :dashboard, :promoter, :merchandiser, :area_manager, :sales_representative]
   enum gender: [:male, :female, :other]
+  has_many :absences, dependent: :nullify
+  has_many :stores, trough :absences, dependent: :nullify
+  has_many :sellouts, dependent: :nullify
+  has_many :issues, dependent: :nullify
+  has_many :inventories, dependent: :nullify
+  belongs_to :manager
 
     # knock auth override
     # def self.from_token_request(request)
