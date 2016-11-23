@@ -1,14 +1,19 @@
 Rails.application.routes.draw do
 
   # ask for jwt token from web server
-  post "login", to: "user_token#create", defaults:{format: :json}
+  post "login", to: "user_token#create", defaults: {format: :json}
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-  #route for absences
-  post "absences/create", to:"absences#create", defaults:{format: :json}
-  get "asd",  to:"absences#asd", defaults:{format: :json}
+  # route for absences
+  post "absences/create", to: "absences#create", defaults: {format: :json}
+  get "asd", to: "absences#asd", defaults: {format: :json}
 
   # route for sellout
-  post "sellouts/create", to:"sellouts#create", defaults:{format: :json}
+  post "sellouts/create", to: "sellouts#create", defaults: {format: :json}
+
+  # route For product knowledge
+  get "product_knowledges", to: "product_knowledges#index", defaults: {format: :json}
+  get "product_knowledges/:id", to: "product_knowledges#show", defaults: {format: :json}
+  post "product_knowledges/create", to: "product_knowledges#create", defaults: {format: :json}
 
 end
