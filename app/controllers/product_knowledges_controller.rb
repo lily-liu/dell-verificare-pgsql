@@ -23,7 +23,7 @@ class ProductKnowledgesController < ApplicationController
     @product_knowledge = ProductKnowledge.new(product_knowledge_params)
 
     if @product_knowledge.save
-      render :show, status: :created#, location: @product_knowledge
+      render :show, status: :created
     else
       render json: @product_knowledge.errors, status: :unprocessable_entity
     end
