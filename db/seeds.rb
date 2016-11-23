@@ -47,4 +47,8 @@ Sellin.create!(
 
 Inventory.create!(
     service_tag: "A123",
+    status: 0,
+    sellin_id: 1,
+    store_id: 1,
+    user_id: 1
 )

@@ -39,13 +39,14 @@ ActiveRecord::Schema.define(version: 20161122063600) do
   end
 
   create_table "inventories", force: :cascade do |t|
-    t.string   "service_tag", null: false
+    t.string   "service_tag",             null: false
+    t.integer  "status",      default: 0
     t.integer  "sellin_id"
     t.integer  "store_id"
     t.integer  "user_id"
     t.datetime "deleted_at"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.index ["sellin_id"], name: "index_inventories_on_sellin_id", using: :btree
     t.index ["service_tag"], name: "index_inventories_on_service_tag", unique: true, using: :btree
     t.index ["store_id"], name: "index_inventories_on_store_id", using: :btree
@@ -68,11 +69,12 @@ ActiveRecord::Schema.define(version: 20161122063600) do
   end
 
   create_table "managers", force: :cascade do |t|
-    t.string   "name",       null: false
+    t.string   "name",                   null: false
     t.integer  "parent_id"
+    t.integer  "level",      default: 0
     t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "product_knowledges", force: :cascade do |t|
@@ -113,6 +115,7 @@ ActiveRecord::Schema.define(version: 20161122063600) do
     t.string   "service_tag",  null: false
     t.integer  "user_id"
     t.integer  "inventory_id"
+    t.integer  "store_id"
     t.integer  "quarter_year", null: false
     t.integer  "quarter",      null: false
     t.integer  "quarter_week", null: false
@@ -123,6 +126,7 @@ ActiveRecord::Schema.define(version: 20161122063600) do
     t.datetime "updated_at",   null: false
     t.index ["inventory_id"], name: "index_sellouts_on_inventory_id", using: :btree
     t.index ["service_tag"], name: "index_sellouts_on_service_tag", unique: true, using: :btree
+    t.index ["store_id"], name: "index_sellouts_on_store_id", using: :btree
     t.index ["user_id"], name: "index_sellouts_on_user_id", using: :btree
   end
 
@@ -169,6 +173,7 @@ ActiveRecord::Schema.define(version: 20161122063600) do
   add_foreign_key "sellins", "stores", column: "source_store"
   add_foreign_key "sellins", "stores", column: "target_store"
   add_foreign_key "sellouts", "inventories"
+  add_foreign_key "sellouts", "stores"
   add_foreign_key "sellouts", "users"
   add_foreign_key "stores", "cities"
   add_foreign_key "users", "managers"
