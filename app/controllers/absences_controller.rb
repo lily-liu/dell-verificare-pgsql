@@ -48,7 +48,7 @@ class AbsencesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def absence_params
-    # params.permit(:user_id, :absence_type, :store_id, :latitude, :longitude, :remark)
+    params.permit(:user_id, :absence_type, :store_id, :latitude, :longitude, :remark)
     user_data = {
         user_id: params.fetch(:user_id).to_i,
         absence_type: params.fetch(:absence_type).to_i,
