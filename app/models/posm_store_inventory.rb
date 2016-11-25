@@ -1,0 +1,2 @@
+class PosmStoreInventory < ApplicationRecord
+end

@@ -1,0 +1,2 @@
+class Posm < ApplicationRecord
+end
