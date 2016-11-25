@@ -22,6 +22,17 @@ User.create!(
     gender: 1
 )
 
+User.create!(
+    username: 'admin2',
+    password_digest: BCrypt::Password.create("password"),
+    level: 0,
+    manager_id: 1,
+    name: 'admin name',
+    email: 'admin1@email.com',
+    phone: "8989898989",
+    gender: 1
+)
+
 City.create!(
     name: 'Jakarta'
 )
@@ -30,6 +41,15 @@ Store.create!(
     store_uid: 1,
     city_id: 1,
     name: 'Test Store',
+    address: 'Cilandak, Jakarta selatan',
+    phone: '081281821',
+    email: 'store@email.com',
+)
+
+Store.create!(
+    store_uid: 2,
+    city_id: 1,
+    name: 'Test Store 2',
     address: 'Cilandak, Jakarta selatan',
     phone: '081281821',
     email: 'store@email.com',

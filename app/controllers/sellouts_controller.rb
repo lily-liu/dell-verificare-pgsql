@@ -17,7 +17,7 @@ class SelloutsController < ApplicationController
   # POST /sellouts
   # POST /sellouts.json
   def create
-    inventory_data = Inventory.where(service_tag: params.fetch(:service_tag, nil).to_s, status: 0).first
+    inventory_data = Inventory.where(service_tag: params.fetch(:service_tag, nil).to_s).where.not(status: 1).first
     store_data = Store.find(params.fetch(:store_id))
 
     if inventory_data.present? && store_data.present? && store_data == inventory_data.store
@@ -37,7 +37,6 @@ class SelloutsController < ApplicationController
           render :show, status: :created
         rescue ActiveRecord::RecordNotUnique
           @conflict_sellout = ConflictedSellout.create(user_id: current_user.id, store_id: store_data.id, inventory_id: inventory_data.id)
-          @conflict_sellout.save
           @message = "sellout already inputted"
           render :error, status: :unauthorized
         rescue StandardError => e
