@@ -32,21 +32,24 @@ class SelloutsController < ApplicationController
         @sellout.quarter_year = current_quarter_year(sales_time)
         @sellout.quarter = current_quarter_months(sales_time)
         @sellout.quarter_week = current_quarter_week(sales_time)
-        if upload_photo(photo_proof, params.fetch(:service_tag))
-          if @sellout.save
+        begin
+          @sellout.save
+          if upload_photo(photo_proof, params.fetch(:service_tag))
             render :show, status: :created
           else
-            render json: @sellout.errors, status: :unprocessable_entity
+            @message = "no photo for sellout"
+            render :error, status: :bad_request
           end
-        else
-          @message = "no photo for sellout"
-          render :error, status: :bad_request
+        rescue ActiveRecord::RecordNotUnique
+          @conflict_sellout = ConflictedSellout.create(user_id: current_user.id, store_id: store_data.id, inventory_id: inventory_data.id)
+          @conflict_sellout.save
+          @message = "sellout already inputted"
+          render :error, status: :unauthorized
         end
       else
-        @message = "error uploading photo for sellout"
-        render :error, status: :unprocessable_entity
+        @message = "error processing proof photo"
+        render :error, status: :bad_request
       end
-
     else
       @message = "no sellin for the service tag"
       render :error, status: :bad_request

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161122063600) do
+ActiveRecord::Schema.define(version: 20161125034053) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,17 @@ ActiveRecord::Schema.define(version: 20161122063600) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["region_id"], name: "index_cities_on_region_id", using: :btree
+  end
+
+  create_table "conflicted_sellouts", force: :cascade do |t|
+    t.integer  "inventory_id"
+    t.integer  "user_id"
+    t.integer  "store_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["inventory_id"], name: "index_conflicted_sellouts_on_inventory_id", using: :btree
+    t.index ["store_id"], name: "index_conflicted_sellouts_on_store_id", using: :btree
+    t.index ["user_id"], name: "index_conflicted_sellouts_on_user_id", using: :btree
   end
 
   create_table "inventories", force: :cascade do |t|
@@ -165,6 +176,9 @@ ActiveRecord::Schema.define(version: 20161122063600) do
   add_foreign_key "absences", "stores"
   add_foreign_key "absences", "users"
   add_foreign_key "cities", "regions"
+  add_foreign_key "conflicted_sellouts", "inventories"
+  add_foreign_key "conflicted_sellouts", "stores"
+  add_foreign_key "conflicted_sellouts", "users"
   add_foreign_key "inventories", "sellins"
   add_foreign_key "inventories", "stores"
   add_foreign_key "inventories", "users"
