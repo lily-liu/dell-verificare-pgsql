@@ -34,7 +34,7 @@ class InventoriesController < ApplicationController
         @conflict_inventory.save
         @message = "inventory already inputted"
         render :error, status: :unauthorized
-      rescue e
+      rescue StandardError => e
         @message = e
         render :error, status: :internal_server_error
       end
