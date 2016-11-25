@@ -21,7 +21,7 @@ class SelloutsController < ApplicationController
     store_data = Store.find(params.fetch(:store_id))
     photo_proof = params.fetch(:proof, nil)
 
-    if inventory_data.present? && store_data.present?
+    if inventory_data.present? && store_data.present? && store_data.id == inventory_data.store_id
       if photo_proof != nil
         @sellout = Sellout.new(sellout_params)
         sales_time = Time.now
@@ -45,13 +45,16 @@ class SelloutsController < ApplicationController
           @conflict_sellout.save
           @message = "sellout already inputted"
           render :error, status: :unauthorized
+        rescue e
+          @message = e
+          render :error, status: :internal_server_error
         end
       else
         @message = "error processing proof photo"
         render :error, status: :bad_request
       end
     else
-      @message = "no sellin for the service tag"
+      @message = "no inventory avaliable on the store for the service tag"
       render :error, status: :bad_request
     end
   end

@@ -1,0 +1,2 @@
+class ConflictedInventory < ApplicationRecord
+end

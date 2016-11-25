@@ -44,6 +44,15 @@ Sellin.create!(
     source_store: 1,
     target_store: 1
 )
+Sellin.create!(
+    service_tag: "B456",
+    quarter_year: 2015,
+    quarter: 4,
+    quarter_week: 8,
+    item_type: 1,
+    source_store: 1,
+    target_store: 1
+)
 
 Inventory.create!(
     service_tag: "A123",

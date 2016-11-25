@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   # route for sellout
   post "sellouts/create", to: "sellouts#create", defaults: {format: :json}
 
+  # route for inventory
+  post "inventories/create", to: "inventories#create", defaults: {format: :json}
+
   # route For product knowledge
   get "product_knowledges", to: "product_knowledges#index", defaults: {format: :json}
   get "product_knowledges/:id", to: "product_knowledges#show", defaults: {format: :json}

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161125034053) do
+ActiveRecord::Schema.define(version: 20161125070406) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,10 +38,23 @@ ActiveRecord::Schema.define(version: 20161125034053) do
     t.index ["region_id"], name: "index_cities_on_region_id", using: :btree
   end
 
+  create_table "conflicted_inventories", force: :cascade do |t|
+    t.integer  "sellin_id"
+    t.integer  "user_id"
+    t.integer  "store_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sellin_id"], name: "index_conflicted_inventories_on_sellin_id", using: :btree
+    t.index ["store_id"], name: "index_conflicted_inventories_on_store_id", using: :btree
+    t.index ["user_id"], name: "index_conflicted_inventories_on_user_id", using: :btree
+  end
+
   create_table "conflicted_sellouts", force: :cascade do |t|
     t.integer  "inventory_id"
     t.integer  "user_id"
     t.integer  "store_id"
+    t.datetime "deleted_at"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.index ["inventory_id"], name: "index_conflicted_sellouts_on_inventory_id", using: :btree
@@ -66,16 +79,17 @@ ActiveRecord::Schema.define(version: 20161125034053) do
 
   create_table "issues", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "program_name",   null: false
-    t.string   "brand_name",     null: false
-    t.string   "store_name",     null: false
-    t.datetime "campaign_start", null: false
+    t.string   "program_name",               null: false
+    t.string   "brand_name",                 null: false
+    t.string   "store_name",                 null: false
+    t.integer  "impact",         default: 0
+    t.datetime "campaign_start",             null: false
     t.datetime "campaign_end"
     t.string   "remark"
-    t.string   "photo_name",     null: false
+    t.string   "photo_name",                 null: false
     t.datetime "deleted_at"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.index ["user_id"], name: "index_issues_on_user_id", using: :btree
   end
 
@@ -86,6 +100,25 @@ ActiveRecord::Schema.define(version: 20161125034053) do
     t.datetime "deleted_at"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+  end
+
+  create_table "posm_store_inventories", force: :cascade do |t|
+    t.integer  "posm_id"
+    t.integer  "store_id"
+    t.integer  "quantity"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["posm_id"], name: "index_posm_store_inventories_on_posm_id", using: :btree
+    t.index ["store_id"], name: "index_posm_store_inventories_on_store_id", using: :btree
+  end
+
+  create_table "posms", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "quantity"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "product_knowledges", force: :cascade do |t|
@@ -176,6 +209,9 @@ ActiveRecord::Schema.define(version: 20161125034053) do
   add_foreign_key "absences", "stores"
   add_foreign_key "absences", "users"
   add_foreign_key "cities", "regions"
+  add_foreign_key "conflicted_inventories", "sellins"
+  add_foreign_key "conflicted_inventories", "stores"
+  add_foreign_key "conflicted_inventories", "users"
   add_foreign_key "conflicted_sellouts", "inventories"
   add_foreign_key "conflicted_sellouts", "stores"
   add_foreign_key "conflicted_sellouts", "users"
@@ -184,6 +220,8 @@ ActiveRecord::Schema.define(version: 20161125034053) do
   add_foreign_key "inventories", "users"
   add_foreign_key "issues", "users"
   add_foreign_key "managers", "managers", column: "parent_id"
+  add_foreign_key "posm_store_inventories", "posms"
+  add_foreign_key "posm_store_inventories", "stores"
   add_foreign_key "sellins", "stores", column: "source_store"
   add_foreign_key "sellins", "stores", column: "target_store"
   add_foreign_key "sellouts", "inventories"

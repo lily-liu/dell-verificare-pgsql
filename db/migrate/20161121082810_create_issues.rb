@@ -5,6 +5,7 @@ class CreateIssues < ActiveRecord::Migration[5.0]
       t.string :program_name, null: false
       t.string :brand_name, null: false
       t.string :store_name, null: false
+      t.integer :impact, default: 0
       t.datetime :campaign_start, null: false
       t.datetime :campaign_end, null: true
       t.string :remark, null: true
