@@ -17,18 +17,16 @@ class InventoriesController < ApplicationController
   # POST /inventories.json
   def create
     sellin_data = Sellin.find_by service_tag: params.fetch(:service_tag, nil).to_s
-    if sellin_data.present?
+    store_data = Store.find(params.fetch(:store_id, nil).to_i)
+    if sellin_data.present? && store_data.present?
       @inventory = Inventory.new(inventory_params)
       @inventory.status = 0
       @inventory.user = current_user
       @inventory.sellin = sellin_data
+      @inventory.store = store_data
       begin
-        if @inventory.save
-          render :show, status: :created
-        else
-          @message = @inventory.errors
-          render :error, status: :unprocessable_entity
-        end
+        @inventory.save
+        render :show, status: :created
       rescue ActiveRecord::RecordNotUnique
         @conflict_inventory = ConflictedInventory.create(user_id: current_user.id, store_id: store_data.id, sellin_id: sellin_data.id)
         @conflict_inventory.save
@@ -43,7 +41,6 @@ class InventoriesController < ApplicationController
       @message = "no sellin data for that service tag"
       render :error, status: :bad_request
     end
-
 
   end
 
@@ -77,4 +74,5 @@ class InventoriesController < ApplicationController
         service_tag: params.fetch(:service_tag, nil).to_s
     }
   end
+
 end

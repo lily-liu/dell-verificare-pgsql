@@ -8,8 +8,8 @@ class AbsencesController < ApplicationController
     user = current_user
     if user.present? && params.fetch(:store_uid) != nil && params.fetch(:absence_type) !=nil
       store_data = Store.find_by store_uid: params.fetch(:store_uid)
-      existing_absence_in = Absence.where("created_at > ? AND absence_type = ? AND user_id = ? AND store_id = ?", 2.hour.ago, 1, current_user.id.to_i, store_data.id.to_i)
-      existing_absence_out = Absence.where("created_at > ? AND absence_type = ? AND user_id = ? AND store_id = ?", 2.hour.ago, 2, current_user.id.to_i, store_data.id.to_i)
+      existing_absence_in = Absence.where("created_at > ? AND absence_type = ? AND user_id = ? AND store_id = ?", 2.hour.ago, 1, current_user.id.to_i, store_data.id.to_i).first
+      existing_absence_out = Absence.where("created_at > ? AND absence_type = ? AND user_id = ? AND store_id = ?", 2.hour.ago, 2, current_user.id.to_i, store_data.id.to_i).first
       case params.fetch(:absence_type).to_i
         when 2
           if existing_absence_in.present? && !existing_absence_out.present?

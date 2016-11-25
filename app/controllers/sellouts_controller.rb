@@ -17,15 +17,13 @@ class SelloutsController < ApplicationController
   # POST /sellouts
   # POST /sellouts.json
   def create
-    inventory_data = Inventory.find_by service_tag: params.fetch(:service_tag)
+    inventory_data = Inventory.where(service_tag: params.fetch(:service_tag, nil).to_s, status: 0).first
     store_data = Store.find(params.fetch(:store_id))
-    photo_proof = params.fetch(:proof, nil)
 
-    if inventory_data.present? && store_data.present? && store_data.id == inventory_data.store_id
-      if photo_proof != nil
+    if inventory_data.present? && store_data.present? && store_data == inventory_data.store
+      if params.fetch(:proof, nil)
         @sellout = Sellout.new(sellout_params)
         sales_time = Time.now
-
         @sellout.store = store_data
         @sellout.inventory = inventory_data
         @sellout.user = current_user
@@ -34,12 +32,9 @@ class SelloutsController < ApplicationController
         @sellout.quarter_week = current_quarter_week(sales_time)
         begin
           @sellout.save
-          if upload_photo(photo_proof, params.fetch(:service_tag))
-            render :show, status: :created
-          else
-            @message = "no photo for sellout"
-            render :error, status: :bad_request
-          end
+          inventory_data.status = 1
+          inventory_data.save
+          render :show, status: :created
         rescue ActiveRecord::RecordNotUnique
           @conflict_sellout = ConflictedSellout.create(user_id: current_user.id, store_id: store_data.id, inventory_id: inventory_data.id)
           @conflict_sellout.save
@@ -57,6 +52,12 @@ class SelloutsController < ApplicationController
       @message = "no inventory avaliable on the store for the service tag"
       render :error, status: :bad_request
     end
+  end
+
+  def ccc
+    inventory_data = Inventory.where(service_tag: params.fetch(:service_tag, nil).to_s, status: 0).take!
+    store_data = Store.find(params.fetch(:store_id))
+    render json: inventory_data.store == store_data
   end
 
   # PATCH/PUT /sellouts/1
@@ -87,7 +88,8 @@ class SelloutsController < ApplicationController
     user_data = {
         service_tag: params.fetch(:service_tag).to_s,
         price_idr: params.fetch(:price_idr, 0).to_f,
-        price_usd: params.fetch(:price_usd, 0).to_f
+        price_usd: params.fetch(:price_usd, 0).to_f,
+        proof: params.fetch(:proof, nil)
     }
   end
 
@@ -109,14 +111,6 @@ class SelloutsController < ApplicationController
   # this function is part of legacy system
   def current_quarter_week(date)
     ((((date.to_i - 7171200)/86400) / 7).round % 13) + 1
-  end
-
-  # save photo for uploading
-  def upload_photo(proof_image, filename)
-    uploader = PhotoUploader.new
-    uploader.setname(filename)
-    uploader.setstore("uploads/proof")
-    uploader.store!(proof_image)
   end
 
 end

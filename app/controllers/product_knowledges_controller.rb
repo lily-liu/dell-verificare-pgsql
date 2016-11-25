@@ -46,18 +46,18 @@ class ProductKnowledgesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_product_knowledge
-      @product_knowledge = ProductKnowledge.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_product_knowledge
+    @product_knowledge = ProductKnowledge.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def product_knowledge_params
-      params.permit(:name, :description, :file_name)
-      product_data = {
-          name: params.fetch(:name,nil).to_s,
-          description: params.fetch(:description,nil).to_s,
-          file_name: params.fetch(:file_name, 0)
-      }
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def product_knowledge_params
+    params.permit(:name, :description, :file_name)
+    product_data = {
+        name: params.fetch(:name, nil).to_s,
+        description: params.fetch(:description, nil).to_s,
+        file_name: params.fetch(:file_name, nil)
+    }
+  end
 end

@@ -165,6 +165,7 @@ ActiveRecord::Schema.define(version: 20161125070406) do
     t.integer  "quarter_week", null: false
     t.float    "price_idr"
     t.float    "price_usd"
+    t.string   "proof",        null: false
     t.datetime "deleted_at"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false

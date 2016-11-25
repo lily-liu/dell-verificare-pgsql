@@ -10,6 +10,7 @@ class CreateSellouts < ActiveRecord::Migration[5.0]
       t.integer :quarter_week, null: false
       t.float :price_idr, null: true
       t.float :price_usd, null: true
+      t.string :proof, null: false
 
       t.datetime :deleted_at, null: true
       t.timestamps
