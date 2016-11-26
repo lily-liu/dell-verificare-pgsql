@@ -1,4 +1,6 @@
 class Issue < ApplicationRecord
-  enum impact: [:no_impact, :positive, :negative, :other]
+  mount_uploader :photo_name, IssueUploader
+  validates :photo_name, presence: true
+
   belongs_to :user
 end

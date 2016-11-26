@@ -19,5 +19,10 @@ Rails.application.routes.draw do
   get "product_knowledges", to: "product_knowledges#index", defaults: {format: :json}
   get "product_knowledges/:id", to: "product_knowledges#show", defaults: {format: :json}
   post "product_knowledges/create", to: "product_knowledges#create", defaults: {format: :json}
+  
+  # Route issues
+  get "issues/:id", to: "issues#show", defaults: {format: :json}
+  post "issues/create", to: "issues#create", defaults: {format: :json}
+
 
 end
