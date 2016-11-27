@@ -53,7 +53,7 @@ class AbsencesController < ApplicationController
         absence_type: params.fetch(:absence_type).to_i,
         latitude: params.fetch(:latitude, 0).to_f,
         longitude: params.fetch(:longitude, 0).to_f,
-        remark: params.fetch(:remark, nil)
+        remark: params.fetch(:remark, nil).to_s
     }
   end
 
