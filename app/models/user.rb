@@ -30,7 +30,7 @@ class User < ApplicationRecord
   # override jwt payload
   def to_token_payload
     # Returns a valid user, `nil` or raise
-    return {sub: self.id, created: Time.now.to_i}
+    return {sub: self.id, created: Time.now.to_i, username: self.username, name: self.name, email: self.email, level: self.level}
   end
 
 end

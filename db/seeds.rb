@@ -44,6 +44,8 @@ Store.create!(
     address: 'Cilandak, Jakarta selatan',
     phone: '081281821',
     email: 'store@email.com',
+    store_owner: 'owner1',
+    store_building: 'gedung mangdu'
 )
 
 Store.create!(
@@ -53,6 +55,8 @@ Store.create!(
     address: 'Cilandak, Jakarta selatan',
     phone: '081281821',
     email: 'store@email.com',
+    store_owner: 'owner1',
+    store_building: 'gedung mangdu'
 )
 
 Sellin.create!(
