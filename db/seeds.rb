@@ -7,6 +7,13 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'bcrypt'
 
+# Manager.delete_all
+# User.delete_all
+# City.delete_all
+# Store.delete_all
+# Sellin.delete_all
+# Inventory.delete_all
+
 Manager.create!(
     name: "manager1"
 )

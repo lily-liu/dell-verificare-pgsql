@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161125070406) do
+ActiveRecord::Schema.define(version: 20161128063038) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -121,6 +121,18 @@ ActiveRecord::Schema.define(version: 20161125070406) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "posts", force: :cascade do |t|
+    t.string   "title"
+    t.string   "content",    null: false
+    t.integer  "user_id"
+    t.integer  "level",      null: false
+    t.integer  "parent_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_posts_on_user_id", using: :btree
+  end
+
   create_table "product_knowledges", force: :cascade do |t|
     t.string   "name",        null: false
     t.text     "description"
@@ -176,16 +188,18 @@ ActiveRecord::Schema.define(version: 20161125070406) do
   end
 
   create_table "stores", force: :cascade do |t|
-    t.string   "store_uid",              null: false
+    t.string   "store_uid",                  null: false
     t.integer  "city_id"
-    t.string   "name",                   null: false
-    t.integer  "level",      default: 0
-    t.string   "address",                null: false
+    t.string   "name",                       null: false
+    t.integer  "level",          default: 0
+    t.string   "address",                    null: false
     t.string   "phone"
     t.string   "email"
+    t.string   "store_building",             null: false
+    t.string   "store_owner",                null: false
     t.datetime "deleted_at"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.index ["city_id"], name: "index_stores_on_city_id", using: :btree
     t.index ["store_uid"], name: "index_stores_on_store_uid", unique: true, using: :btree
   end
@@ -223,6 +237,8 @@ ActiveRecord::Schema.define(version: 20161125070406) do
   add_foreign_key "managers", "managers", column: "parent_id"
   add_foreign_key "posm_store_inventories", "posms"
   add_foreign_key "posm_store_inventories", "stores"
+  add_foreign_key "posts", "posts", column: "parent_id"
+  add_foreign_key "posts", "users"
   add_foreign_key "sellins", "stores", column: "source_store"
   add_foreign_key "sellins", "stores", column: "target_store"
   add_foreign_key "sellouts", "inventories"
