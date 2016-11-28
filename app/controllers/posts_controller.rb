@@ -10,7 +10,7 @@ class PostsController < ApplicationController
   # GET /posts/:id
   def show
     @post = Post.find(params[:id])
-    @comment = Post.where(:parent_id => @post.id)
+  #  @comment = Post.where(:parent_id => @post.id)
   end
 
   # POST /posts/:id/create_post
