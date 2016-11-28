@@ -1,0 +1,1 @@
+json.partial! "posm_store_inventories/posm_store_inventory", posm_store_inventory: @posm_store_inventory
