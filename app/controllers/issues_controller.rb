@@ -35,8 +35,8 @@ class IssuesController < ApplicationController
           program_name: params.fetch(:program_name).to_s,
           brand_name: params.fetch(:brand_name).to_s,
           store_name: params.fetch(:store_name).to_s,
-          campaign_start: params.fetch(:campaign_start),
-          campaign_end: params.fetch(:campaign_end),
+          campaign_start: params.fetch(:campaign_start).to_time,
+          campaign_end: params.fetch(:campaign_end).to_time,
           remark: params.fetch(:remark).to_s,
           photo_name: params.fetch(:photo_name, nil)
       }
