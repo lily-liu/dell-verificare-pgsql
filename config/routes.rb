@@ -26,6 +26,7 @@ Rails.application.routes.draw do
 
   # route for posms
   post "posms/create", to: "posms#create", defaults: {format: :json}
+  post "posms/inventory/create", to: "posm_store_inventories#create", defaults: {format: :json}
   get "posms/list", to: "posms#index", defaults: {format: :json}
 
 
