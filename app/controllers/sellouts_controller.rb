@@ -54,9 +54,9 @@ class SelloutsController < ApplicationController
   end
 
   def ccc
-    inventory_data = Inventory.where(service_tag: params.fetch(:service_tag, nil).to_s, status: 0).take!
-    store_data = Store.find(params.fetch(:store_id))
-    render json: inventory_data.store == store_data
+    manager = Manager.new(name: "manager test")
+    manager.channel_area_manager = Manager.find(1)
+    render json: manager
   end
 
   # PATCH/PUT /sellouts/1
