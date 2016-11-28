@@ -37,6 +37,9 @@ gem 'paranoia'
 # defining default value for active record
 gem 'default_value_for'
 
+# onesignal wrapper
+gem 'one_signal'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
