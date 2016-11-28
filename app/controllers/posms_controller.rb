@@ -28,7 +28,7 @@ class PosmsController < ApplicationController
   # PATCH/PUT /posms/1.json
   def update
     if @posm.update(posm_params)
-      render :show, status: :ok, location: @posm
+      render :show, status: :ok
     else
       render json: @posm.errors, status: :unprocessable_entity
     end

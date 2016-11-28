@@ -24,5 +24,8 @@ Rails.application.routes.draw do
   get "issues/:id", to: "issues#show", defaults: {format: :json}
   post "issues/create", to: "issues#create", defaults: {format: :json}
 
+  # route for posms
+  post "posms/create", to: "posms#create", defaults: {format: :json}
+
 
 end
