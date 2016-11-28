@@ -49,7 +49,7 @@ class SelloutsController < ApplicationController
       end
     else
       @message = "no inventory avaliable on the store for the service tag"
-      render :error, status: :bad_request
+      render :error, status: :not_found
     end
   end
 

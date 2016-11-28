@@ -20,7 +20,8 @@ class PosmsController < ApplicationController
     if @posm.save
       render :show, status: :created
     else
-      render json: @posm.errors, status: :unprocessable_entity
+      @message = "cant save posm"
+      render :error, status: :internal_server_error
     end
   end
 

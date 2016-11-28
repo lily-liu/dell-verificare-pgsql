@@ -16,12 +16,24 @@ class PosmStoreInventoriesController < ApplicationController
   # POST /posm_store_inventories.json
   def create
     @posm_store_inventory = PosmStoreInventory.new(posm_store_inventory_params)
+    posm_data = Posm.find(params.fetch(:posm_id).to_i)
+    store_data = Store.find(params.fetch(:store_id).to_i)
 
-    if @posm_store_inventory.save
-      render :show, status: :created, location: @posm_store_inventory
+    if posm_data.present? && store_data.present?
+      @posm_store_inventory.store = store_data
+      @posm_store_inventory.posm = posm_data
+
+      if @posm_store_inventory.save
+        render :show, status: :created
+      else
+        @message = "cant assign inventory to store"
+        render :error, status: :internal_server_error
+      end
     else
-      render json: @posm_store_inventory.errors, status: :unprocessable_entity
+      @message = "store or posm not available on db"
+      render :error, status: :not_found
     end
+
   end
 
   # PATCH/PUT /posm_store_inventories/1
@@ -41,13 +53,16 @@ class PosmStoreInventoriesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_posm_store_inventory
-      @posm_store_inventory = PosmStoreInventory.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_posm_store_inventory
+    @posm_store_inventory = PosmStoreInventory.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def posm_store_inventory_params
-      params.fetch(:posm_store_inventory, {})
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def posm_store_inventory_params
+    params.permit(:posm_id, :quantity, :store_id)
+    issue_data = {
+        quantity: params.fetch(:quantity).to_i
+    }
+  end
 end

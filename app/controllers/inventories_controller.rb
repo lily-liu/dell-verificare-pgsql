@@ -40,7 +40,7 @@ class InventoriesController < ApplicationController
 
     else
       @message = "no sellin data for that service tag"
-      render :error, status: :bad_request
+      render :error, status: :not_found
     end
 
   end

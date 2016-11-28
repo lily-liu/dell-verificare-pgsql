@@ -15,7 +15,7 @@ class IssuesController < ApplicationController
     if @issue.save
       render :show, status: :created
     else
-      @message = "Issues cannot save"
+      @message = "cant save issues"
       render json: @issue.errors, status: :unprocessable_entity
     end
   end
