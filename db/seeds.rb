@@ -52,7 +52,8 @@ Store.create!(
     phone: '081281821',
     email: 'store@email.com',
     store_owner: 'owner1',
-    store_building: 'gedung mangdu'
+    store_building: 'gedung mangdu',
+    store_category: 1
 )
 
 Store.create!(
@@ -63,7 +64,8 @@ Store.create!(
     phone: '081281821',
     email: 'store@email.com',
     store_owner: 'owner1',
-    store_building: 'gedung mangdu'
+    store_building: 'gedung mangdu',
+    store_category: 0
 )
 
 Sellin.create!(
