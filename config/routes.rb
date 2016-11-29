@@ -32,7 +32,7 @@ Rails.application.routes.draw do
   # Route Posts
   get "posts/list", to: "posts#index", defaults: {format: :json}
   get "posts/:id", to: "posts#show", defaults: {format: :json}
+  post "posts/create", to: "posts#create_post", defaults: {format: :json}
   post "posts/create_comment/:parent_id", to: "posts#create_comment", defaults: {format: :json}
-  post "posts/create_post", to: "posts#create_post", defaults: {format: :json}
 
 end
