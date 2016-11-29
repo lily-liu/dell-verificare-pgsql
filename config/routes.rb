@@ -23,10 +23,10 @@ Rails.application.routes.draw do
   post "issues/create", to: "issues#create", defaults: {format: :json}
 
   # route for posms
-  post "posms/inventory/create", to: "posm_store_inventories#create", defaults: {format: :json}
-  post "posms/create", to: "posms#create", defaults: {format: :json}
   get "posms/inventory/list", to: "posm_store_inventories#index", defaults: {format: :json}
   get "posms/list", to: "posms#index", defaults: {format: :json}
+  post "posms/inventory/create", to: "posm_store_inventories#create", defaults: {format: :json}
+  post "posms/create", to: "posms#create", defaults: {format: :json}
 
   # Route Posts
   get "posts/list", to: "posts#index", defaults: {format: :json}
