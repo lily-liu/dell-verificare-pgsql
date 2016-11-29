@@ -16,22 +16,22 @@ ActiveRecord::Schema.define(version: 20161128063038) do
   enable_extension "plpgsql"
 
   create_table "absences", force: :cascade do |t|
-    t.integer  "absence_type", default: 0
-    t.integer  "user_id"
-    t.integer  "store_id"
-    t.float    "latitude",     default: 0.0
-    t.float    "longitude",    default: 0.0
-    t.string   "remark"
+    t.integer "absence_type", default: 0
+    t.integer "user_id"
+    t.integer "store_id"
+    t.float "latitude", default: 0.0
+    t.float "longitude", default: 0.0
+    t.string "remark"
     t.datetime "deleted_at"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["store_id"], name: "index_absences_on_store_id", using: :btree
     t.index ["user_id"], name: "index_absences_on_user_id", using: :btree
   end
 
   create_table "cities", force: :cascade do |t|
-    t.string   "name",       null: false
-    t.integer  "region_id"
+    t.string "name", null: false
+    t.integer "region_id"
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -39,9 +39,9 @@ ActiveRecord::Schema.define(version: 20161128063038) do
   end
 
   create_table "conflicted_inventories", force: :cascade do |t|
-    t.integer  "sellin_id"
-    t.integer  "user_id"
-    t.integer  "store_id"
+    t.integer "sellin_id"
+    t.integer "user_id"
+    t.integer "store_id"
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -51,26 +51,26 @@ ActiveRecord::Schema.define(version: 20161128063038) do
   end
 
   create_table "conflicted_sellouts", force: :cascade do |t|
-    t.integer  "inventory_id"
-    t.integer  "user_id"
-    t.integer  "store_id"
+    t.integer "inventory_id"
+    t.integer "user_id"
+    t.integer "store_id"
     t.datetime "deleted_at"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["inventory_id"], name: "index_conflicted_sellouts_on_inventory_id", using: :btree
     t.index ["store_id"], name: "index_conflicted_sellouts_on_store_id", using: :btree
     t.index ["user_id"], name: "index_conflicted_sellouts_on_user_id", using: :btree
   end
 
   create_table "inventories", force: :cascade do |t|
-    t.string   "service_tag",             null: false
-    t.integer  "status",      default: 0
-    t.integer  "sellin_id"
-    t.integer  "store_id"
-    t.integer  "user_id"
+    t.string "service_tag", null: false
+    t.integer "status", default: 0
+    t.integer "sellin_id"
+    t.integer "store_id"
+    t.integer "user_id"
     t.datetime "deleted_at"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["sellin_id"], name: "index_inventories_on_sellin_id", using: :btree
     t.index ["service_tag"], name: "index_inventories_on_service_tag", unique: true, using: :btree
     t.index ["store_id"], name: "index_inventories_on_store_id", using: :btree
@@ -78,34 +78,34 @@ ActiveRecord::Schema.define(version: 20161128063038) do
   end
 
   create_table "issues", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "program_name",               null: false
-    t.string   "brand_name",                 null: false
-    t.string   "store_name",                 null: false
-    t.integer  "impact",         default: 0
-    t.datetime "campaign_start",             null: false
+    t.integer "user_id"
+    t.string "program_name", null: false
+    t.string "brand_name", null: false
+    t.string "store_name", null: false
+    t.integer "impact", default: 0
+    t.datetime "campaign_start", null: false
     t.datetime "campaign_end"
-    t.string   "remark"
-    t.string   "photo_name",                 null: false
+    t.string "remark"
+    t.string "photo_name", null: false
     t.datetime "deleted_at"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_issues_on_user_id", using: :btree
   end
 
   create_table "managers", force: :cascade do |t|
-    t.string   "name",                   null: false
-    t.integer  "parent_id"
-    t.integer  "level",      default: 0
+    t.string "name", null: false
+    t.integer "parent_id"
+    t.integer "level", default: 0
     t.datetime "deleted_at"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "posm_store_inventories", force: :cascade do |t|
-    t.integer  "posm_id"
-    t.integer  "store_id"
-    t.integer  "quantity"
+    t.integer "posm_id"
+    t.integer "store_id"
+    t.integer "quantity"
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -114,19 +114,19 @@ ActiveRecord::Schema.define(version: 20161128063038) do
   end
 
   create_table "posms", force: :cascade do |t|
-    t.string   "name"
-    t.integer  "quantity"
+    t.string "name"
+    t.integer "quantity"
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "posts", force: :cascade do |t|
-    t.string   "title"
-    t.string   "content",    null: false
-    t.integer  "user_id"
-    t.integer  "level",      null: false
-    t.integer  "parent_id"
+    t.string "title"
+    t.string "content", null: false
+    t.integer "user_id"
+    t.integer "level", null: false
+    t.integer "parent_id"
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -134,53 +134,53 @@ ActiveRecord::Schema.define(version: 20161128063038) do
   end
 
   create_table "product_knowledges", force: :cascade do |t|
-    t.string   "name",        null: false
-    t.text     "description"
-    t.string   "file_name",   null: false
+    t.string "name", null: false
+    t.text "description"
+    t.string "file_name", null: false
     t.datetime "deleted_at"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "regions", force: :cascade do |t|
-    t.string   "name",            null: false
-    t.integer  "region_position", null: false
+    t.string "name", null: false
+    t.integer "region_position", null: false
     t.datetime "deleted_at"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "sellins", force: :cascade do |t|
-    t.string   "service_tag",  null: false
-    t.integer  "quarter_year", null: false
-    t.integer  "quarter",      null: false
-    t.integer  "quarter_week", null: false
-    t.integer  "item_type",    null: false
-    t.string   "part_number"
-    t.string   "product_type"
-    t.string   "product_name"
-    t.integer  "source_store", null: false
-    t.integer  "target_store", null: false
+    t.string "service_tag", null: false
+    t.integer "quarter_year", null: false
+    t.integer "quarter", null: false
+    t.integer "quarter_week", null: false
+    t.integer "item_type", null: false
+    t.string "part_number"
+    t.string "product_type"
+    t.string "product_name"
+    t.integer "source_store", null: false
+    t.integer "target_store", null: false
     t.datetime "deleted_at"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["service_tag"], name: "index_sellins_on_service_tag", unique: true, using: :btree
   end
 
   create_table "sellouts", force: :cascade do |t|
-    t.string   "service_tag",  null: false
-    t.integer  "user_id"
-    t.integer  "inventory_id"
-    t.integer  "store_id"
-    t.integer  "quarter_year", null: false
-    t.integer  "quarter",      null: false
-    t.integer  "quarter_week", null: false
-    t.float    "price_idr"
-    t.float    "price_usd"
-    t.string   "proof",        null: false
+    t.string "service_tag", null: false
+    t.integer "user_id"
+    t.integer "inventory_id"
+    t.integer "store_id"
+    t.integer "quarter_year", null: false
+    t.integer "quarter", null: false
+    t.integer "quarter_week", null: false
+    t.float "price_idr"
+    t.float "price_usd"
+    t.string "proof", null: false
     t.datetime "deleted_at"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["inventory_id"], name: "index_sellouts_on_inventory_id", using: :btree
     t.index ["service_tag"], name: "index_sellouts_on_service_tag", unique: true, using: :btree
     t.index ["store_id"], name: "index_sellouts_on_store_id", using: :btree
@@ -188,34 +188,34 @@ ActiveRecord::Schema.define(version: 20161128063038) do
   end
 
   create_table "stores", force: :cascade do |t|
-    t.string   "store_uid",                  null: false
-    t.integer  "city_id"
-    t.string   "name",                       null: false
-    t.integer  "level",          default: 0
-    t.string   "address",                    null: false
-    t.string   "phone"
-    t.string   "email"
-    t.string   "store_building",             null: false
-    t.string   "store_owner",                null: false
+    t.string "store_uid", null: false
+    t.integer "city_id"
+    t.string "name", null: false
+    t.integer "level", default: 0
+    t.string "address", null: false
+    t.string "phone"
+    t.string "email"
+    t.string "store_building", null: false
+    t.string "store_owner", null: false
     t.datetime "deleted_at"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["city_id"], name: "index_stores_on_city_id", using: :btree
     t.index ["store_uid"], name: "index_stores_on_store_uid", unique: true, using: :btree
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "username",                     null: false
-    t.string   "password_digest",              null: false
-    t.integer  "level",           default: 0
-    t.integer  "manager_id"
-    t.string   "name",            default: ""
-    t.string   "email",                        null: false
-    t.string   "phone",           default: ""
-    t.integer  "gender",          default: 3
+    t.string "username", null: false
+    t.string "password_digest", null: false
+    t.integer "level", default: 0
+    t.integer "manager_id"
+    t.string "name", default: ""
+    t.string "email", null: false
+    t.string "phone", default: ""
+    t.integer "gender", default: 3
     t.datetime "deleted_at"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["manager_id"], name: "index_users_on_manager_id", using: :btree
     t.index ["username"], name: "index_users_on_username", unique: true, using: :btree
