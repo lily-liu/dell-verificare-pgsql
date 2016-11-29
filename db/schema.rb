@@ -125,7 +125,7 @@ ActiveRecord::Schema.define(version: 20161128063038) do
     t.string   "title"
     t.string   "content",    null: false
     t.integer  "user_id"
-    t.integer  "type",       null: false
+    t.integer  "level",      null: false
     t.integer  "parent_id"
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
