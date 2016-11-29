@@ -6,11 +6,9 @@ Rails.application.routes.draw do
 
   # route for absences
   post "absences/create", to: "absences#create", defaults: {format: :json}
-  get "asd", to: "absences#asd", defaults: {format: :json}
 
   # route for sellout
   post "sellouts/create", to: "sellouts#create", defaults: {format: :json}
-  post "sellouts/ccc", to: "sellouts#ccc", defaults: {format: :json}
 
   # route for inventory
   post "inventories/create", to: "inventories#create", defaults: {format: :json}
