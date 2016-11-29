@@ -5,6 +5,12 @@ class PosmStoreInventoriesController < ApplicationController
   # GET /posm_store_inventories.json
   def index
     @posm_store_inventories = PosmStoreInventory.all
+    if @posm_store_inventories.present?
+      render :index, status: :ok
+    else
+      @message = "no posm found"
+      render :error, status: :not_found
+    end
   end
 
   # GET /posm_store_inventories/1

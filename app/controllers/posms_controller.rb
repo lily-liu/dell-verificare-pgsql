@@ -5,6 +5,12 @@ class PosmsController < ApplicationController
   # GET /posms.json
   def index
     @posms = Posm.all
+    if @posms.present?
+      render :index, status: :ok
+    else
+      @message = "no posm found"
+      render :error, status: :not_found
+    end
   end
 
   # GET /posms/1
