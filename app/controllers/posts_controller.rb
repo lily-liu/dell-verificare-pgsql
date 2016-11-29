@@ -5,6 +5,12 @@ class PostsController < ApplicationController
   # GET /posts   => Index Post
   def index
     @posts = Post.where(:level => 0)
+    if @posts.present?
+      render :index, status: :ok
+    else
+      @message = "no post found"
+      render :error, status: :not_found
+    end
   end
 
   # GET /posts/:id
