@@ -4,7 +4,8 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.where("Level = ? OR Level = ? OR Level = ?", 2, 3, 4)
+    @users = User.all
+    # @users = User.where("Level = ? OR Level = ? OR Level = ?", 2, 3, 4)
     if @users.present?
       render :index, status: :ok
     else
