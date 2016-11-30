@@ -45,5 +45,8 @@ Rails.application.routes.draw do
 
   # routes for users
   get "users/list", to: "users#index", defaults: {format: :json}
+  post "users/create", to: "users#create", defaults: {format: :json}
+  patch "users/update/:id", to: "users#update", defaults: {format: :json}
+  delete "users/delete/:id", to: "users#destroy", defaults: {format: :json}
 
 end
