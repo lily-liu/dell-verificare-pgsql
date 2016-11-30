@@ -43,28 +43,36 @@ class StoresController < ApplicationController
   # POST /stores.json
   def create
     @store = Store.new(store_params)
+    @store.city = City.find(params.fetch(:city_id).to_i)
 
     if @store.save
-      render :show, status: :created, location: @store
+      render :show, status: :created
     else
-      render json: @store.errors, status: :unprocessable_entity
+      @message = @store.errors
+      render :error, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /stores/1
   # PATCH/PUT /stores/1.json
   def update
-    if @store.update(store_params)
-      render :show, status: :ok, location: @store
+    if @store.update(store_update_params)
+      render :show, status: :ok
     else
-      render json: @store.errors, status: :unprocessable_entity
+      @message = @store.errors
+      render :error, status: :unprocessable_entity
     end
   end
 
   # DELETE /stores/1
   # DELETE /stores/1.json
   def destroy
-    @store.destroy
+    if @store.destroy
+      render :show, status: :ok
+    else
+      @message = @store.errors
+      render :error, status: :unprocessable_entity
+    end
   end
 
   private
@@ -75,6 +83,32 @@ class StoresController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def store_params
-    params.fetch(:store, {})
+    params.permit(:store_uid, :city_id, :name, :level, :phone, :address, :store_building, :email, :store_category, :store_owner)
+    store_data = {
+        city_id: params.fetch(:city_id, nil).to_i,
+        store_uid: params.fetch(:store_uid, nil).to_s,
+        name: params.fetch(:name, nil).to_s,
+        level: params.fetch(:level, 0).to_i,
+        phone: params.fetch(:phone, nil).to_s,
+        address: params.fetch(:address, nil).to_s,
+        email: params.fetch(:email, nil).to_s,
+        store_building: params.fetch(:store_building, nil).to_s,
+        store_category: params.fetch(:store_category, nil).to_i,
+        store_owner: params.fetch(:store_owner, nil).to_s,
+    }
+  end
+
+  def store_update_params
+    params.permit(:name, :level, :phone, :address, :store_building, :email, :store_owner)
+    store_data = {
+        city_id: params.fetch(:city_id, nil).to_i,
+        name: params.fetch(:name, nil).to_s,
+        level: params.fetch(:level, 0).to_i,
+        phone: params.fetch(:phone, nil).to_s,
+        address: params.fetch(:address, nil).to_s,
+        email: params.fetch(:email, nil).to_s,
+        store_building: params.fetch(:store_building, nil).to_s,
+        store_owner: params.fetch(:store_owner, nil).to_s,
+    }
   end
 end

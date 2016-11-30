@@ -39,6 +39,9 @@ Rails.application.routes.draw do
   get "stores/list", to: "stores#list_stores", defaults: {format: :json}
   get "dealers/list", to: "stores#list_dealers", defaults: {format: :json}
   get "distributors/list", to: "stores#list_distributors", defaults: {format: :json}
+  patch "stores/update/:id", to: "stores#update", defaults: {format: :json}
+  post "stores/create", to: "stores#create", defaults: {format: :json}
+  delete "stores/delete/:id", to: "stores#destroy", defaults: {format: :json}
 
   # routes for users
   get "users/list", to: "users#index", defaults: {format: :json}
