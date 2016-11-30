@@ -18,7 +18,7 @@ class SelloutsController < ApplicationController
   # POST /sellouts.json
   def create
     inventory_data = Inventory.where(service_tag: params.fetch(:service_tag, nil).to_s).first
-    store_data = Store.find(params.fetch(:store_id,nil).to_i)
+    store_data = Store.find(params.fetch(:store_id, nil).to_i)
 
     if inventory_data.present? && store_data.present? && store_data == inventory_data.store
       if params.fetch(:proof, nil)
@@ -74,6 +74,16 @@ class SelloutsController < ApplicationController
   # DELETE /sellouts/1.json
   def destroy
     @sellout.destroy
+  end
+
+  def list_conflicted_sellouts
+    @conflicts = ConflictedSellout.all
+    if @conflicts.present?
+      render json: @conflicts, status: :ok
+    else
+      @message = "no conflict found"
+      render :error, status: :not_found
+    end
   end
 
   private

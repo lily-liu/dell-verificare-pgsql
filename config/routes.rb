@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   post "absences/create", to: "absences#create", defaults: {format: :json}
 
   # route for sellout
+  get "sellouts/conflicts", to: "sellouts#list_conflicted_sellouts", defaults: {format: :json}
   post "sellouts/create", to: "sellouts#create", defaults: {format: :json}
 
   # route for inventory
