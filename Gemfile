@@ -34,11 +34,11 @@ gem 'bulk_insert'
 # for soft deletion record on db
 gem 'paranoia'
 
-# defining default value for active record
-gem 'default_value_for'
-
-# onesignal wrapper
+# onesignal wrapper for push notification
 gem 'one_signal'
+
+# csv handling lib and wrapper
+gem 'smarter_csv'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

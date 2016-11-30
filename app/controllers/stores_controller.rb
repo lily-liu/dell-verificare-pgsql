@@ -4,8 +4,28 @@ class StoresController < ApplicationController
 
   # GET /stores
   # GET /stores.json
-  def index
-    @stores = Store.all
+  def list_stores
+    @stores = Store.where("level = ?", 2)
+    if @stores.present?
+      render :index, status: :ok
+    else
+      @message = "no store found"
+      render :error, status: :not_found
+    end
+  end
+
+  def list_dealers
+    @stores = Store.where("level = ?", 1)
+    if @stores.present?
+      render :index, status: :ok
+    else
+      @message = "no store found"
+      render :error, status: :not_found
+    end
+  end
+
+  def list_distributors
+    @stores = Store.where("level = ?", 0)
     if @stores.present?
       render :index, status: :ok
     else
@@ -48,13 +68,13 @@ class StoresController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_store
-      @store = Store.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_store
+    @store = Store.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def store_params
-      params.fetch(:store, {})
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def store_params
+    params.fetch(:store, {})
+  end
 end

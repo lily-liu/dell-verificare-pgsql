@@ -36,7 +36,9 @@ Rails.application.routes.draw do
   post "posts/create_comment/:parent_id", to: "posts#create_comment", defaults: {format: :json}
 
   # routes for stores
-  get "stores/list", to: "stores#index", defaults: {format: :json}
+  get "stores/list", to: "stores#list_stores", defaults: {format: :json}
+  get "dealers/list", to: "stores#list_dealers", defaults: {format: :json}
+  get "distributors/list", to: "stores#list_distributors", defaults: {format: :json}
 
   # routes for users
   get "users/list", to: "users#index", defaults: {format: :json}
