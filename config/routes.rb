@@ -46,4 +46,11 @@ Rails.application.routes.draw do
   # routes for users
   get "users/list", to: "users#index", defaults: {format: :json}
 
+  # route for cities
+  get "cities/list", to: "cities#index", defaults: {format: :json}
+  post "cities/create", to: "cities#create", defaults: {format: :json}
+
+  # route for region
+  get "regions/list", to: "regions#index", defaults: {format: :json}
+
 end
