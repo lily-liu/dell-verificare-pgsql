@@ -45,9 +45,9 @@ City.create!(
 )
 
 Store.create!(
-    store_uid: 1,
+    store_uid: "STR-139",
     city_id: 1,
-    name: 'Test Store',
+    name: 'Genius Intel',
     address: 'Cilandak, Jakarta selatan',
     phone: '081281821',
     email: 'store@email.com',
@@ -57,9 +57,9 @@ Store.create!(
 )
 
 Store.create!(
-    store_uid: 2,
+    store_uid: "STR-251",
     city_id: 1,
-    name: 'Test Store 2',
+    name: 'Genius NBC',
     address: 'Cilandak, Jakarta selatan',
     phone: '081281821',
     email: 'store@email.com',
@@ -67,9 +67,53 @@ Store.create!(
     store_building: 'gedung mangdu',
     store_category: 0
 )
+Store.create!(
+    store_uid: "STR-1445",
+    city_id: 1,
+    name: 'HnD Computer 1',
+    address: 'Cilandak, Jakarta selatan',
+    phone: '081281821',
+    email: 'store@email.com',
+    store_owner: 'owner1',
+    store_building: 'gedung mangdu',
+    store_category: 2
+)
+Store.create!(
+    store_uid: "STR-3913",
+    city_id: 1,
+    name: 'HnD Computer 2',
+    address: 'Cilandak, Jakarta selatan',
+    phone: '081281821',
+    email: 'store@email.com',
+    store_owner: 'owner1',
+    store_building: 'gedung mangdu',
+    store_category: 2
+)
+Store.create!(
+    store_uid: "STR-1208",
+    city_id: 1,
+    name: 'Amunisi Com',
+    address: 'Cilandak, Jakarta selatan',
+    phone: '081281821',
+    email: 'store@email.com',
+    store_owner: 'owner1',
+    store_building: 'gedung mangdu',
+    store_category: 2
+)
+Store.create!(
+    store_uid: "STR-530",
+    city_id: 1,
+    name: 'Celebes Computer Centre',
+    address: 'Cilandak, Jakarta selatan',
+    phone: '081281821',
+    email: 'store@email.com',
+    store_owner: 'owner1',
+    store_building: 'gedung mangdu',
+    store_category: 2
+)
 
 Sellin.create!(
-    service_tag: "A123",
+    service_tag: "4TB8J52",
     quarter_year: 2015,
     quarter: 3,
     quarter_week: 10,
@@ -78,7 +122,7 @@ Sellin.create!(
     target_store: 1
 )
 Sellin.create!(
-    service_tag: "B456",
+    service_tag: "HHH0L52",
     quarter_year: 2015,
     quarter: 4,
     quarter_week: 8,
@@ -86,11 +130,48 @@ Sellin.create!(
     source_store: 1,
     target_store: 1
 )
-
-Inventory.create!(
-    service_tag: "A123",
-    status: 0,
-    sellin_id: 1,
-    store_id: 1,
-    user_id: 1
+Sellin.create!(
+    service_tag: "H8D9J52",
+    quarter_year: 2015,
+    quarter: 4,
+    quarter_week: 8,
+    item_type: 1,
+    source_store: 1,
+    target_store: 1
+)
+Sellin.create!(
+    service_tag: "DQB8J52",
+    quarter_year: 2015,
+    quarter: 4,
+    quarter_week: 8,
+    item_type: 1,
+    source_store: 1,
+    target_store: 1
+)
+Sellin.create!(
+    service_tag: "42QVK52",
+    quarter_year: 2015,
+    quarter: 4,
+    quarter_week: 8,
+    item_type: 1,
+    source_store: 1,
+    target_store: 1
+)
+Sellin.create!(
+    service_tag: "DFC9J52",
+    quarter_year: 2015,
+    quarter: 4,
+    quarter_week: 8,
+    item_type: 1,
+    source_store: 1,
+    target_store: 1
+)
+Sellin.create!(
+    service_tag: "4YPVK52",
+    quarter_year: 2015,
+    quarter: 4,
+    quarter_week: 8,
+    item_type: 1,
+    source_store: 1,
+    target_store: 1
 )

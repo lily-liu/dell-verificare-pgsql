@@ -17,8 +17,8 @@ class SelloutsController < ApplicationController
   # POST /sellouts
   # POST /sellouts.json
   def create
-    inventory_data = Inventory.where(service_tag: params.fetch(:service_tag, nil).to_s).where.not(status: 1).first
-    store_data = Store.find(params.fetch(:store_id))
+    inventory_data = Inventory.where(service_tag: params.fetch(:service_tag, nil).to_s).first
+    store_data = Store.find(params.fetch(:store_id,nil).to_i)
 
     if inventory_data.present? && store_data.present? && store_data == inventory_data.store
       if params.fetch(:proof, nil)
@@ -48,6 +48,7 @@ class SelloutsController < ApplicationController
         render :error, status: :bad_request
       end
     else
+      @conflict_sellout = ConflictedSellout.create(user_id: current_user.id, store_id: store_data.id, inventory_id: inventory_data.id)
       @message = "no inventory avaliable on the store for the service tag"
       render :error, status: :not_found
     end
