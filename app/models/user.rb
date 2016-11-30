@@ -2,7 +2,7 @@ class User < ApplicationRecord
   has_secure_password
 
   # enum values
-  enum level: [:admin, :dashboard, :promoter, :merchandiser, :area_manager, :sales_representative]
+  enum level: [:admin, :dashboard, :promoter, :merchandiser, :sales_representative]
   enum gender: [:male, :female, :other]
   has_many :absences, dependent: :nullify
   has_many :stores, through: :absences, dependent: :nullify

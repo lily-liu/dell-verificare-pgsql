@@ -15,9 +15,8 @@ class PostsController < ApplicationController
 
   # GET /posts/:id
   def show
-    post_data = Post.find(params.fetch(:id, nil))
-    @post_comment = {post: post_data, comments: post_data.comments}
-    render :showpostcomment, status: :ok
+    @post = Post.find(params.fetch(:id, nil))
+    render :show, status: :ok
   end
 
   # POST /posts/:id/create_post
