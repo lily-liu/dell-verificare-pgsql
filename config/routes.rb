@@ -9,9 +9,11 @@ Rails.application.routes.draw do
 
   # route for sellout
   post "sellouts/create", to: "sellouts#create", defaults: {format: :json}
+  get "sellouts/list", to: "sellouts#index", defaults: {format: :json}
 
   # route for inventory
   post "inventories/create", to: "inventories#create", defaults: {format: :json}
+  get "inventories/list", to: "inventories#index", defaults: {format: :json}
 
   # route For product knowledge
   get "product_knowledges/list", to: "product_knowledges#index", defaults: {format: :json}
@@ -48,5 +50,9 @@ Rails.application.routes.draw do
   post "users/create", to: "users#create", defaults: {format: :json}
   patch "users/update/:id", to: "users#update", defaults: {format: :json}
   delete "users/delete/:id", to: "users#destroy", defaults: {format: :json}
+
+  #Routes for Sellin
+  get "sellins/list", to: "sellins#index", defaults: {format: :json}
+  patch "sellins/update/:id", to: "sellins#update", defaults: {format: :json}
 
 end
