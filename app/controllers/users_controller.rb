@@ -24,7 +24,8 @@ class UsersController < ApplicationController
 
     if @user.save
       render :show, status: :created#, location: @user
-    else
+    else  
+      @message = "Cannot insert data, user or email has exist"
       render json: @user.errors, status: :unprocessable_entity
     end
   end
