@@ -3,10 +3,8 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update, :destroy]
   before_action :authenticate_user
 
-  # GET /users
-  # GET /users.json
+  # GET /users/list
   def index
-    # @users = User.all
     @users = User.where("Level = ? OR Level = ? OR Level = ?", 2, 3, 4)
     if @users.present?
       render :index, status: :ok
@@ -16,13 +14,11 @@ class UsersController < ApplicationController
     end
   end
 
-  # GET /users/1
-  # GET /users/1.json
+  # GET/NO /users/:id 
   def show
   end
 
-  # POST /users
-  # POST /users.json
+  # POST /users/create
   def create
     @user = User.new(user_params)
 
@@ -33,8 +29,7 @@ class UsersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
+  # PATCH /users/update/:id
   def update
     if @user.update(user_update_params)
       render :show, status: :ok
@@ -43,8 +38,7 @@ class UsersController < ApplicationController
     end
   end
 
-  # DELETE /users/1
-  # DELETE /users/1.json
+  # DELETE /users/delete/:id
   def destroy
     if @user.destroy
       render :show, status: :ok
@@ -73,13 +67,11 @@ class UsersController < ApplicationController
       phone: params.fetch(:phone).to_s,
       gender: params.fetch(:gender).to_i
     }
-    # params.fetch(:user, {}) BCrypt::Password.create("password")
   end
 
   def user_update_params
     params.permit(:password_digest, :level, :manager_id, :name, :email, :phone, :gender)
     user_data = {
-      #username: params.fetch(:username).to_s,
       password_digest: BCrypt::Password.create(params.fetch(:password_digest)),
       level: params.fetch(:level).to_i,
       manager_id: params.fetch(:manager_id).to_i,
@@ -88,6 +80,5 @@ class UsersController < ApplicationController
       phone: params.fetch(:phone).to_s,
       gender: params.fetch(:gender).to_i
     }
-    # params.fetch(:user, {}) BCrypt::Password.create("password")
   end
 end
