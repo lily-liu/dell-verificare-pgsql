@@ -1,6 +1,5 @@
-class PosmStoreInventory < ApplicationRecord
+class Visibility < ApplicationRecord
+  enum status: [:front, :side, :banner, :signage]
   mount_uploader :visibility, PosmVisibilityUploader
   validates :visibility, presence: true
-  belongs_to :posm
-  belongs_to :store
 end

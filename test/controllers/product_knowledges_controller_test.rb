@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ProductKnowledgesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @product_knowledge = product_knowledges(:one)
+    @sell_kit = product_knowledges(:one)
   end
 
   test "should get index" do
@@ -12,25 +12,25 @@ class ProductKnowledgesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create product_knowledge" do
     assert_difference('ProductKnowledge.count') do
-      post product_knowledges_url, params: { product_knowledge: { description: @product_knowledge.description, file_name: @product_knowledge.file_name, name: @product_knowledge.name } }, as: :json
+      post product_knowledges_url, params: {sell_kit: {description: @sell_kit.description, file_name: @sell_kit.file_name, name: @sell_kit.name } }, as: :json
     end
 
     assert_response 201
   end
 
   test "should show product_knowledge" do
-    get product_knowledge_url(@product_knowledge), as: :json
+    get product_knowledge_url(@sell_kit), as: :json
     assert_response :success
   end
 
   test "should update product_knowledge" do
-    patch product_knowledge_url(@product_knowledge), params: { product_knowledge: { description: @product_knowledge.description, file_name: @product_knowledge.file_name, name: @product_knowledge.name } }, as: :json
+    patch product_knowledge_url(@sell_kit), params: {sell_kit: {description: @sell_kit.description, file_name: @sell_kit.file_name, name: @sell_kit.name } }, as: :json
     assert_response 200
   end
 
   test "should destroy product_knowledge" do
     assert_difference('ProductKnowledge.count', -1) do
-      delete product_knowledge_url(@product_knowledge), as: :json
+      delete product_knowledge_url(@sell_kit), as: :json
     end
 
     assert_response 204

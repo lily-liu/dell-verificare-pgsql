@@ -2,6 +2,7 @@ class CreateSellouts < ActiveRecord::Migration[5.0]
   def change
     create_table :sellouts do |t|
       t.string :service_tag, null: false, uniqueness: true
+      t.integer :sold_by, null:false
       t.belongs_to :user, index: true, foreign_key: true
       t.belongs_to :inventory, index: true, foreign_key: true
       t.belongs_to :store, index: true, foreign_key: true
@@ -17,5 +18,6 @@ class CreateSellouts < ActiveRecord::Migration[5.0]
     end
     # unique index
     add_index :sellouts, :service_tag, unique: true
+    add_foreign_key :sellouts, :users, column: :sold_by
   end
 end

@@ -18,15 +18,21 @@ class SelloutsController < ApplicationController
   # POST /sellouts.json
   def create
     inventory_data = Inventory.where(service_tag: params.fetch(:service_tag, nil).to_s).first
+    sellin_data = Sellin.where(service_tag: params.fetch(:service_tag, nil).to_s).first
     store_data = Store.find(params.fetch(:store_id, nil).to_i)
 
-    if inventory_data.present? && store_data.present? && store_data == inventory_data.store
+    if inventory_data.present? && store_data.present? && sellin_data.present? && store_data == inventory_data.store
       if params.fetch(:proof, nil)
         @sellout = Sellout.new(sellout_params)
         sales_time = Time.now
         @sellout.store = store_data
         @sellout.inventory = inventory_data
         @sellout.user = current_user
+        if params[:sold_by].present?
+          @sellout.sold_by = User.find(params.fetch(:sold_by, nil).to_i)
+        else
+          @sellout.sold_by = current_user
+        end
         @sellout.quarter_year = current_quarter_year(sales_time)
         @sellout.quarter = current_quarter_months(sales_time)
         @sellout.quarter_week = current_quarter_week(sales_time)
@@ -36,7 +42,7 @@ class SelloutsController < ApplicationController
           inventory_data.save
           render :show, status: :created
         rescue ActiveRecord::RecordNotUnique
-          @conflict_sellout = ConflictedSellout.create(user_id: current_user.id, store_id: store_data.id, inventory_id: inventory_data.id)
+          @conflict_sellout = ConflictedSellout.create(user_id: current_user.id, store_id: store_data.id, service_tag: params.fetch(:service_tag, nil).to_s, cause: 1)
           @message = "sellout already inputted"
           render :error, status: :unauthorized
         rescue StandardError => e
@@ -47,8 +53,12 @@ class SelloutsController < ApplicationController
         @message = "error processing proof photo"
         render :error, status: :bad_request
       end
+    elsif !sellin_data.present?
+      @conflict_sellout = ConflictedSellout.create(user_id: current_user.id, store_id: store_data.id, service_tag: params.fetch(:service_tag, nil).to_s, cause: 0)
+      @message = "no sellin avaliable on the store for the service tag"
+      render :error, status: :not_found
     else
-      @conflict_sellout = ConflictedSellout.create(user_id: current_user.id, store_id: store_data.id, inventory_id: inventory_data.id)
+      @conflict_sellout = ConflictedSellout.create(user_id: current_user.id, store_id: store_data.id, service_tag: params.fetch(:service_tag, nil).to_s, cause: 2)
       @message = "no inventory avaliable on the store for the service tag"
       render :error, status: :not_found
     end
@@ -94,7 +104,7 @@ class SelloutsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def sellout_params
-    params.permit(:service_tag, :price_idr, :price_usd, :proof, :store_id)
+    params.permit(:service_tag, :price_idr, :price_usd, :proof, :store_id, :sold_by)
     user_data = {
         service_tag: params.fetch(:service_tag).to_s,
         price_idr: params.fetch(:price_idr, 0).to_f,

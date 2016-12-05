@@ -22,6 +22,11 @@ class InventoriesController < ApplicationController
     if sellin_data.present? && store_data.present?
       @inventory = Inventory.new(inventory_params)
       @inventory.status = 0
+      if params[:added_by].present?
+        @inventory.sold_by = User.find(params.fetch(:added_by, nil).to_i)
+      else
+        @inventory.sold_by = current_user
+      end
       @inventory.user = current_user
       @inventory.sellin = sellin_data
       @inventory.store = store_data
@@ -30,7 +35,7 @@ class InventoriesController < ApplicationController
         render :show, status: :created
       rescue ActiveRecord::RecordNotUnique
         @inventory = inventory_data
-        @conflict_inventory = ConflictedInventory.create(user_id: current_user.id, store_id: store_data.id, sellin_id: sellin_data.id)
+        @conflict_inventory = ConflictedInventory.create(user_id: current_user.id, store_id: store_data.id, service_tag: params.fetch(:service_tag, nil).to_s, cause: 1)
         @inventory.update(user: current_user, store: store_data, status: 2)
         render :show, status: :ok
       rescue StandardError => e
@@ -39,6 +44,7 @@ class InventoriesController < ApplicationController
       end
 
     else
+      @conflict_inventory = ConflictedInventory.create(user_id: current_user.id, store_id: store_data.id, service_tag: params.fetch(:service_tag, nil).to_s, cause: 0)
       @message = "no sellin data for that service tag"
       render :error, status: :not_found
     end
@@ -69,7 +75,7 @@ class InventoriesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def inventory_params
-    params.permit(:store_id, :service_tag)
+    params.permit(:store_id, :service_tag, :added_by)
     product_data = {
         store_id: params.fetch(:store_id, nil).to_i,
         service_tag: params.fetch(:service_tag, nil).to_s
