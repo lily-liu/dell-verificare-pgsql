@@ -1,0 +1,2 @@
+json.extract! sellin, :service_tag, :quarter_year, :quarter, :quarter_week, :item_type, :part_number, :product_type, :product_name, :source_store, :target_store
+#json.url sellin_url(sellin, format: :json)

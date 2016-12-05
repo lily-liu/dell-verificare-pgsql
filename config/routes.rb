@@ -10,9 +10,11 @@ Rails.application.routes.draw do
   # route for sellout
   get "sellouts/conflicts", to: "sellouts#list_conflicted_sellouts", defaults: {format: :json}
   post "sellouts/create", to: "sellouts#create", defaults: {format: :json}
+  get "sellouts/list", to: "sellouts#index", defaults: {format: :json}
 
   # route for inventory
   post "inventories/create", to: "inventories#create", defaults: {format: :json}
+  get "inventories/list", to: "inventories#index", defaults: {format: :json}
 
   # route For product knowledge
   get "sell_kits/list", to: "sell_kits#index", defaults: {format: :json}
@@ -46,6 +48,13 @@ Rails.application.routes.draw do
 
   # routes for users
   get "users/list", to: "users#index", defaults: {format: :json}
+  post "users/create", to: "users#create", defaults: {format: :json}
+  patch "users/update/:id", to: "users#update", defaults: {format: :json}
+  delete "users/delete/:id", to: "users#destroy", defaults: {format: :json}
+
+  #Routes for Sellin
+  get "sellins/list", to: "sellins#index", defaults: {format: :json}
+  patch "sellins/update/:id", to: "sellins#update", defaults: {format: :json}
 
   # route for cities
   get "cities/list", to: "cities#index", defaults: {format: :json}
