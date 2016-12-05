@@ -140,11 +140,11 @@ ActiveRecord::Schema.define(version: 20161202042759) do
   end
 
   create_table "regions", force: :cascade do |t|
-    t.string   "name",            null: false
-    t.integer  "region_position", null: false
+    t.string   "name",       null: false
+    t.integer  "position",   null: false
     t.datetime "deleted_at"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "sell_kits", force: :cascade do |t|

@@ -40,8 +40,14 @@ User.create!(
     gender: 1
 )
 
+Region.create!(
+    name: 'Jabodetabek',
+    position: 1
+)
+
 City.create!(
-    name: 'Jakarta'
+    name: 'Jakarta',
+    region_id: 1
 )
 
 Store.create!(

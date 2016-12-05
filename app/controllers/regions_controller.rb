@@ -5,7 +5,7 @@ class RegionsController < ApplicationController
   # GET /regions
   # GET /regions.json
   def index
-    @regions = City.all
+    @regions = Region.all
     if @regions.present?
       render :index, status: :ok
     else

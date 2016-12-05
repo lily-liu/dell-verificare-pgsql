@@ -1,4 +1,4 @@
 class Region < ApplicationRecord
-  enum region_position: [:region_1, :region_2, :region_3, :region_4]
+  enum position: [:region1, :region2, :region3, :region4]
   has_many :cities, dependent: :nullify
 end
