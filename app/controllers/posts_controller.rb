@@ -29,7 +29,7 @@ class PostsController < ApplicationController
       render :show, status: :created
     else
       @message = 'Cannot save data'
-      render json: @post.errors, status: :unprocessable_entity
+      render :error, status: :unprocessable_entity
     end
   end
 
@@ -43,8 +43,8 @@ class PostsController < ApplicationController
     if @post.save
       render :show, status: :created
     else
-      @message = 'Cannot save data'
-      render json: @post.errors, status: :unprocessable_entity
+      @message = @post.errors
+      render :error, status: :unprocessable_entity
     end
   end
 

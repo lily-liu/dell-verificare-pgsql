@@ -34,7 +34,8 @@ class SellKitsController < ApplicationController
     if @sell_kit.save
       render :show, status: :created
     else
-      render json: @sell_kit.errors, status: :unprocessable_entity
+      @message = @sell_kit.errors
+      render :error, status: :unprocessable_entity
     end
   end
 

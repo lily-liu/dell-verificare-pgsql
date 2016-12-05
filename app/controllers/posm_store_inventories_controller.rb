@@ -32,7 +32,7 @@ class PosmStoreInventoriesController < ApplicationController
       if @posm_store_inventory.save
         render :show, status: :created
       else
-        @message = "cant assign inventory to store"
+        @message = @posm_store_inventory.errors
         render :error, status: :internal_server_error
       end
     else

@@ -26,7 +26,7 @@ class PosmsController < ApplicationController
     if @posm.save
       render :show, status: :created
     else
-      @message = "cant save posm"
+      @message = @posm.errors
       render :error, status: :internal_server_error
     end
   end
