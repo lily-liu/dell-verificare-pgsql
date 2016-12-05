@@ -29,7 +29,7 @@ class SellKitsController < ApplicationController
   # POST /product_knowledges
   # POST /product_knowledges.json
   def create
-    @sell_kit = SellKit.new(product_knowledge_params)
+    @sell_kit = SellKit.new(sell_kit_params)
 
     if @sell_kit.save
       render :show, status: :created

@@ -15,9 +15,9 @@ Rails.application.routes.draw do
   post "inventories/create", to: "inventories#create", defaults: {format: :json}
 
   # route For product knowledge
-  get "product_knowledges/list", to: "product_knowledges#index", defaults: {format: :json}
-  get "product_knowledges/:id", to: "product_knowledges#show", defaults: {format: :json}
-  post "product_knowledges/create", to: "product_knowledges#create", defaults: {format: :json}
+  get "sell_kits/list", to: "sell_kits#index", defaults: {format: :json}
+  get "sell_kits/:id", to: "sell_kits#show", defaults: {format: :json}
+  post "sell_kits/create", to: "sell_kits#create", defaults: {format: :json}
 
   # Route issues
   get "issues/list", to: "issues#index", defaults: {format: :json}
