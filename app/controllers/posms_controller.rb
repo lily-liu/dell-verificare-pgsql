@@ -31,6 +31,8 @@ class PosmsController < ApplicationController
     end
   end
 
+
+
   # PATCH/PUT /posms/1
   # PATCH/PUT /posms/1.json
   def update

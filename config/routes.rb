@@ -52,7 +52,7 @@ Rails.application.routes.draw do
   patch "users/update/:id", to: "users#update", defaults: {format: :json}
   delete "users/delete/:id", to: "users#destroy", defaults: {format: :json}
 
-  #Routes for Sellin
+  # routes for Sellin
   get "sellins/list", to: "sellins#index", defaults: {format: :json}
   patch "sellins/update/:id", to: "sellins#update", defaults: {format: :json}
 
@@ -62,5 +62,9 @@ Rails.application.routes.draw do
 
   # route for region
   get "regions/list", to: "regions#index", defaults: {format: :json}
+
+  # route for visibility
+  get "visibilities/list_per_user", to: "visibilities#list_visibility_per_user", defaults: {format: :json}
+  post "visibilities/create", to: "visibilities#create", defaults: {format: :json}
 
 end

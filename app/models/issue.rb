@@ -3,4 +3,5 @@ class Issue < ApplicationRecord
   validates :photo_name, presence: true
 
   belongs_to :user
+  belongs_to :store
 end

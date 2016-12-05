@@ -23,6 +23,8 @@ class CitiesController < ApplicationController
   # POST /cities.json
   def create
     @city = City.new(city_params)
+    region = Region.find(params.fetch(:region_id, 0).to_i)
+    @city.region = region
 
     if @city.save
       render :show, status: :created
@@ -65,7 +67,6 @@ class CitiesController < ApplicationController
     params.permit(:name, :region_id)
     user_data = {
         name: params.fetch(:name, nil).to_s,
-        region_id: params.fetch(:region_id, 0).to_i,
     }
   end
 

@@ -82,6 +82,7 @@ ActiveRecord::Schema.define(version: 20161202042759) do
 
   create_table "issues", force: :cascade do |t|
     t.integer  "user_id"
+    t.integer  "store_id"
     t.string   "program_name",               null: false
     t.string   "brand_name",                 null: false
     t.string   "store_name",                 null: false
@@ -93,6 +94,7 @@ ActiveRecord::Schema.define(version: 20161202042759) do
     t.datetime "deleted_at"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.index ["store_id"], name: "index_issues_on_store_id", using: :btree
     t.index ["user_id"], name: "index_issues_on_user_id", using: :btree
   end
 
@@ -233,11 +235,14 @@ ActiveRecord::Schema.define(version: 20161202042759) do
 
   create_table "visibilities", force: :cascade do |t|
     t.integer  "user_id"
+    t.integer  "store_id"
     t.integer  "category",   default: 0
     t.string   "visibility",             null: false
+    t.string   "remark"
     t.datetime "deleted_at"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.index ["store_id"], name: "index_visibilities_on_store_id", using: :btree
     t.index ["user_id"], name: "index_visibilities_on_user_id", using: :btree
   end
 
@@ -252,6 +257,7 @@ ActiveRecord::Schema.define(version: 20161202042759) do
   add_foreign_key "inventories", "stores"
   add_foreign_key "inventories", "users"
   add_foreign_key "inventories", "users", column: "added_by"
+  add_foreign_key "issues", "stores"
   add_foreign_key "issues", "users"
   add_foreign_key "managers", "managers", column: "parent_id"
   add_foreign_key "posm_store_inventories", "posms"
@@ -267,5 +273,6 @@ ActiveRecord::Schema.define(version: 20161202042759) do
   add_foreign_key "sellouts", "users", column: "sold_by"
   add_foreign_key "stores", "cities"
   add_foreign_key "users", "managers"
+  add_foreign_key "visibilities", "stores"
   add_foreign_key "visibilities", "users"
 end
