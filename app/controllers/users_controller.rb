@@ -1,4 +1,3 @@
-require 'bcrypt'
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update, :destroy]
   before_action :authenticate_user
@@ -59,27 +58,27 @@ class UsersController < ApplicationController
   def user_params
     params.permit(:username, :password_digest, :level, :manager_id, :name, :email, :phone, :gender)
     user_data = {
-      username: params.fetch(:username).to_s,
-      password_digest: BCrypt::Password.create(params.fetch(:password_digest)),
-      level: params.fetch(:level).to_i,
-      manager_id: params.fetch(:manager_id).to_i,
-      name: params.fetch(:name).to_s,
-      email: params.fetch(:email).to_s,
-      phone: params.fetch(:phone).to_s,
-      gender: params.fetch(:gender).to_i
+        username: params.fetch(:username).to_s,
+        password_digest: BCrypt::Password.create(params.fetch(:password_digest)),
+        level: params.fetch(:level).to_i,
+        manager_id: params.fetch(:manager_id).to_i,
+        name: params.fetch(:name).to_s,
+        email: params.fetch(:email).to_s,
+        phone: params.fetch(:phone).to_s,
+        gender: params.fetch(:gender).to_i
     }
   end
 
   def user_update_params
     params.permit(:password_digest, :level, :manager_id, :name, :email, :phone, :gender)
     user_data = {
-      password_digest: BCrypt::Password.create(params.fetch(:password_digest)),
-      level: params.fetch(:level).to_i,
-      manager_id: params.fetch(:manager_id).to_i,
-      name: params.fetch(:name).to_s,
-      email: params.fetch(:email).to_s,
-      phone: params.fetch(:phone).to_s,
-      gender: params.fetch(:gender).to_i
+        password_digest: BCrypt::Password.create(params.fetch(:password_digest)),
+        level: params.fetch(:level).to_i,
+        manager_id: params.fetch(:manager_id).to_i,
+        name: params.fetch(:name).to_s,
+        email: params.fetch(:email).to_s,
+        phone: params.fetch(:phone).to_s,
+        gender: params.fetch(:gender).to_i
     }
   end
 end
