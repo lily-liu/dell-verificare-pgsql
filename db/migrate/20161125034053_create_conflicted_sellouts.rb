@@ -5,10 +5,10 @@ class CreateConflictedSellouts < ActiveRecord::Migration[5.0]
       t.belongs_to :user, index: true, foreign_key: true
       t.belongs_to :store, index: true, foreign_key: true
       t.integer :cause, default: 0
+      t.boolean :solved, default: false
 
       t.datetime :deleted_at, null: true
       t.timestamps
     end
-    add_index :conflicted_sellouts, :service_tag, unique: true
   end
 end

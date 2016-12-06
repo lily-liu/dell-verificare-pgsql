@@ -5,20 +5,26 @@ class SellKitsController < ApplicationController
   # GET /product_knowledges
   # GET /product_knowledges.json
   def index
-    @sell_kits = SellKit.all
+    category = params.fetch(category, nil).to_i
+    family = params.fetch(family, nil).to_i
+    if category.present? && family.present?
+      @sellkit = SellKit.where("category = ? AND family = ?", category, family)
+      render :index, status: :ok
+    else
+      @message = "no category or family match"
+      render :error, status: :bad_request
+    end
   end
 
   # GET /product_knowledges/1
   # GET /product_knowledges/1.json
   def show
-    category = params.fetch(category, nil).to_i
-    family = params.fetch(family, nil).to_i
-    if category.present? && family.present?
-      @sellkit = SellKit.where("category = ? AND family = ?", category, family)
-      render :show, status: :created
+    @sell_kit = SellKit.find(params.fetch(:id).to_i)
+    if @sell_kit.present?
+      render :show, status: :ok
     else
-      @message = "no category or family match"
-      render :error, status: :bad_request
+      @message = "no item found"
+      render :error, status: :not_found
     end
   end
 

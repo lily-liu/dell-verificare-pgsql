@@ -8,7 +8,6 @@ Rails.application.routes.draw do
   post "absences/create", to: "absences#create", defaults: {format: :json}
 
   # route for sellout
-  get "sellouts/conflicts", to: "sellouts#list_conflicted_sellouts", defaults: {format: :json}
   post "sellouts/create", to: "sellouts#create", defaults: {format: :json}
   get "sellouts/list", to: "sellouts#index", defaults: {format: :json}
 
@@ -66,5 +65,9 @@ Rails.application.routes.draw do
   # route for visibility
   get "visibilities/list_per_user", to: "visibilities#list_visibility_per_user", defaults: {format: :json}
   post "visibilities/create", to: "visibilities#create", defaults: {format: :json}
+
+  # route for conflicted items
+  get "conflicts/inventories", to: "conflicted_items#list_conflicted_inventory", defaults: {format: :json}
+  get "conflicts/sellouts", to: "conflicted_items#list_conflicted_sellouts", defaults: {format: :json}
 
 end

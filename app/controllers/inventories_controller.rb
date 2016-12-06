@@ -6,6 +6,12 @@ class InventoriesController < ApplicationController
   # GET /inventories.json
   def index
     @inventories = Inventory.all
+    if @inventories.present?
+      render :index, status: :ok
+    else
+      @message = "no inventory found"
+      render :error, status: :not_found
+    end
   end
 
   # GET /inventories/1
@@ -35,7 +41,7 @@ class InventoriesController < ApplicationController
         render :show, status: :created
       rescue ActiveRecord::RecordNotUnique
         @inventory = inventory_data
-        @conflict_inventory = ConflictedInventory.create(user_id: current_user.id, store_id: store_data.id, service_tag: params.fetch(:service_tag, nil).to_s, cause: 1)
+        @conflict_inventory = ConflictedInventory.create(user_id: current_user.id, store_id: store_data.id, service_tag: params.fetch(:service_tag, nil).to_s, cause: 1, solved: false)
         @inventory.update(user: current_user, store: store_data, status: 2)
         render :show, status: :ok
       rescue StandardError => e
@@ -44,7 +50,7 @@ class InventoriesController < ApplicationController
       end
 
     else
-      @conflict_inventory = ConflictedInventory.create(user_id: current_user.id, store_id: store_data.id, service_tag: params.fetch(:service_tag, nil).to_s, cause: 0)
+      @conflict_inventory = ConflictedInventory.create(user_id: current_user.id, store_id: store_data.id, service_tag: params.fetch(:service_tag, nil).to_s, cause: 0, solved: false)
       @message = "no sellin data for that service tag"
       render :error, status: :not_found
     end

@@ -1,9 +1,15 @@
 class SellinsController < ApplicationController
-  before_action :set_sellin, only: [:update]#[:show, :update, :destroy]
+  before_action :set_sellin, only: [:update] #[:show, :update, :destroy]
 
   # GET /sellins/list
   def index
     @sellins = Sellin.all
+    if @sellins.present?
+      render :index, status: :ok
+    else
+      @message = "no sellin found"
+      render :error, status: :not_found
+    end
   end
 
   # # GET /sellins/:id
@@ -36,15 +42,15 @@ class SellinsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_sellin
-      @sellin = Sellin.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_sellin
+    @sellin = Sellin.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def sellin_params
-      params.permit(:service_tag, :quarter_year, :quarter, :quarter_week, :item_type, :part_number, :product_type, :product_name, :source_store, :target_store) 
-      sellin_data = {
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def sellin_params
+    params.permit(:service_tag, :quarter_year, :quarter, :quarter_week, :item_type, :part_number, :product_type, :product_name, :source_store, :target_store)
+    sellin_data = {
         service_tag: params.fetch(:service_tag),
         quarter_year: params.fetch(:quarter_year).to_i,
         quarter: params.fetch(:quarter).to_i,
@@ -55,6 +61,6 @@ class SellinsController < ApplicationController
         product_name: params.fetch(:product_name, nil).to_s,
         source_store: params.fetch(:source_store).to_i,
         target_store: params.fetch(:target_store).to_i
-      }
-    end
+    }
+  end
 end

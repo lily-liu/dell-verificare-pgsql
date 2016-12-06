@@ -39,27 +39,27 @@ ActiveRecord::Schema.define(version: 20161202042759) do
   end
 
   create_table "conflicted_inventories", force: :cascade do |t|
-    t.string   "service_tag",             null: false
+    t.string   "service_tag",                 null: false
     t.integer  "user_id"
     t.integer  "store_id"
     t.integer  "cause",       default: 0
+    t.boolean  "solved",      default: false
     t.datetime "deleted_at"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.index ["service_tag"], name: "index_conflicted_inventories_on_service_tag", unique: true, using: :btree
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.index ["store_id"], name: "index_conflicted_inventories_on_store_id", using: :btree
     t.index ["user_id"], name: "index_conflicted_inventories_on_user_id", using: :btree
   end
 
   create_table "conflicted_sellouts", force: :cascade do |t|
-    t.string   "service_tag",             null: false
+    t.string   "service_tag",                 null: false
     t.integer  "user_id"
     t.integer  "store_id"
     t.integer  "cause",       default: 0
+    t.boolean  "solved",      default: false
     t.datetime "deleted_at"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.index ["service_tag"], name: "index_conflicted_sellouts_on_service_tag", unique: true, using: :btree
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.index ["store_id"], name: "index_conflicted_sellouts_on_store_id", using: :btree
     t.index ["user_id"], name: "index_conflicted_sellouts_on_user_id", using: :btree
   end
