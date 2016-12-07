@@ -11,6 +11,7 @@ class CreateSellins < ActiveRecord::Migration[5.0]
       t.string :product_name, null: true
       t.integer :source_store, null: false
       t.integer :target_store, null: false
+      t.string :csv_ref, null: true
 
 
       t.datetime :deleted_at, null: true

@@ -33,6 +33,8 @@ GEM
       activemodel (= 5.0.0.1)
       activesupport (= 5.0.0.1)
       arel (~> 7.0)
+    activerecord-import (0.16.2)
+      activerecord (>= 3.2)
     activesupport (5.0.0.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (~> 0.7)
@@ -41,8 +43,6 @@ GEM
     arel (7.1.4)
     bcrypt (3.1.11)
     builder (3.2.2)
-    bulk_insert (1.3.0)
-      activerecord (>= 4.1.0)
     byebug (9.0.6)
     carrierwave (0.11.2)
       activemodel (>= 3.2.0)
@@ -147,8 +147,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord-import
   bcrypt (~> 3.1.7)
-  bulk_insert
   byebug
   carrierwave
   jbuilder (~> 2.5)

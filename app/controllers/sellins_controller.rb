@@ -16,16 +16,38 @@ class SellinsController < ApplicationController
   # def show
   # end
 
-  # # POST /sellins/create
+  # POST /sellins/create
   # def create
   #   @sellin = Sellin.new(sellin_params)
-
+  #
   #   if @sellin.save
   #     render :show, status: :created, location: @sellin
   #   else
   #     render json: @sellin.errors, status: :unprocessable_entity
   #   end
   # end
+
+  def input_sellin_from_csv
+    csv_file = CsvUploader.new
+    csv_file.store!(params.fetch(:csv))
+    csv_data = SmarterCSV.process('public' + csv_file.url)
+
+    if csv_data.present?
+      saved_data = []
+
+      csv_data.each do |data|
+        sellins_tmp = Sellin.new(data)
+        sellins_tmp.csv_ref = csv_file.url
+        saved_data << sellins_tmp
+      end
+
+      @sellins = Sellin.import(saved_data)
+      render json: @sellins, status: :ok
+    else
+      @message = "csv file is empty"
+      render :error, status: :internal_server_error
+    end
+  end
 
   # PATCH/PUT /sellins/:id
   def update

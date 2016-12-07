@@ -29,7 +29,7 @@ gem 'mini_magick'
 gem 'knock'
 
 # for bulk inserting sellin in db
-gem 'bulk_insert'
+gem 'activerecord-import'
 
 # for soft deletion record on db
 gem 'paranoia'

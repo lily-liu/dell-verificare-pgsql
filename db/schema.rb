@@ -171,6 +171,7 @@ ActiveRecord::Schema.define(version: 20161202042759) do
     t.string   "product_name"
     t.integer  "source_store", null: false
     t.integer  "target_store", null: false
+    t.string   "csv_ref"
     t.datetime "deleted_at"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false

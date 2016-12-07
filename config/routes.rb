@@ -54,6 +54,7 @@ Rails.application.routes.draw do
   # routes for Sellin
   get "sellins/list", to: "sellins#index", defaults: {format: :json}
   patch "sellins/update/:id", to: "sellins#update", defaults: {format: :json}
+  post "sellins/import", to: "sellins#input_sellin_from_csv", defaults: {format: :json}
 
   # route for cities
   get "cities/list", to: "cities#index", defaults: {format: :json}
