@@ -42,7 +42,8 @@ class SellinsController < ApplicationController
       end
 
       @sellins = Sellin.import(saved_data)
-      render json: @sellins, status: :ok
+      @success_input = Sellin.where(id: @sellins.ids)
+      render :import, status: :ok
     else
       @message = "csv file is empty"
       render :error, status: :internal_server_error
