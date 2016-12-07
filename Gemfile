@@ -39,6 +39,7 @@ gem 'one_signal'
 
 # csv handling lib and wrapper
 gem 'smarter_csv'
+gem 'to_csv-rails'
 
 # pdf handling libs
 gem 'wkhtmltopdf-binary'

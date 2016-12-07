@@ -55,6 +55,7 @@ Rails.application.routes.draw do
   get "sellins/list", to: "sellins#index", defaults: {format: :json}
   patch "sellins/update/:id", to: "sellins#update", defaults: {format: :json}
   post "sellins/import", to: "sellins#input_sellin_from_csv", defaults: {format: :json}
+  get "sellins/export", to: "sellins#sellin_csv_export", defaults: {format: :csv}
 
   # route for cities
   get "cities/list", to: "cities#index", defaults: {format: :json}
@@ -64,7 +65,7 @@ Rails.application.routes.draw do
   get "regions/list", to: "regions#index", defaults: {format: :json}
 
   # route for visibility
-  get "visibilities/list_per_user", to: "visibilities#list_visibility_per_user", defaults: {format: :json}
+  get "visibilities/list_per_user_store", to: "visibilities#list_visibility_per_user_and_store", defaults: {format: :json}
   post "visibilities/create", to: "visibilities#create", defaults: {format: :json}
 
   # route for conflicted items

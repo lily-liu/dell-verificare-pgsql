@@ -1,5 +1,6 @@
 class SellinsController < ApplicationController
-  before_action :set_sellin, only: [:update] #[:show, :update, :destroy]
+  before_action :set_sellin, only: [:update]
+  # before_action :authenticate_user
 
   # GET /sellins/list
   def index
@@ -48,6 +49,11 @@ class SellinsController < ApplicationController
       @message = "csv file is empty"
       render :error, status: :internal_server_error
     end
+  end
+
+  def sellin_csv_export
+    @export = Sellin.all.to_a
+    send_data(@export.to_csv(except: [:created_at, :updated_at, :deleted_at, :id, :csv_ref]), type: 'text/csv: charset=utf-8; header=present', filename: "report-" + Time.now.to_datetime.to_s + ".csv")
   end
 
   # PATCH/PUT /sellins/:id

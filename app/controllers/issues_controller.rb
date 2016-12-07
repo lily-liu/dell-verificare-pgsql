@@ -50,7 +50,7 @@ class IssuesController < ApplicationController
         store_name: params.fetch(:store_name).to_s,
         campaign_start: params.fetch(:campaign_start).to_time,
         campaign_end: params.fetch(:campaign_end).to_time,
-        remark: params.fetch(:remark).to_s,
+        remark: params.fetch(:remark,nil).to_s,
         photo_name: params.fetch(:photo_name, nil)
     }
   end
