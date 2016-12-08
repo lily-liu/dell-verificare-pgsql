@@ -23,6 +23,12 @@ class VisibilitiesController < ApplicationController
     end
   end
 
+  def list_visibility_view
+    @user = current_user.username
+    @store = Store.find(params.fetch(:store_id).to_i)
+    @visibilities = Visibility.where('user_id = ? AND created_at > ?', 1, 1.week.ago)
+  end
+
   # POST /visibilities
   # POST /visibilities.json
   def create

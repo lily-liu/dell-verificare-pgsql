@@ -70,6 +70,7 @@ Rails.application.routes.draw do
   # route for visibility
   get "visibilities/list_per_user_store", to: "visibilities#list_visibility_per_user_and_store", defaults: {format: :json}
   post "visibilities/create", to: "visibilities#create", defaults: {format: :json}
+  get "visibilities/list_view", to: "visibilities#list_visibility_view"
 
   # route for conflicted items
   get "conflicts/inventories", to: "conflicted_items#list_conflicted_inventory", defaults: {format: :json}
