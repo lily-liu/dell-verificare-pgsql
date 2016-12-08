@@ -49,6 +49,13 @@ class PosmsController < ApplicationController
     @posm.destroy
   end
 
+  def posm_per_category
+    @report = Posm.select(:category,:quantity).group(:category).sum(:quantity)
+    asd = @report.keys
+    dsa = @report.values
+    render json: @report, status: :ok
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_posm

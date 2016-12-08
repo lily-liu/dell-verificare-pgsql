@@ -111,8 +111,8 @@ ActiveRecord::Schema.define(version: 20161202042759) do
     t.integer  "posm_id"
     t.integer  "store_id"
     t.integer  "user_id"
-    t.integer  "quantity"
-    t.string   "visibility"
+    t.integer  "quantity",   null: false
+    t.string   "visibility", null: false
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -122,11 +122,12 @@ ActiveRecord::Schema.define(version: 20161202042759) do
   end
 
   create_table "posms", force: :cascade do |t|
-    t.string   "name"
-    t.integer  "quantity"
+    t.string   "name",                   null: false
+    t.integer  "category",   default: 0
+    t.integer  "quantity",               null: false
     t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "posts", force: :cascade do |t|

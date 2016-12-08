@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
 
   # ask for jwt token from web server
-  post "login", to: "user_token#create", defaults: {format: :json}
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  post "login", to: "user_token#create", defaults: {format: :json}
 
   # route for absences
   post "absences/create", to: "absences#create", defaults: {format: :json}
@@ -18,7 +18,6 @@ Rails.application.routes.draw do
   get "inventories/list", to: "inventories#index", defaults: {format: :json}
   get "inventories/recap_cam", to: "inventories#inventories_per_cam", defaults: {format: :json}
 
-
   # route For product knowledge
   get "sell_kits/list", to: "sell_kits#index", defaults: {format: :json}
   get "sell_kits/:id", to: "sell_kits#show", defaults: {format: :json}
@@ -32,6 +31,7 @@ Rails.application.routes.draw do
   # route for posms
   get "posms/inventory/list", to: "posm_store_inventories#index", defaults: {format: :json}
   get "posms/list", to: "posms#index", defaults: {format: :json}
+  get "posms/recap_category", to: "posms#posm_per_category", defaults: {format: :json}
   post "posms/inventory/create", to: "posm_store_inventories#create", defaults: {format: :json}
   post "posms/create", to: "posms#create", defaults: {format: :json}
 
@@ -76,7 +76,6 @@ Rails.application.routes.draw do
   # route for conflicted items
   get "conflicts/inventories", to: "conflicted_items#list_conflicted_inventory", defaults: {format: :json}
   get "conflicts/sellouts", to: "conflicted_items#list_conflicted_sellouts", defaults: {format: :json}
-
 
 
 end
