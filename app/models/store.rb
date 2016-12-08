@@ -10,4 +10,6 @@ class Store < ApplicationRecord
   has_many :users, through: :absences, dependent: :nullify
   has_many :posms, through: :posm_store_inventories, dependent: :nullify
   belongs_to :city
+
+  validates :store_uid, :city, :name, :address, presence: true
 end

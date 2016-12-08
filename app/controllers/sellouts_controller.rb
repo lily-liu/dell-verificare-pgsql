@@ -96,6 +96,11 @@ class SelloutsController < ApplicationController
     end
   end
 
+  def sellouts_each_cam_per_qw
+    @report = Manager.select(:quarter_week).joins(users: :sellouts).where(id: params.fetch(:manager_id).to_i).group(:quarter_week).count
+    render json: @report, status: :ok
+  end
+
   def sellouts_per_cam
     @report = Manager.select(:name).joins(users: :sellouts).group(:name).count
     render json: @report, status: :ok

@@ -31,7 +31,7 @@ class InventoriesController < ApplicationController
       if params[:added_by].present?
         @inventory.sold_by = User.find(params.fetch(:added_by, nil).to_i)
       else
-        @inventory.sold_by = current_user
+        @inventory.added_by = current_user
       end
       @inventory.user = current_user
       @inventory.sellin = sellin_data

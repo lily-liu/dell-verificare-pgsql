@@ -14,6 +14,8 @@ class User < ApplicationRecord
   has_many :conflicted_sellouts, dependent: :nullify
   belongs_to :manager
 
+  validates :username, :name, :manager, :password_digest, presence: true
+
   # knock auth override
   # def self.from_token_request(request)
   #   # Returns a valid user, `nil` or raise `Knock.not_found_exception_class_name`

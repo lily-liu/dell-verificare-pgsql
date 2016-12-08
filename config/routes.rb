@@ -8,15 +8,16 @@ Rails.application.routes.draw do
   post "absences/create", to: "absences#create", defaults: {format: :json}
 
   # route for sellout
-  post "sellouts/create", to: "sellouts#create", defaults: {format: :json}
   get "sellouts/list", to: "sellouts#index", defaults: {format: :json}
   get "sellouts/recap_cam", to: "sellouts#sellouts_per_cam", defaults: {format: :json}
   get "sellouts/recap_region", to: "sellouts#sellouts_per_region", defaults: {format: :json}
+  get "sellouts/recap_weeks/:manager_id", to: "sellouts#sellouts_each_cam_per_qw", defaults: {format: :json}
+  post "sellouts/create", to: "sellouts#create", defaults: {format: :json}
 
   # route for inventory
-  post "inventories/create", to: "inventories#create", defaults: {format: :json}
   get "inventories/list", to: "inventories#index", defaults: {format: :json}
   get "inventories/recap_cam", to: "inventories#inventories_per_cam", defaults: {format: :json}
+  post "inventories/create", to: "inventories#create", defaults: {format: :json}
 
   # route For product knowledge
   get "sell_kits/list", to: "sell_kits#index", defaults: {format: :json}
@@ -57,9 +58,9 @@ Rails.application.routes.draw do
 
   # routes for Sellin
   get "sellins/list", to: "sellins#index", defaults: {format: :json}
-  patch "sellins/update/:id", to: "sellins#update", defaults: {format: :json}
-  post "sellins/import", to: "sellins#input_sellin_from_csv", defaults: {format: :json}
   get "sellins/export", to: "sellins#sellin_csv_export", defaults: {format: :csv}
+  post "sellins/import", to: "sellins#input_sellin_from_csv", defaults: {format: :json}
+  patch "sellins/update/:id", to: "sellins#update", defaults: {format: :json}
 
   # route for cities
   get "cities/list", to: "cities#index", defaults: {format: :json}
@@ -69,7 +70,7 @@ Rails.application.routes.draw do
   get "regions/list", to: "regions#index", defaults: {format: :json}
 
   # route for visibility
-  get "visibilities/list_per_user_store", to: "visibilities#list_visibility_per_user_and_store", defaults: {format: :json}
+  get "visibilities/list_per_user_store/:store_id", to: "visibilities#list_visibility_per_user_and_store", defaults: {format: :json}
   post "visibilities/create", to: "visibilities#create", defaults: {format: :json}
   get "visibilities/list_view", to: "visibilities#list_visibility_view"
 

@@ -3,4 +3,5 @@ class ConflictedInventory < ApplicationRecord
   belongs_to :user
   belongs_to :store
 
+  validates :service_tag, :user, :store, :cause, :solved, presence: true
 end
