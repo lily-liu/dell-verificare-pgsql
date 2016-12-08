@@ -6,6 +6,7 @@ class Store < ApplicationRecord
   has_many :issues, dependent: :nullify
   has_many :conflicted_inventories, dependent: :nullify
   has_many :conflicted_sellouts, dependent: :nullify
+  has_many :visibilities, dependent: :nullify
   has_many :users, through: :absences, dependent: :nullify
   has_many :posms, through: :posm_store_inventories, dependent: :nullify
   belongs_to :city
