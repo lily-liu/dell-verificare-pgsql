@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   post "sellouts/create", to: "sellouts#create", defaults: {format: :json}
   get "sellouts/list", to: "sellouts#index", defaults: {format: :json}
   get "sellouts/recap_cam", to: "sellouts#sellouts_per_cam", defaults: {format: :json}
+  get "sellouts/recap_region", to: "sellouts#sellouts_per_region", defaults: {format: :json}
 
   # route for inventory
   post "inventories/create", to: "inventories#create", defaults: {format: :json}
