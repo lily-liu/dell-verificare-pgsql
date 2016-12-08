@@ -9,6 +9,8 @@ class User < ApplicationRecord
   has_many :sellouts, dependent: :nullify
   has_many :issues, dependent: :nullify
   has_many :inventories, dependent: :nullify
+  has_many :conflicted_inventories, dependent: :nullify
+  has_many :conflicted_sellouts, dependent: :nullify
   belongs_to :manager
 
   # knock auth override

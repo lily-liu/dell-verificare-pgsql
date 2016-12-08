@@ -3,6 +3,10 @@ class Store < ApplicationRecord
   enum store_category: [:non_mft, :dell_corner, :dell_signage, :dell_exclusive_store]
   has_many :absences, dependent: :nullify
   has_many :sellouts, dependent: :nullify
+  has_many :issues, dependent: :nullify
+  has_many :conflicted_inventories, dependent: :nullify
+  has_many :conflicted_sellouts, dependent: :nullify
   has_many :users, through: :absences, dependent: :nullify
+  has_many :posms, through: :posm_store_inventories, dependent: :nullify
   belongs_to :city
 end
