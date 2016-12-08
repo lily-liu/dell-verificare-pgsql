@@ -5,5 +5,4 @@ class Absence < ApplicationRecord
 
   validates :store, :user, presence: true
   validates :latitude, :longitude, presence: true, numericality: true
-  validates :remark, allow_blank: true, allow_nil: true
 end
