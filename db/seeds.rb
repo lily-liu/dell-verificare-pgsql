@@ -246,3 +246,79 @@ Sellin.create!(
     source_store: 1,
     target_store: 1
 )
+
+Posm.create!(
+    name: "posm1",
+    category: 1,
+    quantity: 100
+)
+
+Posm.create!(
+    name: "posm2",
+    category: 2,
+    quantity: 100
+)
+
+Posm.create!(
+    name: "posm3",
+    category: 3,
+    quantity: 100
+)
+
+PosmStoreInventory.create!(
+    posm_id: 1,
+    store_id: 1,
+    user_id: 1,
+    quantity: 20,
+    visibility: File.open(Rails.root + "public/uploads/kona.jpg")
+)
+
+PosmStoreInventory.create!(
+    posm_id: 1,
+    store_id: 2,
+    user_id: 2,
+    quantity: 20,
+    visibility: File.open(Rails.root + "public/uploads/kona.jpg")
+
+)
+
+PosmStoreInventory.create!(
+    posm_id: 2,
+    store_id: 1,
+    user_id: 1,
+    quantity: 20,
+    visibility: File.open(Rails.root + "public/uploads/kona.jpg")
+)
+
+PosmStoreInventory.create!(
+    posm_id: 2,
+    store_id: 2,
+    user_id: 1,
+    quantity: 20,
+    visibility: File.open(Rails.root + "public/uploads/kona.jpg")
+)
+
+PosmStoreInventory.create!(
+    posm_id: 2,
+    store_id: 2,
+    user_id: 2,
+    quantity: 20,
+    visibility: File.open(Rails.root + "public/uploads/kona.jpg")
+)
+
+PosmStoreInventory.create!(
+    posm_id: 3,
+    store_id: 1,
+    user_id: 2,
+    quantity: 20,
+    visibility: File.open(Rails.root + "public/uploads/kona.jpg")
+)
+
+PosmStoreInventory.create!(
+    posm_id: 3,
+    store_id: 2,
+    user_id: 1,
+    quantity: 20,
+    visibility: File.open(Rails.root + "public/uploads/kona.jpg")
+)
+

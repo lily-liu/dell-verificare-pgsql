@@ -5,7 +5,9 @@ class User < ApplicationRecord
   enum level: [:admin, :dashboard, :area_manager, :promoter, :merchandiser, :sales_representative]
   enum gender: [:male, :female, :other]
   has_many :absences, dependent: :nullify
+  has_many :posm_store_inventories, dependent: :nullify
   has_many :stores, through: :absences, dependent: :nullify
+  has_many :posm, through: :posm_store_inventories, dependent: :nullify
   has_many :sellouts, dependent: :nullify
   has_many :issues, dependent: :nullify
   has_many :visibilities, dependent: :nullify
