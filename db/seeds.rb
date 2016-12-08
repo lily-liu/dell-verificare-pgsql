@@ -244,6 +244,7 @@ Sellin.create!(
     quarter_week: 8,
     item_type: 1,
     source_store: 1,
+    product_type: "3437-i34010-4-500-UBT-D",
     target_store: 1
 )
 
