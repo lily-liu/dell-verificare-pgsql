@@ -10,10 +10,13 @@ Rails.application.routes.draw do
   # route for sellout
   post "sellouts/create", to: "sellouts#create", defaults: {format: :json}
   get "sellouts/list", to: "sellouts#index", defaults: {format: :json}
+  get "sellouts/recap_cam", to: "sellouts#sellouts_per_cam", defaults: {format: :json}
 
   # route for inventory
   post "inventories/create", to: "inventories#create", defaults: {format: :json}
   get "inventories/list", to: "inventories#index", defaults: {format: :json}
+  get "inventories/recap_cam", to: "inventories#inventories_per_cam", defaults: {format: :json}
+
 
   # route For product knowledge
   get "sell_kits/list", to: "sell_kits#index", defaults: {format: :json}
@@ -71,5 +74,7 @@ Rails.application.routes.draw do
   # route for conflicted items
   get "conflicts/inventories", to: "conflicted_items#list_conflicted_inventory", defaults: {format: :json}
   get "conflicts/sellouts", to: "conflicted_items#list_conflicted_sellouts", defaults: {format: :json}
+
+
 
 end

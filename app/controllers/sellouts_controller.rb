@@ -70,10 +70,9 @@ class SelloutsController < ApplicationController
     end
   end
 
-  def ccc
-    manager = Manager.new(name: "manager test")
-    manager.channel_area_manager = Manager.find(1)
-    render json: manager
+  def sellouts_per_cam
+    @report = Manager.select(:name).joins(users: :sellouts).group(:name).count
+    render json: @report, status: :ok
   end
 
   # PATCH/PUT /sellouts/1

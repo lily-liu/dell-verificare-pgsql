@@ -73,6 +73,11 @@ class InventoriesController < ApplicationController
     @inventory.destroy
   end
 
+  def inventories_per_cam
+    @report = Manager.select(:name).joins(users: :inventories).group(:name).count
+    render json: @report, status: :ok
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_inventory

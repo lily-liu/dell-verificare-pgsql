@@ -18,6 +18,10 @@ Manager.create!(
     name: "manager1"
 )
 
+Manager.create!(
+    name: "manager2"
+)
+
 User.create!(
     username: 'admin',
     password_digest: BCrypt::Password.create("password"),
@@ -63,10 +67,21 @@ User.create!(
 )
 
 User.create!(
+    username: 'promoter2',
+    password_digest: BCrypt::Password.create("password"),
+    level: 3,
+    manager_id: 2,
+    name: 'admin name',
+    email: 'admin32@email.com',
+    phone: "8989898989",
+    gender: 1
+)
+
+User.create!(
     username: 'merchandiser',
     password_digest: BCrypt::Password.create("password"),
     level: 4,
-    manager_id: 1,
+    manager_id: 2,
     name: 'admin name',
     email: 'admin4@email.com',
     phone: "8989898989",
@@ -77,7 +92,7 @@ User.create!(
     username: 'sales_representative',
     password_digest: BCrypt::Password.create("password"),
     level: 5,
-    manager_id: 1,
+    manager_id: 2,
     name: 'admin name',
     email: 'admin5@email.com',
     phone: "8989898989",
