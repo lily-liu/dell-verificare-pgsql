@@ -70,11 +70,6 @@ class SelloutsController < ApplicationController
     end
   end
 
-  def sellouts_per_cam
-    @report = Manager.select(:name).joins(users: :sellouts).group(:name).count
-    render json: @report, status: :ok
-  end
-
   # PATCH/PUT /sellouts/1
   # PATCH/PUT /sellouts/1.json
   def update
@@ -99,6 +94,16 @@ class SelloutsController < ApplicationController
       @message = "no conflict found"
       render :error, status: :not_found
     end
+  end
+
+  def sellouts_per_cam
+    @report = Manager.select(:name).joins(users: :sellouts).group(:name).count
+    render json: @report, status: :ok
+  end
+
+  def sellouts_per_region
+    @report = Region.select(:name).joins(cities: [{stores: :sellouts}]).group(:name).count
+    render json: @report, status: :ok
   end
 
   private
