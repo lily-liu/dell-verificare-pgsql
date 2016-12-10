@@ -249,7 +249,7 @@ Sellin.create!(
 )
 
 Posm.create!(
-    name: "posm1",
+    name: "posm10",
     category: 1,
     quantity: 100
 )
