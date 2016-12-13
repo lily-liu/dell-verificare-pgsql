@@ -1,61 +1,64 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
-	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<style type="text/css">
-		.container{
-			padding: 30px;
-		}
-		td{
-			padding-right: 10px;
-		}
-		h3{
-			font-size: 25px;
-		}
-		tr{
-			margin-bottom: 0px;
-		}
-	</style>
+  <title></title>
+  <%= stylesheet_link_tag "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" %>
+  <style type="text/css">
+    .container {
+      padding: 30px;
+    }
+
+    td {
+      padding-right: 10px;
+    }
+
+    h3 {
+      font-size: 25px;
+    }
+
+    tr {
+      margin-bottom: 0px;
+    }
+  </style>
 </head>
 <body>
-	<div class="container">
-		<div class="row">
-			<table>
-				<tr>
-					<td>
-						<h3>Username  </h3> 
-					</td>
-					<td>
-						<h3>	:  <%= @user %></h3>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<h3>Store  </h3> 
-					</td>
-					<td>
-						<h3>	:  <%= @store.name %></h3>
-					</td>
-				</tr>
-			</table>
-			<hr>
-		</div>
+<div class="container">
+  <div class="row">
+    <table>
+      <tr>
+        <td>
+          <h3>Username </h3>
+        </td>
+        <td>
+          <h3> :  <%= @user.username %></h3>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <h3>Store </h3>
+        </td>
+        <td>
+          <h3> :  <%= @store.name %></h3>
+        </td>
+      </tr>
+    </table>
+    <hr>
+  </div>
 
-		<% @visibilities.each do |visibility| %>
-		<div class="row">
-			<div class="col-md-4">
-				<img class="img-responsive" src="<%= visibility.visibility %>">
-			</div>
+  <% @visibilities.each do |visibility| %>
+      <div class="row">
+        <div class="col-md-4">
+          <%= image_tag visibility.visibility %>
+        </div>
 
-			<div class="col-md-8">
-				<h3><%= visibility.category %></h3>
-				<h3><%= visibility.created_at %></h3>
-			</div>
-		</div>
-		<hr>
-		<% end %>
+        <div class=" col-md-8">
+          <h3><%= visibility.category.humanize %></h3>
+          <h3><%= visibility.created_at %></h3>
+        </div>
+      </div>
+      <hr>
+  <% end %>
 
-	</div>
+</div>
 </body>
 </html>

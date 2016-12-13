@@ -18,15 +18,38 @@ class VisibilitiesController < ApplicationController
     if @visibilities.present? && store_data.present?
       render :index, status: :ok
     else
-      @message = @visibility.errors
-      render :error, status: :bad_request
+      @message = 'no visibility found'
+      render :error, status: :not_found
     end
   end
 
   def list_visibility_view
-    @user = current_user.username
+    # @user = current_user.username
+    @user = User.find(1)
     @store = Store.find(params.fetch(:store_id).to_i)
-    @visibilities = Visibility.where('user_id = ? AND created_at > ?', 1, 1.week.ago)
+    @visibilities = Visibility.where('user_id = ? AND created_at > ?', 1, 1.week.ago).order(:category, :created_at)
+    @deck = Powerpoint::Presentation.new
+
+    ppt_title = "Report for Store #{@store.name} by #{@user.username}"
+    ppt_subtitle = Time.now.to_date
+    @deck.add_intro ppt_title, ppt_subtitle
+
+    @visibilities.each do |visibility|
+      title = "Category: #{visibility.category.humanize}\nOn: #{visibility.created_at.to_date}"
+      image_path = "public#{visibility.visibility.url}"
+      @deck.add_pictorial_slide title, image_path
+    end
+    tmp_file = @deck.save("public/uploads/ppt/#{SecureRandom.uuid}.pptx")
+    if tmp_file.present?
+      send_file(tmp_file, filename: "#{@user.username}_#{@store.name.parameterize}.pptx", content_type: "application/vnd.openxmlformats-officedocument.presentationml.presentation")
+    else
+      @message = "unable to generate presentation file"
+      render :error, status: :internal_server_error
+    end
+
+
+    # pdf = WickedPdf.new.pdf_from_string(html)
+    # send_data(pdf, filename: "#{@user}_#{@store.name}_visibility_report_#{Time.now.to_date}", disposition: 'attachment')
   end
 
   # POST /visibilities

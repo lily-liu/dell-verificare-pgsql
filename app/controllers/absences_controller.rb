@@ -2,6 +2,16 @@ class AbsencesController < ApplicationController
   # before_action :set_absence, only: [:show]
   before_action :authenticate_user
 
+  def index
+    @absences = Absence.all
+    if @absences.present?
+      render :index, status: :ok
+    else
+      @message = "no absence found"
+      render :error, status: :not_found
+    end
+  end
+
   # POST /absences
   # POST /absences.json
   def create

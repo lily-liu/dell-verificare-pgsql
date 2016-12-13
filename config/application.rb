@@ -27,6 +27,9 @@ module DellVerificarePgsql
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
+    # for pdf
+    config.assets.enabled = true
+
     # allow cors for dev
     # config.middleware.insert_before 0, Rack::Cors do
     #   allow do
