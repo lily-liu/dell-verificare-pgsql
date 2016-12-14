@@ -42,3 +42,11 @@ bower.json
 
 # Ignore Byebug command history file.
 .byebug_history
+
+#ignore uploaded files folders
+/public/uploads/ppt/
+/public/uploads/issue_photo/
+/public/uploads/csv/
+/public/uploads/posm_visibility/
+/public/uploads/product_knowledge/
+/public/uploads/sellout_proof/

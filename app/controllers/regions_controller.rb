@@ -47,6 +47,11 @@ class RegionsController < ApplicationController
     @region.destroy
   end
 
+  def regions_csv_export
+    @export = Region.all.to_a
+    send_data(@export.to_csv(except: [:created_at, :updated_at, :deleted_at, :id]), type: 'text/csv: charset=utf-8; header=present', filename: "region-list-#{Time.now.to_date}.csv")
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_region

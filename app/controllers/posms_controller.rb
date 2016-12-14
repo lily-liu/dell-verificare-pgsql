@@ -1,5 +1,6 @@
 class PosmsController < ApplicationController
   before_action :set_posm, only: [:show, :update, :destroy]
+  before_action :authenticate_user
 
   # GET /posms
   # GET /posms.json

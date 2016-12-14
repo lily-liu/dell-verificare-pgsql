@@ -1,5 +1,6 @@
 class PosmStoreInventoriesController < ApplicationController
   before_action :set_posm_store_inventory, only: [:show, :update, :destroy]
+  before_action :authenticate_user
 
   # GET /posm_store_inventories
   # GET /posm_store_inventories.json

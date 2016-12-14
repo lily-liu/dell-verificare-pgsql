@@ -1,6 +1,6 @@
 class SellinsController < ApplicationController
   before_action :set_sellin, only: [:update]
-  # before_action :authenticate_user
+  before_action :authenticate_user
 
   # GET /sellins/list
   def index

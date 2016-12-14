@@ -44,6 +44,7 @@ gem 'one_signal'
 gem 'smarter_csv'
 gem 'to_csv-rails'
 
+# powerpoint export gem
 gem 'powerpoint'
 
 

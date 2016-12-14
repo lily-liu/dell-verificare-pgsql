@@ -1,5 +1,6 @@
 class VisibilitiesController < ApplicationController
   before_action :set_visibility, only: [:show, :update, :destroy]
+  before_action :authenticate_user
 
   # GET /visibilities
   # GET /visibilities.json
