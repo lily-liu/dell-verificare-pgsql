@@ -60,6 +60,12 @@ Rails.application.routes.draw do
   patch "users/update/:id", to: "users#update", defaults: {format: :json}
   delete "users/delete/:id", to: "users#destroy", defaults: {format: :json}
 
+  # routes for managers
+  get "managers/list", to: "managers#index", defaults: {format: :json}
+  post "managers/create", to: "managers#create", defaults: {format: :json}
+  patch "managers/update/:id", to: "managers#update", defaults: {format: :json}
+  delete "managers/delete/:id", to: "managers#destroy", defaults: {format: :json}
+
   # routes for Sellin
   get "sellins/list", to: "sellins#index", defaults: {format: :json}
   get "sellins/export", to: "sellins#sellin_csv_export", defaults: {format: :csv}

@@ -34,7 +34,8 @@ class UsersController < ApplicationController
     if @user.update(user_update_params)
       render :show, status: :ok
     else
-      render json: @user.errors, status: :unprocessable_entity
+      @message = @user.errors
+      render :error, status: :unprocessable_entity
     end
   end
 
