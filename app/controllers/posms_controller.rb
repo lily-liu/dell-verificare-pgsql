@@ -51,8 +51,6 @@ class PosmsController < ApplicationController
 
   def posm_per_category
     @report = Posm.select(:category,:quantity).group(:category).sum(:quantity)
-    asd = @report.keys
-    dsa = @report.values
     render json: @report, status: :ok
   end
 

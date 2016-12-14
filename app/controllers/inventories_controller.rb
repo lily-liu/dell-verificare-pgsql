@@ -78,6 +78,11 @@ class InventoriesController < ApplicationController
     render json: @report, status: :ok
   end
 
+  def inventories_each_cam_per_store
+    @report = Store.select(:name).joins(inventories: [{user: :manager}]).joins(:inventories).where(managers:{id: params.fetch(:manager_id).to_i}).group(:name).count
+    render :report, status: :ok
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_inventory

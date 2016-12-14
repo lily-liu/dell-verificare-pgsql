@@ -11,13 +11,15 @@ Rails.application.routes.draw do
   # route for sellout
   get "sellouts/list", to: "sellouts#index", defaults: {format: :json}
   get "sellouts/recap_cam", to: "sellouts#sellouts_per_cam", defaults: {format: :json}
+  get "sellouts/recap_store_cam/:manager_id", to: "sellouts#sellouts_each_cam_per_store", defaults: {format: :json}
   get "sellouts/recap_region", to: "sellouts#sellouts_per_region", defaults: {format: :json}
-  get "sellouts/recap_weeks/:manager_id", to: "sellouts#sellouts_each_cam_per_qw", defaults: {format: :json}
+  get "sellouts/recap_region_store/:region_id", to: "sellouts#sellouts_each_store_per_region", defaults: {format: :json}
   post "sellouts/create", to: "sellouts#create", defaults: {format: :json}
 
   # route for inventory
   get "inventories/list", to: "inventories#index", defaults: {format: :json}
   get "inventories/recap_cam", to: "inventories#inventories_per_cam", defaults: {format: :json}
+  get "inventories/recap_store_cam/:manager_id", to: "inventories#inventories_each_cam_per_store", defaults: {format: :json}
   post "inventories/create", to: "inventories#create", defaults: {format: :json}
 
   # route For product knowledge
@@ -71,7 +73,7 @@ Rails.application.routes.draw do
   get "regions/list", to: "regions#index", defaults: {format: :json}
 
   # route for visibility
-  get "visibilities/list_per_user_store/:store_id", to: "visibilities#list_visibility_per_user_and_store", defaults: {format: :json}
+  get "visibilities/list_per_user_store/:store_id/", to: "visibilities#list_visibility_per_user_and_store", defaults: {format: :json}
   get "visibilities/list_view/:store_id", to: "visibilities#list_visibility_view"
   post "visibilities/create", to: "visibilities#create", defaults: {format: :json}
 

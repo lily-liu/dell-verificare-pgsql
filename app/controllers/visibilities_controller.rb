@@ -25,7 +25,7 @@ class VisibilitiesController < ApplicationController
 
   def list_visibility_view
     # @user = current_user.username
-    @user = User.find(1)
+    @user = User.find(params.fetch(:user_id).to_i)
     @store = Store.find(params.fetch(:store_id).to_i)
     @visibilities = Visibility.where('user_id = ? AND created_at > ?', 1, 1.week.ago).order(:category, :created_at)
     @deck = Powerpoint::Presentation.new
@@ -96,7 +96,7 @@ class VisibilitiesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def visibility_params
-    params.permit(:category, :visibility, :remark, :store_id)
+    params.permit(:category, :visibility, :remark, :store_id, :user_id)
     issue_data = {
         category: params.fetch(:category).to_i,
         remark: params.fetch(:remark, nil).to_s,

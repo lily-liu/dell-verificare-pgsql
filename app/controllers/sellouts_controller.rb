@@ -96,19 +96,24 @@ class SelloutsController < ApplicationController
     end
   end
 
-  def sellouts_each_cam_per_qw
-    @report = Manager.select(:quarter_week).joins(users: :sellouts).where(id: params.fetch(:manager_id).to_i).group(:quarter_week).count
-    render json: @report, status: :ok
+  def sellouts_each_cam_per_store
+    @report = Store.select(:name).joins(sellouts: [{user: :manager}]).joins(:sellouts).where(managers:{id: params.fetch(:manager_id).to_i}).group(:name).count
+    render :report, status: :ok
   end
 
   def sellouts_per_cam
     @report = Manager.select(:name).joins(users: :sellouts).group(:name).count
-    render json: @report, status: :ok
+    render :report, status: :ok
   end
 
   def sellouts_per_region
     @report = Region.select(:name).joins(cities: [{stores: :sellouts}]).group(:name).count
-    render json: @report, status: :ok
+    render :report, status: :ok
+  end
+
+  def sellouts_each_store_per_region
+    @report = Store.select(:name).joins(:sellouts).joins(city: :region).where(regions: {id: params.fetch(:region_id).to_i}).group(:name).count
+    render :report, status: :ok
   end
 
   private
@@ -119,7 +124,7 @@ class SelloutsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def sellout_params
-    params.permit(:service_tag, :price_idr, :price_usd, :proof, :store_id, :sold_by)
+    params.permit(:service_tag, :price_idr, :price_usd, :proof, :store_id, :sold_by, :region_id, :manager_id)
     user_data = {
         service_tag: params.fetch(:service_tag).to_s,
         price_idr: params.fetch(:price_idr, 0).to_f,

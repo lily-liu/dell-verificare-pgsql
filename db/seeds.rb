@@ -104,8 +104,18 @@ Region.create!(
     position: 1
 )
 
+Region.create!(
+    name: 'Jabodetabek2',
+    position: 1
+)
+
 City.create!(
     name: 'Jakarta',
+    region_id: 1
+)
+
+City.create!(
+    name: 'Bandung',
     region_id: 1
 )
 
@@ -116,6 +126,7 @@ Store.create!(
     address: 'Cilandak, Jakarta selatan',
     phone: '081281821',
     email: 'store@email.com',
+    level: 0,
     store_owner: 'owner1',
     store_building: 'gedung mangdu',
     store_category: 1
@@ -127,6 +138,7 @@ Store.create!(
     name: 'Genius NBC',
     address: 'Cilandak, Jakarta selatan',
     phone: '081281821',
+    level: 1,
     email: 'store@email.com',
     store_owner: 'owner1',
     store_building: 'gedung mangdu',
@@ -136,6 +148,7 @@ Store.create!(
     store_uid: "STR-1445",
     city_id: 1,
     name: 'HnD Computer 1',
+    level: 2,
     address: 'Cilandak, Jakarta selatan',
     phone: '081281821',
     email: 'store@email.com',
@@ -145,8 +158,9 @@ Store.create!(
 )
 Store.create!(
     store_uid: "STR-3913",
-    city_id: 1,
+    city_id: 2,
     name: 'HnD Computer 2',
+    level: 0,
     address: 'Cilandak, Jakarta selatan',
     phone: '081281821',
     email: 'store@email.com',
@@ -156,8 +170,9 @@ Store.create!(
 )
 Store.create!(
     store_uid: "STR-1208",
-    city_id: 1,
+    city_id: 2,
     name: 'Amunisi Com',
+    level: 1,
     address: 'Cilandak, Jakarta selatan',
     phone: '081281821',
     email: 'store@email.com',
@@ -167,8 +182,9 @@ Store.create!(
 )
 Store.create!(
     store_uid: "STR-530",
-    city_id: 1,
+    city_id: 2,
     name: 'Celebes Computer Centre',
+    level: 2,
     address: 'Cilandak, Jakarta selatan',
     phone: '081281821',
     email: 'store@email.com',
