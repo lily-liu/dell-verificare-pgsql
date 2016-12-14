@@ -74,10 +74,14 @@ Rails.application.routes.draw do
 
   # route for cities
   get "cities/list", to: "cities#index", defaults: {format: :json}
+  get "cities/export", to: "cities#cities_csv_export", defaults: {format: :json}
   post "cities/create", to: "cities#create", defaults: {format: :json}
+
 
   # route for region
   get "regions/list", to: "regions#index", defaults: {format: :json}
+  get "regions/export", to: "regions#regions_csv_export", defaults: {format: :json}
+
 
   # route for visibility
   get "visibilities/list_per_user_store", to: "visibilities#list_visibility_per_user_and_store", defaults: {format: :json}
