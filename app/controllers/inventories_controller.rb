@@ -28,11 +28,6 @@ class InventoriesController < ApplicationController
     if sellin_data.present? && store_data.present?
       @inventory = Inventory.new(inventory_params)
       @inventory.status = 0
-      if params[:added_by].present?
-        @inventory.sold_by = User.find(params.fetch(:added_by, nil).to_i)
-      else
-        @inventory.added_by = current_user
-      end
       @inventory.user = current_user
       @inventory.sellin = sellin_data
       @inventory.store = store_data

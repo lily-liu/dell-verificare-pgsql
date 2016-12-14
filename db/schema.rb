@@ -67,7 +67,6 @@ ActiveRecord::Schema.define(version: 20161202042759) do
   create_table "inventories", force: :cascade do |t|
     t.string   "service_tag",             null: false
     t.integer  "status",      default: 0
-    t.integer  "added_by",                null: false
     t.integer  "sellin_id"
     t.integer  "store_id"
     t.integer  "user_id"
@@ -181,7 +180,6 @@ ActiveRecord::Schema.define(version: 20161202042759) do
 
   create_table "sellouts", force: :cascade do |t|
     t.string   "service_tag",  null: false
-    t.integer  "sold_by",      null: false
     t.integer  "user_id"
     t.integer  "inventory_id"
     t.integer  "store_id"
@@ -258,7 +256,6 @@ ActiveRecord::Schema.define(version: 20161202042759) do
   add_foreign_key "inventories", "sellins"
   add_foreign_key "inventories", "stores"
   add_foreign_key "inventories", "users"
-  add_foreign_key "inventories", "users", column: "added_by"
   add_foreign_key "issues", "stores"
   add_foreign_key "issues", "users"
   add_foreign_key "managers", "managers", column: "parent_id"
@@ -272,7 +269,6 @@ ActiveRecord::Schema.define(version: 20161202042759) do
   add_foreign_key "sellouts", "inventories"
   add_foreign_key "sellouts", "stores"
   add_foreign_key "sellouts", "users"
-  add_foreign_key "sellouts", "users", column: "sold_by"
   add_foreign_key "stores", "cities"
   add_foreign_key "users", "managers"
   add_foreign_key "visibilities", "stores"

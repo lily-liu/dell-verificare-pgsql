@@ -34,11 +34,6 @@ class SelloutsController < ApplicationController
         @sellout.store = store_data
         @sellout.inventory = inventory_data
         @sellout.user = current_user
-        if params[:sold_by].present?
-          @sellout.sold_by = User.find(params.fetch(:sold_by, nil).to_i)
-        else
-          @sellout.sold_by = current_user
-        end
         @sellout.quarter_year = current_quarter_year(sales_time)
         @sellout.quarter = current_quarter_months(sales_time)
         @sellout.quarter_week = current_quarter_week(sales_time)
@@ -97,7 +92,7 @@ class SelloutsController < ApplicationController
   end
 
   def sellouts_each_cam_per_store
-    @report = Store.select(:name).joins(sellouts: [{user: :manager}]).joins(:sellouts).where(managers:{id: params.fetch(:manager_id).to_i}).group(:name).count
+    @report = Store.select(:name).joins(sellouts: [{user: :manager}]).joins(:sellouts).where(managers: {id: params.fetch(:manager_id).to_i}).group(:name).count
     render :report, status: :ok
   end
 
@@ -114,6 +109,12 @@ class SelloutsController < ApplicationController
   def sellouts_each_store_per_region
     @report = Store.select(:name).joins(:sellouts).joins(city: :region).where(regions: {id: params.fetch(:region_id).to_i}).group(:name).count
     render :report, status: :ok
+  end
+
+  def sellout_report_export_csv
+    @export = Sellout.joins([:store, {user: :manager}])
+    render json: @export, status: :ok
+    # send_data(@export.to_csv(except: [:created_at, :updated_at, :deleted_at, :id]), type: 'text/csv: charset=utf-8; header=present', filename: "report-sellouts-#{Time.now.to_date}.csv")
   end
 
   private

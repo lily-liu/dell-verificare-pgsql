@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get "sellouts/recap_store_cam", to: "sellouts#sellouts_each_cam_per_store", defaults: {format: :json}
   get "sellouts/recap_region", to: "sellouts#sellouts_per_region", defaults: {format: :json}
   get "sellouts/recap_region_store", to: "sellouts#sellouts_each_store_per_region", defaults: {format: :json}
+  get "sellouts/export", to: "sellouts#sellout_report_export_csv"
   post "sellouts/create", to: "sellouts#create", defaults: {format: :json}
 
   # route for inventory
@@ -49,7 +50,7 @@ Rails.application.routes.draw do
   get "stores/list", to: "stores#list_stores", defaults: {format: :json}
   get "dealers/list", to: "stores#list_dealers", defaults: {format: :json}
   get "distributors/list", to: "stores#list_distributors", defaults: {format: :json}
-  get "stores/export", to: "stores#stores_csv_export", defaults: {format: :json}
+  get "stores/export", to: "stores#stores_csv_export"
   patch "stores/update/:id", to: "stores#update", defaults: {format: :json}
   post "stores/create", to: "stores#create", defaults: {format: :json}
   delete "stores/delete/:id", to: "stores#destroy", defaults: {format: :json}
@@ -68,24 +69,24 @@ Rails.application.routes.draw do
 
   # routes for Sellin
   get "sellins/list", to: "sellins#index", defaults: {format: :json}
-  get "sellins/export", to: "sellins#sellin_csv_export", defaults: {format: :csv}
+  get "sellins/export", to: "sellins#sellin_csv_export"
   post "sellins/import", to: "sellins#input_sellin_from_csv", defaults: {format: :json}
   patch "sellins/update/:id", to: "sellins#update", defaults: {format: :json}
 
   # route for cities
   get "cities/list", to: "cities#index", defaults: {format: :json}
-  get "cities/export", to: "cities#cities_csv_export", defaults: {format: :json}
+  get "cities/export", to: "cities#cities_csv_export"
   post "cities/create", to: "cities#create", defaults: {format: :json}
 
 
   # route for region
   get "regions/list", to: "regions#index", defaults: {format: :json}
-  get "regions/export", to: "regions#regions_csv_export", defaults: {format: :json}
+  get "regions/export", to: "regions#regions_csv_export"
 
 
   # route for visibility
   get "visibilities/list_per_user_store", to: "visibilities#list_visibility_per_user_and_store", defaults: {format: :json}
-  get "visibilities/recap_per_user_store", to: "visibilities#list_visibility_view"
+  get "visibilities/export_recap", to: "visibilities#list_visibility_view"
   post "visibilities/create", to: "visibilities#create", defaults: {format: :json}
 
   # route for conflicted items
