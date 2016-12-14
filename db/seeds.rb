@@ -193,6 +193,22 @@ Store.create!(
     store_category: 2
 )
 
+Absence.create!(
+    absence_type: 1,
+    user_id: 1,
+    store_id: 1,
+    latitude: 3.22,
+    longitude: 3.154
+)
+
+Absence.create!(
+    absence_type: 2,
+    user_id: 2,
+    store_id: 2,
+    latitude: 3.22,
+    longitude: 3.154
+)
+
 Sellin.create!(
     service_tag: "4TB8J52",
     quarter_year: 2015,
@@ -203,6 +219,7 @@ Sellin.create!(
     product_type: "3437-i34010-4-500-UBT-D",
     target_store: 1
 )
+
 Sellin.create!(
     service_tag: "HHH0L52",
     quarter_year: 2015,
@@ -213,6 +230,7 @@ Sellin.create!(
     product_type: "3437-i34010-4-500-UBT-D",
     target_store: 1
 )
+
 Sellin.create!(
     service_tag: "H8D9J52",
     quarter_year: 2015,
@@ -223,6 +241,7 @@ Sellin.create!(
     product_type: "3437-i34010-4-500-UBT-D",
     target_store: 1
 )
+
 Sellin.create!(
     service_tag: "DQB8J52",
     quarter_year: 2015,
@@ -233,6 +252,7 @@ Sellin.create!(
     product_type: "3437-i34010-4-500-UBT-D",
     target_store: 1
 )
+
 Sellin.create!(
     service_tag: "42QVK52",
     quarter_year: 2015,
@@ -243,6 +263,7 @@ Sellin.create!(
     product_type: "3437-i34010-4-500-UBT-D",
     target_store: 1
 )
+
 Sellin.create!(
     service_tag: "DFC9J52",
     quarter_year: 2015,
@@ -253,6 +274,7 @@ Sellin.create!(
     product_type: "3437-i34010-4-500-UBT-D",
     target_store: 1
 )
+
 Sellin.create!(
     service_tag: "4YPVK52",
     quarter_year: 2015,
@@ -353,5 +375,36 @@ Visibility.create!(
     remark: "v2",
     category: 0,
     visibility: File.open(Rails.root + "public/uploads/kona.jpg")
+)
+
+SellKit.create!(
+    name: "nyan1",
+    description: "asdasd",
+    file_name: File.open(Rails.root + "public/uploads/pdf.pdf"),
+    category: 0,
+    family: 0
+)
+
+SellKit.create!(
+    name: "nyan2",
+    description: "dsadsa",
+    file_name: File.open(Rails.root + "public/uploads/pdf.pdf"),
+    category: 1,
+    family: 1
+)
+
+Post.create!(
+    title: "test1",
+    content: "testing pertama",
+    user_id: 1,
+    level: 0
+)
+
+Post.create!(
+    title: "comment1",
+    content: "testing pertama comment",
+    user_id: 2,
+    level: 1,
+    parent_id: 1
 )
 
