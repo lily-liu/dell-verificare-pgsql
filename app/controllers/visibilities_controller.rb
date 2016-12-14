@@ -14,7 +14,7 @@ class VisibilitiesController < ApplicationController
 
   def list_visibility_per_user_and_store
     store_data = Store.find(params.fetch(:store_id).to_i)
-    @visibilities = Visibility.where('user_id = ? AND created_at > ? AND store_id = ?', current_user.id, 1.week.ago, store_data.id)
+    @visibilities = Visibility.where('user_id = ? AND created_at > ? AND store_id = ?', params.fetch(:user_id).to_i, 1.week.ago, store_data.id)
     if @visibilities.present? && store_data.present?
       render :index, status: :ok
     else
