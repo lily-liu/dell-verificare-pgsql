@@ -28,10 +28,9 @@ class PosmsController < ApplicationController
       render :show, status: :created
     else
       @message = @posm.errors
-      render :error, status: :internal_server_error
+      render :error, status: :unprocessable_entity
     end
   end
-
 
 
   # PATCH/PUT /posms/1
@@ -40,7 +39,8 @@ class PosmsController < ApplicationController
     if @posm.update(posm_params)
       render :show, status: :ok
     else
-      render json: @posm.errors, status: :unprocessable_entity
+      @message = @posm.errors
+      render :error, status: :unprocessable_entity
     end
   end
 
@@ -51,8 +51,12 @@ class PosmsController < ApplicationController
   end
 
   def posm_per_category
-    @report = Posm.select(:category,:quantity).group(:category).sum(:quantity)
-    render json: @report, status: :ok
+    @report = Posm.group(:category).sum(:quantity)
+    @categories = []
+    @report.keys.each do |key|
+      @categories << Posm.categories.keys[key]
+    end
+    render :report, status: :ok
   end
 
   private
