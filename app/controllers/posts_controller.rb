@@ -36,7 +36,7 @@ class PostsController < ApplicationController
   # POST /posts/:id/create_comment
   def create_comment
     @post = Post.new(post_params)
-    @post.post = Post.find(params.fetch(:parent_id))
+    @post.parent = Post.find(params.fetch(:parent_id))
     @post.user = current_user
     @post.level = 1
 

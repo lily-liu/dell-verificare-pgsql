@@ -28,7 +28,7 @@ module DellVerificarePgsql
     config.api_only = true
 
     # for pdf
-    config.assets.enabled = true
+    # config.assets.enabled = true
 
     # allow cors for dev
     # config.middleware.insert_before 0, Rack::Cors do
