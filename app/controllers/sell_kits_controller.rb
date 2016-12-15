@@ -8,7 +8,7 @@ class SellKitsController < ApplicationController
     category = params.fetch(category, nil).to_i
     family = params.fetch(family, nil).to_i
     if category.present? && family.present?
-      @sellkit = SellKit.where("category = ? AND family = ?", category, family)
+      @sell_kits = SellKit.where("category = ? AND family = ?", category, family)
       render :index, status: :ok
     else
       @message = "no category or family match"
