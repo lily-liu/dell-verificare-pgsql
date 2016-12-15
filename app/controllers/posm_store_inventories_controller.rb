@@ -29,6 +29,7 @@ class PosmStoreInventoriesController < ApplicationController
     if posm_data.present? && store_data.present?
       @posm_store_inventory.store = store_data
       @posm_store_inventory.posm = posm_data
+      @posm_store_inventory.user = current_user
 
       if @posm_store_inventory.save
         render :show, status: :created
@@ -68,9 +69,10 @@ class PosmStoreInventoriesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def posm_store_inventory_params
-    params.permit(:posm_id, :quantity, :store_id)
+    params.permit(:posm_id, :quantity, :store_id, :visibility)
     issue_data = {
-        quantity: params.fetch(:quantity).to_i
+        quantity: params.fetch(:quantity).to_i,
+        visibility: params.fetch(:visibility)
     }
   end
 end
