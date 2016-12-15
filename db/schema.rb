@@ -182,7 +182,7 @@ ActiveRecord::Schema.define(version: 20161202042759) do
   create_table "sellouts", force: :cascade do |t|
     t.string   "service_tag",  null: false
     t.integer  "user_id"
-    t.integer  "sold_by"
+    t.integer  "added_by"
     t.integer  "inventory_id"
     t.integer  "store_id"
     t.integer  "quarter_year", null: false
@@ -272,7 +272,7 @@ ActiveRecord::Schema.define(version: 20161202042759) do
   add_foreign_key "sellouts", "inventories"
   add_foreign_key "sellouts", "stores"
   add_foreign_key "sellouts", "users"
-  add_foreign_key "sellouts", "users", column: "sold_by"
+  add_foreign_key "sellouts", "users", column: "added_by"
   add_foreign_key "stores", "cities"
   add_foreign_key "users", "managers"
   add_foreign_key "visibilities", "stores"

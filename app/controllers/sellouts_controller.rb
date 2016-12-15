@@ -34,8 +34,8 @@ class SelloutsController < ApplicationController
         @sellout.store = store_data
         @sellout.inventory = inventory_data
         @sellout.user = current_user
-        if params[:sold_by].present?
-          @sellout.sold_by = User.find(params[:added_by])
+        if params[:added_by].present?
+          @sellout.sold_by = User.find(params.fetch(:added_by).to_i)
         end
         @sellout.quarter_year = current_quarter_year(sales_time)
         @sellout.quarter = current_quarter_months(sales_time)
@@ -130,7 +130,7 @@ class SelloutsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def sellout_params
-    params.permit(:service_tag, :price_idr, :price_usd, :proof, :store_id, :sold_by, :region_id, :manager_id)
+    params.permit(:service_tag, :price_idr, :price_usd, :proof, :store_id, :sold_by, :region_id, :manager_id, :added_by)
     user_data = {
         service_tag: params.fetch(:service_tag).to_s,
         price_idr: params.fetch(:price_idr, 0).to_f,
