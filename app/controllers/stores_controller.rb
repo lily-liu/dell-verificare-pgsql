@@ -39,6 +39,16 @@ class StoresController < ApplicationController
     send_data(@export.to_csv(except: [:created_at, :updated_at, :deleted_at, :id]), type: 'text/csv: charset=utf-8; header=present', filename: "store-list-#{Time.now.to_date}.csv")
   end
 
+  def list_store_levels
+    @levels = Store.levels
+    render :level, status: :ok
+  end
+
+  def list_store_categories
+    @levels = Store.store_categories
+    render :level, status: :ok
+  end
+
   # GET /stores/1
   # GET /stores/1.json
   def show

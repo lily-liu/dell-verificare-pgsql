@@ -113,6 +113,8 @@ class SelloutsController < ApplicationController
 
   def sellout_report_export_csv
     @export = Sellout.joins([:store, {user: :manager}])
+                  .joins(store: [{city: :region}])
+                  .select('sellouts.created_at AS transaction_date, stores.store_uid, stores.name AS store_name, stores.store_category, stores.store_building AS building_name, managers.name AS cam_name, users.name AS promoter_name, regions.name AS region_name')
     render json: @export, status: :ok
     # send_data(@export.to_csv(except: [:created_at, :updated_at, :deleted_at, :id]), type: 'text/csv: charset=utf-8; header=present', filename: "report-sellouts-#{Time.now.to_date}.csv")
   end
