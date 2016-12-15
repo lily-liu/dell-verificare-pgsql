@@ -29,6 +29,11 @@ class InventoriesController < ApplicationController
       @inventory = Inventory.new(inventory_params)
       @inventory.status = 0
       @inventory.user = current_user
+      if params[:added_by].present?
+        @inventory.added_by = User.find(params[:added_by])
+      else
+        @inventory.added_by = current_user
+      end
       @inventory.sellin = sellin_data
       @inventory.store = store_data
       begin

@@ -408,3 +408,12 @@ Post.create!(
     parent_id: 1
 )
 
+Inventory.create!(
+    service_tag: "4TB8J52",
+    status: 0,
+    sellin_id: 1,
+    store_id: 1,
+    user_id: 1,
+    added_by: User.find(1)
+)
+
