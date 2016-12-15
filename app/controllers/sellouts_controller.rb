@@ -36,8 +36,6 @@ class SelloutsController < ApplicationController
         @sellout.user = current_user
         if params[:sold_by].present?
           @sellout.sold_by = User.find(params[:added_by])
-        else
-          @sellout.sold_by = current_user
         end
         @sellout.quarter_year = current_quarter_year(sales_time)
         @sellout.quarter = current_quarter_months(sales_time)

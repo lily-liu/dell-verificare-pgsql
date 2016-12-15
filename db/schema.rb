@@ -69,7 +69,7 @@ ActiveRecord::Schema.define(version: 20161202042759) do
     t.integer  "status",      default: 0
     t.integer  "sellin_id"
     t.integer  "store_id"
-    t.integer  "added_by",                null: false
+    t.integer  "added_by"
     t.integer  "user_id"
     t.datetime "deleted_at"
     t.datetime "created_at",              null: false
@@ -182,7 +182,7 @@ ActiveRecord::Schema.define(version: 20161202042759) do
   create_table "sellouts", force: :cascade do |t|
     t.string   "service_tag",  null: false
     t.integer  "user_id"
-    t.integer  "sold_by",      null: false
+    t.integer  "sold_by"
     t.integer  "inventory_id"
     t.integer  "store_id"
     t.integer  "quarter_year", null: false
