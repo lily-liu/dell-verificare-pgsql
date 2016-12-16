@@ -64,7 +64,7 @@ class ManagersController < ApplicationController
     params.permit(:name, :level, :parent_id)
     user_data = {
         level: params.fetch(:level, 0).to_i,
-        parent_id: params.fetch(:parent_id, 0).to_i,
+        parent_id: params.fetch(:parent_id, nil),
         name: params.fetch(:name).to_s,
     }
   end
