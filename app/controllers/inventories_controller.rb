@@ -73,8 +73,7 @@ class InventoriesController < ApplicationController
 
   def inventories_per_cam
     @report = Manager.select(:name).joins(users: :inventories).group(:name).count
-    render json: @report, status: :ok
-  end
+    render :report, status: :ok  end
 
   def inventories_each_cam_per_store
     @report = Store.select(:name).joins(inventories: [{user: :manager}]).joins(:inventories).where(managers:{id: params.fetch(:manager_id).to_i}).group(:name).count
