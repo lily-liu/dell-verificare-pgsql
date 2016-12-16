@@ -1,5 +1,5 @@
 class Store < ApplicationRecord
-  enum level: [:distributor, :master_dealer, :store]
+  enum level: [:distributor, :master_dealer, :normal_store]
   enum store_category: [:non_mft, :dell_corner, :dell_signage, :dell_exclusive_store]
   has_many :absences, dependent: :nullify
   has_many :sellouts, dependent: :nullify
