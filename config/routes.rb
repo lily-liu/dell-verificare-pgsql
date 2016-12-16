@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get "sellouts/recap_region_store", to: "sellouts#sellouts_each_store_per_region", defaults: {format: :json}
   get "sellouts/export", to: "sellouts#sellout_report_export_csv", defaults: {format: :csv}
   post "sellouts/create", to: "sellouts#create", defaults: {format: :json}
+  patch "sellouts/update/:id", to: "sellouts#update", defaults: {format: :json}
 
   # route for inventory
   get "inventories/list", to: "inventories#index", defaults: {format: :json}
@@ -51,11 +52,11 @@ Rails.application.routes.draw do
   get "dealers/list", to: "stores#list_dealers", defaults: {format: :json}
   get "distributors/list", to: "stores#list_distributors", defaults: {format: :json}
   get "stores/export", to: "stores#stores_csv_export", defaults: {format: :csv}
+  get "stores/list_level", to: "stores#list_store_levels", defaults: {format: :json}
+  get "stores/list_category", to: "stores#list_store_categories", defaults: {format: :json}
   patch "stores/update/:id", to: "stores#update", defaults: {format: :json}
   post "stores/create", to: "stores#create", defaults: {format: :json}
   delete "stores/delete/:id", to: "stores#destroy", defaults: {format: :json}
-  get "stores/list_level", to: "stores#list_store_levels", defaults: {format: :json}
-  get "stores/list_category", to: "stores#list_store_categories", defaults: {format: :json}
 
 
   # routes for users

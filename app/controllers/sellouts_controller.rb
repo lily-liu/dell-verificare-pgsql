@@ -71,8 +71,8 @@ class SelloutsController < ApplicationController
   # PATCH/PUT /sellouts/1
   # PATCH/PUT /sellouts/1.json
   def update
-    if @sellout.update(sellout_params)
-      render :show, status: :ok, location: @sellout
+    if @sellout.update(update_sellout_params)
+      render :show, status: :ok
     else
       render json: @sellout.errors, status: :unprocessable_entity
     end
@@ -135,6 +135,13 @@ class SelloutsController < ApplicationController
         service_tag: params.fetch(:service_tag).to_s,
         price_idr: params.fetch(:price_idr, 0).to_f,
         price_usd: params.fetch(:price_usd, 0).to_f,
+        proof: params.fetch(:proof, nil)
+    }
+  end
+
+  def update_sellout_params
+    params.permit(:proof)
+    user_data = {
         proof: params.fetch(:proof, nil)
     }
   end
