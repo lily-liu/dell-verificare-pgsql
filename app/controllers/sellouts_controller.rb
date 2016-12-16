@@ -1,5 +1,5 @@
 class SelloutsController < ApplicationController
-  # before_action :set_sellout, only: [:show, :update, :destroy]
+  before_action :set_sellout, only: [:show, :update, :destroy]
   before_action :authenticate_user
 
 
