@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 
   # GET /users/list
   def index
-    @users = User.where(level: [2,3,4,5])
+    @users = User.where(level: [2, 3, 4, 5])
     if @users.present?
       render :index, status: :ok
     else
@@ -20,11 +20,14 @@ class UsersController < ApplicationController
   # POST /users/create
   def create
     @user = User.new(user_params)
-
-    if @user.save
+    begin
+      @user.save
       render :show, status: :created
-    else
-      @message = @user.errors
+    rescue ActiveRecord::RecordNotUnique
+      @message = "email or username already used"
+      render :error, status: :unprocessable_entity
+    rescue StandardError => e
+      @message = e
       render :error, status: :unprocessable_entity
     end
   end
