@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 
   # GET /users/list
   def index
-    @users = User.where("Level = ? OR Level = ? OR Level = ?", 2, 3, 4)
+    @users = User.where(level: [2,3,4,5])
     if @users.present?
       render :index, status: :ok
     else
