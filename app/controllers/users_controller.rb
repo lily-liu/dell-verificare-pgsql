@@ -54,6 +54,11 @@ class UsersController < ApplicationController
     render :level, status: :ok
   end
 
+  def list_user_genders
+    @levels = User.genders
+    render :level, status: :ok
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_user
