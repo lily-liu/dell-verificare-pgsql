@@ -28,9 +28,11 @@ class InventoriesController < ApplicationController
     if sellin_data.present? && store_data.present?
       @inventory = Inventory.new(inventory_params)
       @inventory.status = 0
-      @inventory.user = current_user
       if params[:added_by].present?
-        @inventory.added_by = User.find(params.fetch(:added_by).to_i)
+        @inventory.user = User.find(params.fetch(:added_by).to_i)
+        @inventory.added_by = current_user
+      else
+        @inventory.user = current_user
       end
       @inventory.sellin = sellin_data
       @inventory.store = store_data
@@ -73,10 +75,11 @@ class InventoriesController < ApplicationController
 
   def inventories_per_cam
     @report = Manager.select(:name).joins(users: :inventories).group(:name).count
-    render :report, status: :ok  end
+    render :report, status: :ok
+  end
 
   def inventories_each_cam_per_store
-    @report = Store.select(:name).joins(inventories: [{user: :manager}]).joins(:inventories).where(managers:{id: params.fetch(:manager_id).to_i}).group(:name).count
+    @report = Store.select(:name).joins(inventories: [{user: :manager}]).joins(:inventories).where(managers: {id: params.fetch(:manager_id).to_i}).group(:name).count
     render :report, status: :ok
   end
 

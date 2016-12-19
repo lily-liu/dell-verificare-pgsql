@@ -44,12 +44,6 @@ class AbsencesController < ApplicationController
     end
   end
 
-  def asd
-    existing_absence_in = Absence.where("created_at > ? AND absence_type = ? AND user_id = ? AND store_id = ?", 2.hour.ago, 1, params.fetch(:user_id), params.fetch(:store_id))
-    existing_absence_out = Absence.where("created_at > ? AND absence_type = ? AND user_id = ? AND store_id = ?", 2.hour.ago, 2, params.fetch(:user_id), params.fetch(:store_id))
-    render json: existing_absence_in.present?
-  end
-
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_absence

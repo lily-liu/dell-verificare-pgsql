@@ -36,7 +36,7 @@ class StoresController < ApplicationController
 
   def stores_csv_export
     @export = Store.all.to_a
-    send_data(@export.to_csv(except: [:created_at, :updated_at, :deleted_at, :id]), type: 'text/csv: charset=utf-8; header=present', filename: "store-list-#{Time.now.to_date}.csv")
+    send_data(@export.to_csv(except: [:created_at, :updated_at, :deleted_at]), type: 'text/csv', filename: "store-list-#{Time.now.to_date}.csv")
   end
 
   def list_store_levels

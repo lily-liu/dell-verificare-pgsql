@@ -1,6 +1,6 @@
 class SelloutsController < ApplicationController
   before_action :set_sellout, only: [:show, :update, :destroy]
-  before_action :authenticate_user
+  # before_action :authenticate_user
 
 
   # GET /sellouts
@@ -33,9 +33,11 @@ class SelloutsController < ApplicationController
         sales_time = Time.now
         @sellout.store = store_data
         @sellout.inventory = inventory_data
-        @sellout.user = current_user
         if params[:added_by].present?
-          @sellout.sold_by = User.find(params.fetch(:added_by).to_i)
+          @sellout.user = User.find(params.fetch(:added_by).to_i)
+          @sellout.added_by = current_user
+        else
+          @sellout.user = current_user
         end
         @sellout.quarter_year = current_quarter_year(sales_time)
         @sellout.quarter = current_quarter_months(sales_time)
@@ -117,9 +119,11 @@ class SelloutsController < ApplicationController
   def sellout_report_export_csv
     @export = Sellout.joins([:store, {user: :manager}])
                   .joins(store: [{city: :region}])
-                  .select('sellouts.created_at AS transaction_date, stores.store_uid, stores.name AS store_name, stores.store_category, stores.store_building AS building_name, managers.name AS cam_name, users.name AS promoter_name, regions.name AS region_name')
-    render json: @export, status: :ok
-    # send_data(@export.to_csv(except: [:created_at, :updated_at, :deleted_at, :id]), type: 'text/csv: charset=utf-8; header=present', filename: "report-sellouts-#{Time.now.to_date}.csv")
+                  .joins(inventory: :sellin)
+                  .select('sellouts.created_at AS transaction_date, stores.store_uid, stores.name AS store_name, stores.store_category, stores.store_building AS building_name, stores.address AS store_address, stores.phone AS store_phone, stores.email AS store_email, stores.store_owner, managers.name AS cam_name, users.name AS pic_name, users.level AS user_level, regions.name AS region_name, regions.position AS region, cities.name AS city_name, sellins.service_tag, sellins.part_number, sellins.product_type, sellins.product_name, sellins.source_store AS distributor, sellins.target_store AS master_dealer, sellouts.quarter_year, sellouts.quarter, sellouts.quarter_week')
+    csv_data = ReportBuilder.build(@export)
+    # render json: asd, status: :ok
+    send_data(csv_data, type: 'text/csv', filename: "report-sellouts-#{Time.now.to_date}.csv")
   end
 
   private
