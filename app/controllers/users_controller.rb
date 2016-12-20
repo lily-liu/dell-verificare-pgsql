@@ -92,7 +92,6 @@ class UsersController < ApplicationController
         name: params.fetch(:name).to_s,
         email: params.fetch(:email).to_s,
         phone: params.fetch(:phone).to_s,
-        gender: params.fetch(:gender).to_i
     }
   end
 end
