@@ -1,5 +1,5 @@
 class SellinsController < ApplicationController
-  before_action :set_sellin, only: [:update]
+  before_action :set_sellin, only: [:update, :show]
   before_action :authenticate_user
 
   # GET /sellins/list
@@ -11,6 +11,11 @@ class SellinsController < ApplicationController
       @message = "no sellin found"
       render :error, status: :not_found
     end
+  end
+
+  def search_service_tag
+    @sellins = Sellin.where('service_tag LIKE ? OR service_tag LIKE ? OR service_tag LIKE ? OR service_tag LIKE ?', "%#{params[:q]}%", "#{params[:q]}%", "%#{params[:q]}", params[:q])
+    render :index, status: :ok
   end
 
   # # GET /sellins/:id

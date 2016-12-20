@@ -59,7 +59,6 @@ Rails.application.routes.draw do
   patch "stores/update/:id", to: "stores#update", defaults: {format: :json}
   post "stores/create", to: "stores#create", defaults: {format: :json}
   delete "stores/delete/:id", to: "stores#destroy", defaults: {format: :json}
-  delete "stores/:id", to: "stores#show", defaults: {format: :json}
 
 
   # routes for users
@@ -73,21 +72,23 @@ Rails.application.routes.draw do
 
   # routes for managers
   get "managers/list", to: "managers#index", defaults: {format: :json}
-  get "managers/:id", to: "managers#show", defaults: {format: :json}
   post "managers/create", to: "managers#create", defaults: {format: :json}
+  get "managers/:id", to: "managers#show", defaults: {format: :json}
   patch "managers/update/:id", to: "managers#update", defaults: {format: :json}
   delete "managers/delete/:id", to: "managers#destroy", defaults: {format: :json}
 
   # routes for Sellin
   get "sellins/list", to: "sellins#index", defaults: {format: :json}
   get "sellins/export", to: "sellins#sellin_csv_export"
+  get "sellins/search", to: "sellins#search_service_tag", defaults: {format: :json}
+  get "sellins/:id", to: "sellins#show", defaults: {format: :json}
   post "sellins/import", to: "sellins#input_sellin_from_csv", defaults: {format: :json}
   patch "sellins/update/:id", to: "sellins#update", defaults: {format: :json}
 
   # route for cities
   get "cities/list", to: "cities#index", defaults: {format: :json}
-  get "cities/:id", to: "cities#show", defaults: {format: :json}
   get "cities/export", to: "cities#cities_csv_export"
+  get "cities/:id", to: "cities#show", defaults: {format: :json}
   post "cities/create", to: "cities#create", defaults: {format: :json}
 
 

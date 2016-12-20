@@ -28,26 +28,25 @@ gem 'rack-cors'
 gem 'carrierwave'
 gem 'mini_magick'
 
-# oauth2 jwt gem for authentication
+# oauth2 jwt gem for authentication gem
 gem 'knock'
 
-# for bulk inserting sellin in db
+# for bulk inserting sellin in db gem
 gem 'activerecord-import'
 
-# for soft deletion record on db
+# for soft deletion record on db gem
 gem 'paranoia'
 
-# onesignal wrapper for push notification
+# onesignal wrapper for push notification gem
 gem 'one_signal'
 
-# csv handling lib and wrapper
+# csv handling lib and wrapper gem
 gem 'smarter_csv'
 gem 'to_csv-rails'
 gem 'julia_builder'
 
 # powerpoint export gem
 gem 'powerpoint'
-
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
