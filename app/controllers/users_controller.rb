@@ -34,6 +34,12 @@ class UsersController < ApplicationController
 
   # PATCH /users/update/:id
   def update
+    if params[:password_digest].present?
+      @password = BCrypt::Password.create(params.fetch(:password_digest))
+    else
+      @password = @user.password_digest
+    end
+
     if @user.update(user_update_params)
       render :show, status: :ok
     else
@@ -86,7 +92,7 @@ class UsersController < ApplicationController
   def user_update_params
     params.permit(:password_digest, :level, :manager_id, :name, :email, :phone, :gender)
     user_data = {
-        password_digest: BCrypt::Password.create(params.fetch(:password_digest)),
+        password_digest: @password,
         level: params.fetch(:level).to_i,
         manager_id: params.fetch(:manager_id).to_i,
         name: params.fetch(:name).to_s,
