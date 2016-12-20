@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get "sellouts/recap_region", to: "sellouts#sellouts_per_region", defaults: {format: :json}
   get "sellouts/recap_region_store", to: "sellouts#sellouts_each_store_per_region", defaults: {format: :json}
   get "sellouts/export", to: "sellouts#sellout_report_export_csv", defaults: {format: :csv}
+  get "sellouts/:id", to: "sellouts#show", defaults: {format: :json}
   post "sellouts/create", to: "sellouts#create", defaults: {format: :json}
   patch "sellouts/update/:id", to: "sellouts#update", defaults: {format: :json}
 
@@ -54,21 +55,25 @@ Rails.application.routes.draw do
   get "stores/export", to: "stores#stores_csv_export", defaults: {format: :csv}
   get "stores/list_level", to: "stores#list_store_levels", defaults: {format: :json}
   get "stores/list_category", to: "stores#list_store_categories", defaults: {format: :json}
+  get "stores/:id", to: "stores#show", defaults: {format: :json}
   patch "stores/update/:id", to: "stores#update", defaults: {format: :json}
   post "stores/create", to: "stores#create", defaults: {format: :json}
   delete "stores/delete/:id", to: "stores#destroy", defaults: {format: :json}
+  delete "stores/:id", to: "stores#show", defaults: {format: :json}
 
 
   # routes for users
   get "users/list", to: "users#index", defaults: {format: :json}
   get "users/list_level", to: "users#list_user_levels", defaults: {format: :json}
   get "users/list_gender", to: "users#list_user_genders", defaults: {format: :json}
+  get "users/:id", to: "users#show", defaults: {format: :json}
   post "users/create", to: "users#create", defaults: {format: :json}
   patch "users/update/:id", to: "users#update", defaults: {format: :json}
   delete "users/delete/:id", to: "users#destroy", defaults: {format: :json}
 
   # routes for managers
   get "managers/list", to: "managers#index", defaults: {format: :json}
+  get "managers/:id", to: "managers#show", defaults: {format: :json}
   post "managers/create", to: "managers#create", defaults: {format: :json}
   patch "managers/update/:id", to: "managers#update", defaults: {format: :json}
   delete "managers/delete/:id", to: "managers#destroy", defaults: {format: :json}
@@ -81,6 +86,7 @@ Rails.application.routes.draw do
 
   # route for cities
   get "cities/list", to: "cities#index", defaults: {format: :json}
+  get "cities/:id", to: "cities#show", defaults: {format: :json}
   get "cities/export", to: "cities#cities_csv_export"
   post "cities/create", to: "cities#create", defaults: {format: :json}
 
