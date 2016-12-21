@@ -1,7 +1,7 @@
 class CreateSellouts < ActiveRecord::Migration[5.0]
   def change
     default_image = DefaultImageUploader.new
-    default_image.store!(File.open(Rails.root + "public/uploads/kona.jpg"))
+    default_image.store!(File.open(Rails.root + "public/uploads/default.png"))
 
     create_table :sellouts do |t|
       t.string :service_tag, null: false, uniqueness: true
