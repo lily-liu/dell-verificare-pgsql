@@ -50,3 +50,4 @@ bower.json
 /public/uploads/posm_visibility/
 /public/uploads/product_knowledge/
 /public/uploads/sellout_proof/
+!/public/uploads/sellout_proof/

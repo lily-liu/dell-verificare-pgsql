@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   get "sellouts/export", to: "sellouts#sellout_report_export_csv", defaults: {format: :csv}
   get "sellouts/:id", to: "sellouts#show", defaults: {format: :json}
   post "sellouts/create", to: "sellouts#create", defaults: {format: :json}
+  post "sellouts/import", to: "sellouts#import_sellout", defaults: {format: :json}
   patch "sellouts/update/:id", to: "sellouts#update", defaults: {format: :json}
 
   # route for inventory
@@ -24,6 +25,7 @@ Rails.application.routes.draw do
   get "inventories/recap_cam", to: "inventories#inventories_per_cam", defaults: {format: :json}
   get "inventories/recap_store_cam", to: "inventories#inventories_each_cam_per_store", defaults: {format: :json}
   post "inventories/create", to: "inventories#create", defaults: {format: :json}
+  post "inventories/import", to: "inventories#import_inventory", defaults: {format: :json}
 
   # route For product knowledge
   get "sell_kits/list", to: "sell_kits#index", defaults: {format: :json}

@@ -1,6 +1,6 @@
 class SelloutsController < ApplicationController
   before_action :set_sellout, only: [:show, :update, :destroy]
-  # before_action :authenticate_user
+  before_action :authenticate_user
 
 
   # GET /sellouts
@@ -70,13 +70,72 @@ class SelloutsController < ApplicationController
     end
   end
 
+  def import_sellout
+    csv_file = CsvUploader.new
+    csv_file.store!(params.fetch(:csv))
+    csv_data = SmarterCSV.process("public#{csv_file.url}")
+
+
+    if csv_data.present?
+      # image_default = PhotoUploader.new
+      # image_default.store!(File.open(Rails.root + "public/uploads/kona.jpg"))
+      # sales_time = Time.now
+      # sellouts_tmp = Sellout.new
+      # sellouts_tmp.service_tag = "asd"
+      # sellouts_tmp.csv_ref = csv_file.url
+      # sellouts_tmp.proof = uploader
+      # sellouts_tmp.added_by = current_user
+      # sellouts_tmp.quarter_year = current_quarter_year(sales_time)
+      # sellouts_tmp.quarter = current_quarter_months(sales_time)
+      # sellouts_tmp.quarter_week = current_quarter_week(sales_time)
+      # sellouts_tmp.price_idr = 0
+      # sellouts_tmp.price_usd = 0
+      # sellouts_tmp.store_id = 1
+      # sellouts_tmp.inventory_id = 1
+      # sellouts_tmp.user_id = 1
+      #
+      # @asd = sellouts_tmp.save!
+      # render json: @asd
+      saved_data = []
+      sales_time = Time.now
+      default_image = DefaultImageUploader.new
+      default_image.store!(File.open(Rails.root + "public/uploads/kona.jpg"))
+
+      csv_data.each do |data|
+        sellouts_tmp = Sellout.new(data)
+        sellouts_tmp.csv_ref = csv_file.url
+        sellouts_tmp.proof = default_image
+        sellouts_tmp.added_by = current_user
+        sellouts_tmp.quarter_year = current_quarter_year(sales_time)
+        sellouts_tmp.quarter = current_quarter_months(sales_time)
+        sellouts_tmp.quarter_week = current_quarter_week(sales_time)
+        sellouts_tmp.price_idr = 0
+        sellouts_tmp.price_usd = 0
+        saved_data << sellouts_tmp
+      end
+
+      @sellouts = Sellout.import!(saved_data)
+      @success_input = Sellout.where(id: @sellouts.ids)
+      render :import, status: :ok
+    else
+      @message = "csv file is empty"
+      render :error, status: :internal_server_error
+    end
+  end
+
+  def export_sellout
+    @export = Sellout.where(updated_at: 1.week.ago)
+    send_data(@export.to_csv(except: [:created_at, :updated_at, :deleted_at, :proof, :price_idr, :price_usd]), type: 'text/csv', filename: "sellout-list-#{Time.now.to_date}.csv")
+  end
+
   # PATCH/PUT /sellouts/1
   # PATCH/PUT /sellouts/1.json
   def update
     if @sellout.update(update_sellout_params)
       render :show, status: :ok
     else
-      render json: @sellout.errors, status: :unprocessable_entity
+      @message = "update param is missing"
+      render :error, status: :unprocessable_entity
     end
   end
 

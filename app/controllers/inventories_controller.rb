@@ -19,6 +19,34 @@ class InventoriesController < ApplicationController
   def show
   end
 
+  def import_inventory
+    csv_file = CsvUploader.new
+    csv_file.store!(params.fetch(:csv))
+    csv_data = SmarterCSV.process("public#{csv_file.url}")
+    if csv_data.present?
+      saved_data = []
+
+      csv_data.each do |data|
+        inventories_tmp = Inventory.new(data)
+        inventories_tmp.csv_ref = csv_file.url
+        inventories_tmp.added_by = current_user
+        saved_data << inventories_tmp
+      end
+
+      @inventories = Inventory.import(saved_data)
+      @success_input = Inventory.where(id: @inventories.ids)
+      render :import, status: :ok
+    else
+      @message = "csv file is empty"
+      render :error, status: :internal_server_error
+    end
+  end
+
+  def inventories_export
+    @export = Inventory.where(updated_at: 1.week.ago)
+    send_data(@export.to_csv(except: [:created_at, :updated_at, :deleted_at]), type: 'text/csv', filename: "inventory-list-#{Time.now.to_date}.csv")
+  end
+
   # POST /inventories
   # POST /inventories.json
   def create
