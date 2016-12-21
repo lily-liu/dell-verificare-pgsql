@@ -99,7 +99,7 @@ class SelloutsController < ApplicationController
       saved_data = []
       sales_time = Time.now
       default_image = DefaultImageUploader.new
-      default_image.store!(File.open(Rails.root + "public/uploads/kona.jpg"))
+      default_image.store!(File.open(Rails.root + "public/uploads/default.png"))
 
       csv_data.each do |data|
         sellouts_tmp = Sellout.new(data)
@@ -124,8 +124,13 @@ class SelloutsController < ApplicationController
   end
 
   def export_sellout
-    @export = Sellout.where(updated_at: 1.week.ago)
-    send_data(@export.to_csv(except: [:created_at, :updated_at, :deleted_at, :proof, :price_idr, :price_usd]), type: 'text/csv', filename: "sellout-list-#{Time.now.to_date}.csv")
+    @export = Sellout.where('updated_at > ?', 1.week.ago).to_a
+    send_data(@export.to_csv(except: [:created_at, :updated_at, :deleted_at, :proof, :price_idr, :price_usd, :added_by]), type: 'text/csv', filename: "sellout-list-#{Time.now.to_date}.csv")
+  end
+
+  def search_service_tag
+    @sellouts = Sellout.where('service_tag LIKE ? OR service_tag LIKE ? OR service_tag LIKE ? OR service_tag LIKE ?', "%#{params[:q]}%", "#{params[:q]}%", "%#{params[:q]}", params[:q])
+    render :index, status: :ok
   end
 
   # PATCH/PUT /sellouts/1

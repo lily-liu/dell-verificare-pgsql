@@ -43,8 +43,13 @@ class InventoriesController < ApplicationController
   end
 
   def inventories_export
-    @export = Inventory.where(updated_at: 1.week.ago)
-    send_data(@export.to_csv(except: [:created_at, :updated_at, :deleted_at]), type: 'text/csv', filename: "inventory-list-#{Time.now.to_date}.csv")
+    @export = Inventory.where('updated_at > ?', 1.week.ago).to_a
+    send_data(@export.to_csv(except: [:created_at, :updated_at, :deleted_at, :added_by]), type: 'text/csv', filename: "inventory-list-#{Time.now.to_date}.csv")
+  end
+
+  def search_service_tag
+    @inventories = Inventory.where('service_tag LIKE ? OR service_tag LIKE ? OR service_tag LIKE ? OR service_tag LIKE ?', "%#{params[:q]}%", "#{params[:q]}%", "%#{params[:q]}", params[:q])
+    render :index, status: :ok
   end
 
   # POST /inventories
