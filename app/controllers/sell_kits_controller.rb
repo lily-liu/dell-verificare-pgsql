@@ -1,6 +1,6 @@
 class SellKitsController < ApplicationController
   # before_action :set_sell_kit, only: [:show, :update, :destroy]
-  before_action :authenticate_user
+  # before_action :authenticate_user
 
   # GET /product_knowledges
   # GET /product_knowledges.json
@@ -26,6 +26,17 @@ class SellKitsController < ApplicationController
       @message = "no item found"
       render :error, status: :not_found
     end
+  end
+
+  def download_data
+    @sell_kit = SellKit.find(params.fetch(:id).to_i)
+    if @sell_kit.present?
+      send_data(File.open("#{Rails.root}/public#{@sell_kit.file_name.url}").read.force_encoding('BINARY'), type: 'application/pdf', filename: "sell-kit-#{@sell_kit.category}-#{@sell_kit.name}.pdf")
+    else
+      @message = "no item found"
+      render :error, status: :not_found
+    end
+
   end
 
   # def download_file

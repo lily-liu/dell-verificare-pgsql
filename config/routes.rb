@@ -33,6 +33,7 @@ Rails.application.routes.draw do
 
   # route For product knowledge
   get "sell_kits/list", to: "sell_kits#index", defaults: {format: :json}
+  get "sell_kits/download/:id", to: "sell_kits#download_data", defaults: {format: :json}
   get "sell_kits/:id", to: "sell_kits#show", defaults: {format: :json}
   post "sell_kits/create", to: "sell_kits#create", defaults: {format: :json}
 
