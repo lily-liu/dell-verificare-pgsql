@@ -68,6 +68,29 @@ class UsersController < ApplicationController
     render :level, status: :ok
   end
 
+  def import_user
+    csv_file = CsvUploader.new
+    csv_file.store!(params.fetch(:csv))
+    csv_data = SmarterCSV.process("public#{csv_file.url}")
+    if csv_data.present?
+      saved_data = []
+
+      csv_data.each do |data|
+        users_tmp = User.new(data)
+        users_tmp.csv_ref = csv_file.url
+        users_tmp.added_by = current_user
+        saved_data << users_tmp
+      end
+
+      @users = Inventory.import(saved_data)
+      @success_input = User.where(id: @inventories.ids)
+      render :import, status: :ok
+    else
+      @message = "csv file is empty"
+      render :error, status: :internal_server_error
+    end
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_user

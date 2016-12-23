@@ -26,9 +26,11 @@ class PostsController < ApplicationController
     @post.level = 0
 
     if @post.save
+      @push_response = push_notif(@post.content)
+      # render json: @push_response
       render :show, status: :created
     else
-      @message = 'Cannot save data'
+      @message = @post.errors
       render :error, status: :unprocessable_entity
     end
   end
@@ -41,6 +43,7 @@ class PostsController < ApplicationController
     @post.level = 1
 
     if @post.save
+      @push_response = push_notif(@post.content)
       render :show, status: :created
     else
       @message = @post.errors
@@ -51,9 +54,35 @@ class PostsController < ApplicationController
 
   private
   # Use callbacks to share common setup or constraints between actions.
-  # def set_post
-  #   @post = Post.find(params[:id])
-  # end
+  def set_post
+    @post = Post.find(params[:id])
+  end
+
+  # to push notification to android
+  def push_notif(message)
+    if ENV['ONESIGNAL_APP_ID'].present? && ENV['ONESIGNAL_API_KEY'].present?
+      app_id = ENV['ONESIGNAL_APP_ID']
+      api_key = ENV['ONESIGNAL_API_KEY']
+    else
+      app_id = '399b5406-a95c-42d7-9062-19639af66d4f'
+      api_key = 'ODIzNzU5M2QtNWMzYi00OWFjLWE3YzUtZmQwN2U2YjgwZDQx'
+    end
+    params = {
+        app_id: app_id,
+        contents: {en: message},
+        included_segments: ['All']
+    }
+    uri = URI.parse('https://onesignal.com/api/v1/notifications')
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+
+    request = Net::HTTP::Post.new(uri.path,
+                                  'Content-Type' => 'application/json;charset=utf-8',
+                                  'Authorization' => "Basic #{api_key}")
+    request.body = params.as_json.to_json
+    response = http.request(request)
+    return response.body
+  end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def post_params

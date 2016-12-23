@@ -51,6 +51,7 @@ Rails.application.routes.draw do
 
   # Route Posts
   get "posts/list", to: "posts#index", defaults: {format: :json}
+  get "posts/notif", to: "posts#push_notif", defaults: {format: :json}
   get "posts/:id", to: "posts#show", defaults: {format: :json}
   post "posts/create", to: "posts#create_post", defaults: {format: :json}
   post "posts/create_comment/:parent_id", to: "posts#create_comment", defaults: {format: :json}
@@ -74,6 +75,7 @@ Rails.application.routes.draw do
   get "users/list_gender", to: "users#list_user_genders", defaults: {format: :json}
   get "users/:id", to: "users#show", defaults: {format: :json}
   post "users/create", to: "users#create", defaults: {format: :json}
+  post "users/import", to: "users#import_user", defaults: {format: :json}
   patch "users/update/:id", to: "users#update", defaults: {format: :json}
   delete "users/delete/:id", to: "users#destroy", defaults: {format: :json}
 
