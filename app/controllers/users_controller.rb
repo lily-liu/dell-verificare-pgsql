@@ -71,19 +71,17 @@ class UsersController < ApplicationController
   def import_user
     csv_file = CsvUploader.new
     csv_file.store!(params.fetch(:csv))
-    csv_data = SmarterCSV.process("public#{csv_file.url}")
+    csv_data = SmarterCSV.process("public#{csv_file.url}",value_converters: {password_digest: PasswordConverter})
     if csv_data.present?
       saved_data = []
 
       csv_data.each do |data|
         users_tmp = User.new(data)
-        users_tmp.csv_ref = csv_file.url
-        users_tmp.added_by = current_user
         saved_data << users_tmp
       end
 
-      @users = Inventory.import(saved_data)
-      @success_input = User.where(id: @inventories.ids)
+      @users = User.import(saved_data)
+      @success_input = User.where(id: @users.ids)
       render :import, status: :ok
     else
       @message = "csv file is empty"
