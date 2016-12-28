@@ -25,6 +25,7 @@ gem 'sprockets-rails'
 gem 'rack-cors'
 
 # for image uload and manipulation
+gem 'fog-aws'
 gem 'carrierwave'
 gem 'mini_magick'
 
