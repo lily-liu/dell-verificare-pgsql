@@ -102,7 +102,7 @@ User.create!(
 User.create!(
     username: 'store',
     password_digest: BCrypt::Password.create("password"),
-    level: 5,
+    level: 6,
     manager_id: 2,
     name: 'admin name',
     email: 'admin6@email.com',
