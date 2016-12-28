@@ -99,6 +99,17 @@ User.create!(
     gender: 1
 )
 
+User.create!(
+    username: 'store',
+    password_digest: BCrypt::Password.create("password"),
+    level: 5,
+    manager_id: 2,
+    name: 'admin name',
+    email: 'admin6@email.com',
+    phone: "8989898989",
+    gender: 1
+)
+
 Region.create!(
     name: 'Jabodetabek',
     position: 1
@@ -286,6 +297,39 @@ Sellin.create!(
     target_store: 1
 )
 
+Sellin.create!(
+    service_tag: "5YNVK52",
+    quarter_year: 2015,
+    quarter: 2,
+    quarter_week: 3,
+    item_type: 1,
+    source_store: 1,
+    product_type: "3437-i34010-4-500-UBT-D",
+    target_store: 1
+)
+
+Sellin.create!(
+    service_tag: "7YNVK52",
+    quarter_year: 2015,
+    quarter: 2,
+    quarter_week: 3,
+    item_type: 1,
+    source_store: 1,
+    product_type: "3437-i34010-4-500-UBT-D",
+    target_store: 1
+)
+
+Sellin.create!(
+    service_tag: "9YNVK53",
+    quarter_year: 2015,
+    quarter: 2,
+    quarter_week: 3,
+    item_type: 1,
+    source_store: 1,
+    product_type: "3437-i34010-4-500-UBT-D",
+    target_store: 1
+)
+
 Posm.create!(
     name: "posm10",
     category: 1,
@@ -408,12 +452,75 @@ Post.create!(
     parent_id: 1
 )
 
-Inventory.create!(
-    service_tag: "4TB8J52",
-    status: 0,
-    sellin_id: 1,
-    store_id: 1,
-    user_id: 1,
-    added_by: User.find(1)
-)
+# Inventory.create!(
+#     service_tag: "4TB8J52",
+#     status: 0,
+#     sellin_id: 1,
+#     store_id: 1,
+#     user_id: 1,
+#     added_by: User.find(1)
+# )
+#
+# Inventory.create!(
+#     service_tag: "HHH0L52",
+#     status: 0,
+#     sellin_id: 1,
+#     store_id: 2,
+#     user_id: 2,
+#     added_by: User.find(1)
+# )
+#
+# Inventory.create!(
+#     service_tag: "H8D9J52",
+#     status: 0,
+#     sellin_id: 1,
+#     store_id: 2,
+#     user_id: 7,
+#     added_by: User.find(1)
+# )
+#
+# Inventory.create!(
+#     service_tag: "DQB8J52",
+#     status: 0,
+#     sellin_id: 1,
+#     store_id: 4,
+#     user_id: 5,
+#     added_by: User.find(1)
+# )
+#
+# Inventory.create!(
+#     service_tag: "42QVK52",
+#     status: 0,
+#     sellin_id: 1,
+#     store_id: 4,
+#     user_id: 1,
+#     added_by: User.find(1)
+# )
+#
+# Inventory.create!(
+#     service_tag: "DFC9J52",
+#     status: 0,
+#     sellin_id: 1,
+#     store_id: 2,
+#     user_id: 6,
+#     added_by: User.find(1)
+# )
+#
+# Inventory.create!(
+#     service_tag: "4YPVK52",
+#     status: 0,
+#     sellin_id: 1,
+#     store_id: 1,
+#     user_id: 6,
+#     added_by: User.find(1)
+# )
+#
+# Inventory.create!(
+#     service_tag: "5YNVK52",
+#     status: 0,
+#     sellin_id: 1,
+#     store_id: 2,
+#     user_id: 6,
+#     added_by: User.find(1)
+# )
 

@@ -31,6 +31,7 @@ gem 'mini_magick'
 
 # oauth2 jwt gem for authentication gem
 gem 'knock'
+gem 'pundit'
 
 # for bulk inserting sellin in db gem
 gem 'activerecord-import'
