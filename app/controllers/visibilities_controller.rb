@@ -1,6 +1,6 @@
 class VisibilitiesController < ApplicationController
   before_action :set_visibility, only: [:show, :update, :destroy]
-  before_action :authenticate_user
+  # before_action :authenticate_user
 
   # GET /visibilities
   # GET /visibilities.json
@@ -45,7 +45,7 @@ class VisibilitiesController < ApplicationController
       send_file(tmp_file, filename: "#{@user.username}_#{@store.name.parameterize}.pptx", content_type: "application/vnd.openxmlformats-officedocument.presentationml.presentation")
     else
       @message = "unable to generate presentation file"
-      render :error, status: :internal_server_error
+      render :error, status: :not_found
     end
 
 
