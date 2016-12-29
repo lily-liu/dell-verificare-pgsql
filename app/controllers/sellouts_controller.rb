@@ -189,25 +189,25 @@ class SelloutsController < ApplicationController
     send_data(csv_data, type: 'text/csv', filename: "report-sellouts-#{Time.now.to_date}.csv")
   end
 
-  def export_sellouts_each_cam_per_store
-    @report = Store.select(:name).joins(sellouts: [{user: :manager}]).joins(:sellouts).where(managers: {id: params.fetch(:manager_id).to_i}).group(:name).count
-    send_data(@report.to_a.to_csv, type: 'text/csv', filename: "recap-sellouts-per-store-cam-#{Time.now.to_date}.csv")
-  end
-
-  def export_sellouts_per_cam
-    @report = Manager.select(:name).joins(users: :sellouts).group(:name).count
-    send_data(@report.to_a.to_csv, type: 'text/csv', filename: "recap-sellouts-per-cam-#{Time.now.to_date}.csv")
-  end
-
-  def export_sellouts_per_region
-    @report = Region.select(:name).joins(cities: [{stores: :sellouts}]).group(:name).count
-    send_data(@report.to_csv, type: 'text/csv', filename: "recap-sellouts-per-region-#{Time.now.to_date}.csv")
-  end
-
-  def export_sellouts_each_store_per_region
-    @report = Region.select(:name).joins(cities: [{stores: :sellouts}]).group(:name).count
-    send_data(@report.to_a.to_csv, type: 'text/csv', filename: "recap-sellouts-per-store-region-#{Time.now.to_date}.csv")
-  end
+  # def export_sellouts_each_cam_per_store
+  #   @report = Store.select(:name).joins(sellouts: [{user: :manager}]).joins(:sellouts).where(managers: {id: params.fetch(:manager_id).to_i}).group(:name).count
+  #   send_data(@report.to_a.to_csv, type: 'text/csv', filename: "recap-sellouts-per-store-cam-#{Time.now.to_date}.csv")
+  # end
+  #
+  # def export_sellouts_per_cam
+  #   @report = Manager.select(:name).joins(users: :sellouts).group(:name).count
+  #   send_data(@report.to_a.to_csv, type: 'text/csv', filename: "recap-sellouts-per-cam-#{Time.now.to_date}.csv")
+  # end
+  #
+  # def export_sellouts_per_region
+  #   @report = Region.select(:name).joins(cities: [{stores: :sellouts}]).group(:name).count
+  #   send_data(@report.to_csv, type: 'text/csv', filename: "recap-sellouts-per-region-#{Time.now.to_date}.csv")
+  # end
+  #
+  # def export_sellouts_each_store_per_region
+  #   @report = Region.select(:name).joins(cities: [{stores: :sellouts}]).group(:name).count
+  #   send_data(@report.to_a.to_csv, type: 'text/csv', filename: "recap-sellouts-per-store-region-#{Time.now.to_date}.csv")
+  # end
 
   private
   # Use callbacks to share common setup or constraints between actions.

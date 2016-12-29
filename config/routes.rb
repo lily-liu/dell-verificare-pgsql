@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   get "sellouts/recap_region", to: "sellouts#sellouts_per_region", defaults: {format: :json}
   get "sellouts/recap_region_store", to: "sellouts#sellouts_each_store_per_region", defaults: {format: :json}
   get "sellouts/export", to: "sellouts#sellout_report_export_csv", defaults: {format: :csv}
-  get "sellouts/export/recap_region", to: "sellouts#export_sellouts_per_region", defaults: {format: :csv}
+  # get "sellouts/export/recap_region", to: "sellouts#export_sellouts_per_region", defaults: {format: :csv}
   get "sellouts/export_list", to: "sellouts#export_sellout", defaults: {format: :csv}
   get "sellouts/search", to: "sellouts#search_service_tag", defaults: {format: :json}
   get "sellouts/:id", to: "sellouts#show", defaults: {format: :json}
