@@ -1,0 +1,2 @@
+class PosmPolicy < ApplicationPolicy
+end

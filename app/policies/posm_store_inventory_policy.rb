@@ -1,0 +1,2 @@
+class PosmStoreInventoryPolicy < ApplicationPolicy
+end

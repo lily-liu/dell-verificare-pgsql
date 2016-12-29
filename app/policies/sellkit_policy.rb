@@ -1,0 +1,2 @@
+class SellkitPolicy < ApplicationPolicy
+end

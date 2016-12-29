@@ -52,10 +52,7 @@ class PosmsController < ApplicationController
 
   def posm_per_category
     @report = Posm.group(:category).sum(:quantity)
-    @categories = []
-    @report.keys.each do |key|
-      @categories << Posm.categories.keys[key]
-    end
+    @categories = @report.keys
     render :report, status: :ok
   end
 

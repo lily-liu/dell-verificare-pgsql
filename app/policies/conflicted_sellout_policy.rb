@@ -1,0 +1,2 @@
+class ConflictedSelloutPolicy < ApplicationPolicy
+end

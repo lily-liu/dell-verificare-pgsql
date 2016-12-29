@@ -1,0 +1,2 @@
+class SellinPolicy < ApplicationPolicy
+end

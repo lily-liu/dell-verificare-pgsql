@@ -1,0 +1,2 @@
+class ConflictedInventoryPolicy < ApplicationPolicy
+end

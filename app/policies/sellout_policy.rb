@@ -1,0 +1,2 @@
+class SelloutPolicy < ApplicationPolicy
+end

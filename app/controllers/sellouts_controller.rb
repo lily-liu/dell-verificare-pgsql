@@ -186,8 +186,27 @@ class SelloutsController < ApplicationController
                   .joins(inventory: :sellin)
                   .select('sellouts.created_at AS transaction_date, stores.store_uid, stores.name AS store_name, stores.store_category, stores.store_building AS building_name, stores.address AS store_address, stores.phone AS store_phone, stores.email AS store_email, stores.store_owner, managers.name AS cam_name, users.name AS pic_name, users.level AS user_level, regions.name AS region_name, regions.position AS region, cities.name AS city_name, sellins.service_tag, sellins.part_number, sellins.product_type, sellins.product_name, sellins.source_store AS distributor, sellins.target_store AS master_dealer, sellouts.quarter_year, sellouts.quarter, sellouts.quarter_week')
     csv_data = ReportBuilder.build(@export)
-    # render json: asd, status: :ok
     send_data(csv_data, type: 'text/csv', filename: "report-sellouts-#{Time.now.to_date}.csv")
+  end
+
+  def export_sellouts_each_cam_per_store
+    @report = Store.select(:name).joins(sellouts: [{user: :manager}]).joins(:sellouts).where(managers: {id: params.fetch(:manager_id).to_i}).group(:name).count
+    send_data(@report.to_a.to_csv, type: 'text/csv', filename: "recap-sellouts-per-store-cam-#{Time.now.to_date}.csv")
+  end
+
+  def export_sellouts_per_cam
+    @report = Manager.select(:name).joins(users: :sellouts).group(:name).count
+    send_data(@report.to_a.to_csv, type: 'text/csv', filename: "recap-sellouts-per-cam-#{Time.now.to_date}.csv")
+  end
+
+  def export_sellouts_per_region
+    @report = Region.select(:name).joins(cities: [{stores: :sellouts}]).group(:name).count
+    send_data(@report.to_csv, type: 'text/csv', filename: "recap-sellouts-per-region-#{Time.now.to_date}.csv")
+  end
+
+  def export_sellouts_each_store_per_region
+    @report = Region.select(:name).joins(cities: [{stores: :sellouts}]).group(:name).count
+    send_data(@report.to_a.to_csv, type: 'text/csv', filename: "recap-sellouts-per-store-region-#{Time.now.to_date}.csv")
   end
 
   private

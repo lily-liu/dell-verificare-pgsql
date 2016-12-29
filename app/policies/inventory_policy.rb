@@ -1,0 +1,2 @@
+class InventoryPolicy < ApplicationPolicy
+end
