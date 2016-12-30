@@ -5,8 +5,9 @@ Rails.application.routes.draw do
   post "login", to: "user_token#create", defaults: {format: :json}
 
   # route for absences
-  post "absences/create", to: "absences#create", defaults: {format: :json}
   get "absences/list", to: "absences#index", defaults: {format: :json}
+  get "absences/export", to: "absences#export_absence", defaults: {format: :csv}
+  post "absences/create", to: "absences#create", defaults: {format: :json}
 
   # route for sellout
   get "sellouts/list", to: "sellouts#index", defaults: {format: :json}
