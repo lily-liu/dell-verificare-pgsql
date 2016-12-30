@@ -181,21 +181,22 @@ ActiveRecord::Schema.define(version: 20161202042759) do
   end
 
   create_table "sellouts", force: :cascade do |t|
-    t.string   "service_tag",                          null: false
+    t.string   "service_tag",                                  null: false
     t.integer  "user_id"
     t.integer  "added_by"
     t.integer  "inventory_id"
     t.integer  "store_id"
-    t.integer  "quarter_year",                         null: false
-    t.integer  "quarter",                              null: false
-    t.integer  "quarter_week",                         null: false
+    t.integer  "quarter_year",                                 null: false
+    t.integer  "quarter",                                      null: false
+    t.integer  "quarter_week",                                 null: false
     t.float    "price_idr"
     t.float    "price_usd"
-    t.string   "proof",        default: "default.png", null: false
+    t.string   "proof",        default: "default.png",         null: false
     t.string   "csv_ref"
+    t.datetime "sales_date",   default: '2016-12-30 09:06:56', null: false
     t.datetime "deleted_at"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
     t.index ["inventory_id"], name: "index_sellouts_on_inventory_id", using: :btree
     t.index ["service_tag"], name: "index_sellouts_on_service_tag", unique: true, using: :btree
     t.index ["store_id"], name: "index_sellouts_on_store_id", using: :btree

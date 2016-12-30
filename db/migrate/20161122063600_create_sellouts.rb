@@ -16,6 +16,8 @@ class CreateSellouts < ActiveRecord::Migration[5.0]
       t.float :price_usd, null: true
       t.string :proof, null: false, default: "default.png"
       t.string :csv_ref, null: true
+      t.datetime :sales_date, null: false, default: Time.now
+
 
       t.datetime :deleted_at, null: true
       t.timestamps

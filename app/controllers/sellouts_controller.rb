@@ -31,7 +31,11 @@ class SelloutsController < ApplicationController
     if inventory_data.present? && store_data.present? && sellin_data.present? && store_data == inventory_data.store
       if params.fetch(:proof, nil)
         @sellout = Sellout.new(sellout_params)
-        sales_time = Time.now
+        if params[:sales_date].present?
+          sales_time = params.fetch(:sales_date).to_date
+        else
+          sales_time = Time.now
+        end
         @sellout.store = store_data
         @sellout.inventory = inventory_data
         if params[:added_by].present?
@@ -40,6 +44,7 @@ class SelloutsController < ApplicationController
         else
           @sellout.user = current_user
         end
+        @ssellout.sales_date = sales_time
         @sellout.quarter_year = current_quarter_year(sales_time)
         @sellout.quarter = current_quarter_months(sales_time)
         @sellout.quarter_week = current_quarter_week(sales_time)
@@ -79,10 +84,10 @@ class SelloutsController < ApplicationController
 
     if csv_data.present?
       saved_data = []
-      sales_time = Time.now
 
       csv_data.each do |data|
         sellouts_tmp = Sellout.new(data)
+        sales_time = data[:sales_date]
         sellouts_tmp.csv_ref = csv_file.url
         sellouts_tmp.added_by = current_user
         sellouts_tmp.quarter_year = current_quarter_year(sales_time)
