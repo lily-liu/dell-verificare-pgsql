@@ -80,13 +80,10 @@ class SelloutsController < ApplicationController
     if csv_data.present?
       saved_data = []
       sales_time = Time.now
-      default_image = DefaultImageUploader.new
-      default_image.store!(File.open(Rails.root + "public/uploads/default.png"))
 
       csv_data.each do |data|
         sellouts_tmp = Sellout.new(data)
         sellouts_tmp.csv_ref = csv_file.url
-        sellouts_tmp.proof = default_image
         sellouts_tmp.added_by = current_user
         sellouts_tmp.quarter_year = current_quarter_year(sales_time)
         sellouts_tmp.quarter = current_quarter_months(sales_time)
@@ -95,7 +92,6 @@ class SelloutsController < ApplicationController
         sellouts_tmp.price_usd = 0
         saved_data << sellouts_tmp
       end
-
       @sellouts = Sellout.import!(saved_data)
       @success_input = Sellout.where(id: @sellouts.ids)
       render :import, status: :ok

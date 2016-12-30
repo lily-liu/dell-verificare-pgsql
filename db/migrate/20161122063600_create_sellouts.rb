@@ -1,7 +1,7 @@
 class CreateSellouts < ActiveRecord::Migration[5.0]
   def change
-    default_image = DefaultImageUploader.new
-    default_image.store!(File.open(Rails.root + "public/uploads/default.png"))
+    # default_image = DefaultImageUploader.new
+    # default_image.store!(File.open(Rails.root + "public/uploads/default.png"))
 
     create_table :sellouts do |t|
       t.string :service_tag, null: false, uniqueness: true
@@ -14,7 +14,7 @@ class CreateSellouts < ActiveRecord::Migration[5.0]
       t.integer :quarter_week, null: false
       t.float :price_idr, null: true
       t.float :price_usd, null: true
-      t.string :proof, null: false, default: default_image.identifier
+      t.string :proof, null: false, default: "default.png"
       t.string :csv_ref, null: true
 
       t.datetime :deleted_at, null: true
