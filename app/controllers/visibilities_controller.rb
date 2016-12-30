@@ -37,7 +37,7 @@ class VisibilitiesController < ApplicationController
 
     @visibilities.each do |visibility|
       title = "Category: #{visibility.category.humanize}\nOn: #{visibility.created_at.to_date}"
-      image_path = "public#{visibility.visibility.url}"
+      image_path = "#{visibility.visibility.url}"
       @deck.add_pictorial_slide title, image_path
     end
     tmp_file = @deck.save("public/uploads/ppt/#{SecureRandom.uuid}.pptx")
