@@ -1,6 +1,6 @@
 class VisibilitiesController < ApplicationController
   before_action :set_visibility, only: [:show, :update, :destroy]
-  # before_action :authenticate_user
+  before_action :authenticate_user
 
   # GET /visibilities
   # GET /visibilities.json
@@ -33,11 +33,12 @@ class VisibilitiesController < ApplicationController
 
     ppt_title = "Report for Store #{@store.name} by #{@user.username}"
     ppt_subtitle = Time.now.to_date
+    uploader = PosmVisibilityUploader.new
     @deck.add_intro ppt_title, ppt_subtitle
 
     @visibilities.each do |visibility|
       title = "Category: #{visibility.category.humanize}\nOn: #{visibility.created_at.to_date}"
-      image_path = "#{visibility.visibility.url}"
+      image_path = uploader.retrieve_from_store!(visibility.visibility_identifier)
       @deck.add_pictorial_slide title, image_path
     end
     tmp_file = @deck.save("public/uploads/ppt/#{SecureRandom.uuid}.pptx")
