@@ -1,3 +1,4 @@
+require 'open-uri'
 class SelloutsController < ApplicationController
   before_action :set_sellout, only: [:show, :update, :destroy]
   before_action :authenticate_user
@@ -73,7 +74,7 @@ class SelloutsController < ApplicationController
   def import_sellout
     csv_file = CsvUploader.new
     csv_file.store!(params.fetch(:csv))
-    csv_data = SmarterCSV.process("public#{csv_file.url}")
+    csv_data = SmarterCSV.process(open(csv_file.url))
 
 
     if csv_data.present?

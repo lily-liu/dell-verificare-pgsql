@@ -1,3 +1,4 @@
+require 'open-uri'
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update, :destroy]
   before_action :authenticate_user
@@ -71,7 +72,7 @@ class UsersController < ApplicationController
   def import_user
     csv_file = CsvUploader.new
     csv_file.store!(params.fetch(:csv))
-    csv_data = SmarterCSV.process("public#{csv_file.url}",value_converters: {password_digest: PasswordConverter})
+    csv_data = SmarterCSV.process(open(csv_file.url), value_converters: {password_digest: PasswordConverter})
     if csv_data.present?
       saved_data = []
 

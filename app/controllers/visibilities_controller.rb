@@ -1,6 +1,7 @@
+require 'open-uri'
 class VisibilitiesController < ApplicationController
   before_action :set_visibility, only: [:show, :update, :destroy]
-  before_action :authenticate_user
+  # before_action :authenticate_user
 
   # GET /visibilities
   # GET /visibilities.json
@@ -30,17 +31,17 @@ class VisibilitiesController < ApplicationController
     @store = Store.find(params.fetch(:store_id).to_i)
     @visibilities = Visibility.where('user_id = ? AND created_at > ?', 1, 1.week.ago).order(:category, :created_at)
     @deck = Powerpoint::Presentation.new
+    ppt_uploader = PptUploader.new
 
     ppt_title = "Report for Store #{@store.name} by #{@user.username}"
     ppt_subtitle = Time.now.to_date
-    uploader = PosmVisibilityUploader.new
     @deck.add_intro ppt_title, ppt_subtitle
 
+    asd =[]
     @visibilities.each do |visibility|
-      image = uploader.retrieve_from_store!(visibility.visibility_identifier)
       title = "Category: #{visibility.category.humanize}\nOn: #{visibility.created_at.to_date}"
-      # image_path = visibility.visibility.url
-      @deck.add_pictorial_slide title, image.url
+      image_path = open(visibility.visibility.url).path
+      @deck.add_pictorial_slide title, image_path
     end
     tmp_file = @deck.save("public/uploads/ppt/#{SecureRandom.uuid}.pptx")
     if tmp_file.present?

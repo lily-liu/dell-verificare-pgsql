@@ -1,3 +1,4 @@
+require 'open-uri'
 class InventoriesController < ApplicationController
   # before_action :set_inventory, only: [:show, :update, :destroy]
   before_action :authenticate_user
@@ -22,7 +23,7 @@ class InventoriesController < ApplicationController
   def import_inventory
     csv_file = CsvUploader.new
     csv_file.store!(params.fetch(:csv))
-    csv_data = SmarterCSV.process("public#{csv_file.url}")
+    csv_data = SmarterCSV.process(open(csv_file.url))
     if csv_data.present?
       saved_data = []
 
