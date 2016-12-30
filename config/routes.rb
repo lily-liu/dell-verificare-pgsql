@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   get "sellouts/export", to: "sellouts#sellout_report_export_csv", defaults: {format: :csv}
   get "sellouts/export_list", to: "sellouts#export_sellout", defaults: {format: :csv}
   get "sellouts/search", to: "sellouts#search_service_tag", defaults: {format: :json}
+  get "sellouts/bulk_search", to: "sellouts#bulk_search_service_tag", defaults: {format: :json}
   get "sellouts/:id", to: "sellouts#show", defaults: {format: :json}
   post "sellouts/create", to: "sellouts#create", defaults: {format: :json}
   post "sellouts/import", to: "sellouts#import_sellout", defaults: {format: :json}

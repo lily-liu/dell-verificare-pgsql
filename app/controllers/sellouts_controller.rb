@@ -32,7 +32,7 @@ class SelloutsController < ApplicationController
       if params.fetch(:proof, nil)
         @sellout = Sellout.new(sellout_params)
         if params[:sales_date].present?
-          sales_time = params.fetch(:sales_date).to_date
+          sales_time = params.fetch(:sales_date).to_time
         else
           sales_time = Time.now
         end
@@ -87,7 +87,7 @@ class SelloutsController < ApplicationController
 
       csv_data.each do |data|
         sellouts_tmp = Sellout.new(data)
-        sales_time = data[:sales_date]
+        sales_time = data[:sales_date].to_time
         sellouts_tmp.csv_ref = csv_file.url
         sellouts_tmp.added_by = current_user
         sellouts_tmp.quarter_year = current_quarter_year(sales_time)
@@ -113,6 +113,12 @@ class SelloutsController < ApplicationController
 
   def search_service_tag
     @sellouts = Sellout.where('service_tag LIKE ? OR service_tag LIKE ? OR service_tag LIKE ? OR service_tag LIKE ?', "%#{params[:q]}%", "#{params[:q]}%", "%#{params[:q]}", params[:q])
+    render :index, status: :ok
+  end
+
+  def bulk_search_service_tag
+    search = params.fetch(:q).to_s.split(/\s*,\s*/)
+    @sellouts = Sellout.where(service_tag: search)
     render :index, status: :ok
   end
 
