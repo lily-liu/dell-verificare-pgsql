@@ -33,13 +33,14 @@ class VisibilitiesController < ApplicationController
 
     ppt_title = "Report for Store #{@store.name} by #{@user.username}"
     ppt_subtitle = Time.now.to_date
-    # uploader = PosmVisibilityUploader.new
+    uploader = PosmVisibilityUploader.new
     @deck.add_intro ppt_title, ppt_subtitle
 
     @visibilities.each do |visibility|
+      image = uploader.retrieve_from_store!(visibility.visibility_identifier)
       title = "Category: #{visibility.category.humanize}\nOn: #{visibility.created_at.to_date}"
-      image_path = visibility.visibility.url
-      @deck.add_pictorial_slide title, image_path
+      # image_path = visibility.visibility.url
+      @deck.add_pictorial_slide title, image.url
     end
     tmp_file = @deck.save("public/uploads/ppt/#{SecureRandom.uuid}.pptx")
     if tmp_file.present?
