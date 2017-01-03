@@ -90,6 +90,28 @@ class StoresController < ApplicationController
     end
   end
 
+  def import_store
+    csv_file = CsvUploader.new
+    csv_file.store!(params.fetch(:csv))
+    csv_data = SmarterCSV.process(open(csv_file.url))
+
+
+    if csv_data.present?
+      saved_data = []
+
+      csv_data.each do |data|
+        stores_tmp = Store.new(data)
+        saved_data << stores_tmp
+      end
+      @stores = Store.import!(saved_data)
+      @success_input = Store.where(id: @stores.ids)
+      render :import, status: :ok
+    else
+      @message = "csv file is empty"
+      render :error, status: :internal_server_error
+    end
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_store

@@ -68,6 +68,7 @@ Rails.application.routes.draw do
   get "stores/:id", to: "stores#show", defaults: {format: :json}
   patch "stores/update/:id", to: "stores#update", defaults: {format: :json}
   post "stores/create", to: "stores#create", defaults: {format: :json}
+  post "stores/import", to: "stores#import_store", defaults: {format: :json}
   delete "stores/delete/:id", to: "stores#destroy", defaults: {format: :json}
 
 
