@@ -116,8 +116,16 @@ Region.create!(
 )
 
 Region.create!(
-    name: 'Jabodetabek2',
-    position: 1
+    name: 'Jabar-Jateng-Jogja',
+    position: 2
+)
+Region.create!(
+    name: 'Jatim-Sulawesi-Kalimantan',
+    position: 3
+)
+Region.create!(
+    name: 'Sumatra',
+    position: 4
 )
 
 City.create!(
