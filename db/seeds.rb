@@ -112,20 +112,20 @@ User.create!(
 
 Region.create!(
     name: 'Jabodetabek',
-    position: 1
+    position: 0
 )
 
 Region.create!(
     name: 'Jabar-Jateng-Jogja',
-    position: 2
+    position: 1
 )
 Region.create!(
     name: 'Jatim-Sulawesi-Kalimantan',
-    position: 3
+    position: 2
 )
 Region.create!(
     name: 'Sumatra',
-    position: 4
+    position: 3
 )
 
 City.create!(
