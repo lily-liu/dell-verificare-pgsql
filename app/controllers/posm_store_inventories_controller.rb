@@ -23,7 +23,7 @@ class PosmStoreInventoriesController < ApplicationController
   # POST /posm_store_inventories.json
   def create
     @posm_store_inventory = PosmStoreInventory.new(posm_store_inventory_params)
-    posm_data = Posm.find(params.fetch(:posm_id).to_i)
+    posm_data = Posm.where('id = ? AND quantity > ?', params.fetch(:posm_id).to_i, 0).first
     store_data = Store.find(params.fetch(:store_id).to_i)
 
     if posm_data.present? && store_data.present?
