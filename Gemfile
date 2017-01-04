@@ -48,7 +48,12 @@ gem 'to_csv-rails'
 gem 'julia_builder'
 
 # powerpoint export gem
-gem 'powerpoint'
+# gem 'powerpoint'
+
+# export image gem
+gem 'aws-sdk'
+gem 'rubyzip'
+# gem 'zipline'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
