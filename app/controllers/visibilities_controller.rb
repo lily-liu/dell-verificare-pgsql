@@ -8,7 +8,7 @@ class VisibilitiesController < ApplicationController
   # GET /visibilities
   # GET /visibilities.json
   def index
-    @visibilities = User.where(level: [2, 3, 4, 5])
+    @visibilities = Visibility.all
     if @visibilities.present?
       render :index, status: :ok
     else
