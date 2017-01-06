@@ -1,3 +1,4 @@
+require 'open-uri'
 class CitiesController < ApplicationController
   before_action :set_city, only: [:show, :update, :destroy]
   before_action :authenticate_user
@@ -60,6 +61,28 @@ class CitiesController < ApplicationController
     @export = City.all.to_a
     send_data(@export.to_csv(except: [:created_at, :updated_at, :deleted_at]), type: 'text/csv', filename: "city-list-#{Time.now.to_date}.csv")
   end
+
+  def import_user
+    csv_file = CsvUploader.new
+    csv_file.store!(params.fetch(:csv))
+    csv_data = SmarterCSV.process(open(csv_file.url))
+    if csv_data.present?
+      saved_data = []
+
+      csv_data.each do |data|
+        cities_tmp = City.new(data)
+        saved_data << cities_tmp
+      end
+
+      @cities = City.import(saved_data)
+      @success_input = City.where(id: @users.ids)
+      render :import, status: :ok
+    else
+      @message = "csv file is empty"
+      render :error, status: :internal_server_error
+    end
+  end
+
 
   private
   # Use callbacks to share common setup or constraints between actions.
