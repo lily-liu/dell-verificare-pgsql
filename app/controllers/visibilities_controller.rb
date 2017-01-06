@@ -1,4 +1,5 @@
 require 'open-uri'
+require 'zip'
 class VisibilitiesController < ApplicationController
   # include ActionController::Streaming
   # include Zipline
