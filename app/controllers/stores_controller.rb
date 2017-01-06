@@ -140,7 +140,6 @@ class StoresController < ApplicationController
     store_data = {
         city_id: params.fetch(:city_id, nil).to_i,
         name: params.fetch(:name, nil).to_s,
-        level: params.fetch(:level, 0).to_i,
         phone: params.fetch(:phone, nil).to_s,
         address: params.fetch(:address, nil).to_s,
         email: params.fetch(:email, nil).to_s,

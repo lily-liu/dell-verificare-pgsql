@@ -76,6 +76,7 @@ Rails.application.routes.draw do
   get "users/list", to: "users#index", defaults: {format: :json}
   get "users/list_level", to: "users#list_user_levels", defaults: {format: :json}
   get "users/list_gender", to: "users#list_user_genders", defaults: {format: :json}
+  get "users/export", to: "users#users_csv_export", defaults: {format: :json}
   get "users/:id", to: "users#show", defaults: {format: :json}
   post "users/create", to: "users#create", defaults: {format: :json}
   post "users/import", to: "users#import_user", defaults: {format: :json}
@@ -84,8 +85,9 @@ Rails.application.routes.draw do
 
   # routes for managers
   get "managers/list", to: "managers#index", defaults: {format: :json}
-  post "managers/create", to: "managers#create", defaults: {format: :json}
+  get "managers/export", to: "managers#managers_csv_export", defaults: {format: :json}
   get "managers/:id", to: "managers#show", defaults: {format: :json}
+  post "managers/create", to: "managers#create", defaults: {format: :json}
   patch "managers/update/:id", to: "managers#update", defaults: {format: :json}
   delete "managers/delete/:id", to: "managers#destroy", defaults: {format: :json}
 

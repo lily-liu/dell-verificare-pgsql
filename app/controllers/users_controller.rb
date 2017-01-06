@@ -88,38 +88,44 @@ class UsersController < ApplicationController
       @message = "csv file is empty"
       render :error, status: :internal_server_error
     end
-  end
 
-  private
-  # Use callbacks to share common setup or constraints between actions.
-  def set_user
-    @user = User.find(params[:id])
-  end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
-  def user_params
-    params.permit(:username, :password_digest, :level, :manager_id, :name, :email, :phone, :gender)
-    user_data = {
-        username: params.fetch(:username).to_s,
-        password_digest: BCrypt::Password.create(params.fetch(:password_digest)),
-        level: params.fetch(:level).to_i,
-        manager_id: params.fetch(:manager_id).to_i,
-        name: params.fetch(:name).to_s,
-        email: params.fetch(:email).to_s,
-        phone: params.fetch(:phone).to_s,
-        gender: params.fetch(:gender).to_i
-    }
-  end
+    def users_csv_export
+      @export = User.all.to_a
+      send_data(@export.to_csv(except: [:created_at, :updated_at, :deleted_at]), type: 'text/csv', filename: "user-list-#{Time.now.to_date}.csv")
+    end
 
-  def user_update_params
-    params.permit(:password_digest, :level, :manager_id, :name, :email, :phone, :gender)
-    user_data = {
-        password_digest: @password,
-        level: params.fetch(:level).to_i,
-        manager_id: params.fetch(:manager_id).to_i,
-        name: params.fetch(:name).to_s,
-        email: params.fetch(:email).to_s,
-        phone: params.fetch(:phone).to_s,
-    }
+    private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_user
+      @user = User.find(params[:id])
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def user_params
+      params.permit(:username, :password_digest, :level, :manager_id, :name, :email, :phone, :gender)
+      user_data = {
+          username: params.fetch(:username).to_s,
+          password_digest: BCrypt::Password.create(params.fetch(:password_digest)),
+          level: params.fetch(:level).to_i,
+          manager_id: params.fetch(:manager_id).to_i,
+          name: params.fetch(:name).to_s,
+          email: params.fetch(:email).to_s,
+          phone: params.fetch(:phone).to_s,
+          gender: params.fetch(:gender).to_i
+      }
+    end
+
+    def user_update_params
+      params.permit(:password_digest, :level, :manager_id, :name, :email, :phone, :gender)
+      user_data = {
+          password_digest: @password,
+          level: params.fetch(:level).to_i,
+          manager_id: params.fetch(:manager_id).to_i,
+          name: params.fetch(:name).to_s,
+          email: params.fetch(:email).to_s,
+          phone: params.fetch(:phone).to_s,
+      }
+    end
   end
 end

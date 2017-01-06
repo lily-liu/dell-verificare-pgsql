@@ -63,11 +63,11 @@ class VisibilitiesController < ApplicationController
   # end
 
   def export_zip
-    Aws.config.update({credentials: Aws::Credentials.new('AKIAINCAF4JBFYUFPNAA', 'E5Z8ZbZuJqvqLk/6hEoJktQ960WRx92jKpAmd6di')})
+    Aws.config.update({credentials: Aws::Credentials.new('AKIAJ3B6D57O2IGVIGAQ', 'BACoiiHHbhAx+2cby3z3Zmk2MAoZmfQSEzKyuEjX')})
 
     s3 = Aws::S3::Resource.new(region: 'ap-southeast-1')
 
-    bucket = s3.bucket("verificareuploads")
+    bucket = s3.bucket("verificareuploads1")
 
     items = Visibility.where('user_id = ? AND store_id = ? AND created_at > ?', params.fetch(:user_id).to_i, params.fetch(:store_id).to_i, 1.week.ago)
 
