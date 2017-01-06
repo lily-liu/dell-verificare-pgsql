@@ -1,6 +1,6 @@
 require 'open-uri'
 class InventoriesController < ApplicationController
-  # before_action :set_inventory, only: [:show, :update, :destroy]
+  before_action :set_inventory, only: [:show, :update, :destroy]
   before_action :authenticate_user
 
   # GET /inventories

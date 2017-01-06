@@ -1,6 +1,6 @@
 class SellKitsController < ApplicationController
-  # before_action :set_sell_kit, only: [:show, :update, :destroy]
-  # before_action :authenticate_user
+  before_action :set_sell_kit, only: [:show, :update, :destroy]
+  before_action :authenticate_user
 
   # GET /product_knowledges
   # GET /product_knowledges.json
