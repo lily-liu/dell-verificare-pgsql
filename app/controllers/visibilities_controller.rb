@@ -73,28 +73,33 @@ class VisibilitiesController < ApplicationController
 
     folder = "uploads/posm_visibility"
 
-    zip_stream = Zip::OutputStream.write_buffer do |zip|
+    if items.present?
+      zip_stream = Zip::OutputStream.write_buffer do |zip|
 
-      items.each do |item|
+        items.each do |item|
 
-        file_obj = bucket.object("#{folder}/#{item.visibility_identifier}")
+          file_obj = bucket.object("#{folder}/#{item.visibility_identifier}")
 
-        zip.put_next_entry("#{item.id}-#{item.category}-#{item.visibility_identifier}")
+          zip.put_next_entry("#{item.id}-#{item.category}-#{item.visibility_identifier}")
 
-        zip.print file_obj.get.body.read
+          zip.print file_obj.get.body.read
+        end
       end
-    end
-    zip_stream.rewind
+      zip_stream.rewind
 
-    begin
-      tempZip = Tempfile.new([SecureRandom.hex(8), '.zip'])
-      tempZip.binmode
-      tempZip.write zip_stream.read
-      tempZip.rewind
-      send_data(tempZip.read, type: 'application/zip', filename: "recap-visibilities#{Time.now.to_date}.zip")
-    ensure
-      tempZip.close
-      tempZip.unlink
+      begin
+        tempZip = Tempfile.new([SecureRandom.hex(8), '.zip'])
+        tempZip.binmode
+        tempZip.write zip_stream.read
+        tempZip.rewind
+        send_data(tempZip.read, type: 'application/zip', filename: "recap-visibilities#{Time.now.to_date}.zip")
+      ensure
+        tempZip.close
+        tempZip.unlink
+      end
+    else
+      @message = 'no visibility found'
+      render :error, status: :not_found
     end
 
   end
