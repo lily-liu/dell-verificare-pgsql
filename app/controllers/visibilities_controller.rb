@@ -4,7 +4,7 @@ class VisibilitiesController < ApplicationController
   # include ActionController::Streaming
   # include Zipline
   before_action :set_visibility, only: [:show, :update, :destroy]
-  before_action :authenticate_user
+  before_action :authenticate_user, except: [:export_zip]
 
   # GET /visibilities
   # GET /visibilities.json
@@ -98,13 +98,6 @@ class VisibilitiesController < ApplicationController
     end
 
   end
-
-  # def test_zip
-  #   # @visibilities = Visibility.where('user_id = ? AND created_at > ?', 1, 1.week.ago).order(:category, :created_at)
-  #   visibilities = Visibility.all
-  #   files = visibilities.map { |visibility| [visibility.visibility, "#{visibility.visibility.url}.png"] }
-  #   zipline(files, 'test.zip')
-  # end
 
   # POST /visibilities
   # POST /visibilities.json
