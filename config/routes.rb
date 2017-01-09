@@ -49,8 +49,11 @@ Rails.application.routes.draw do
   get "posms/inventory/list", to: "posm_store_inventories#index", defaults: {format: :json}
   get "posms/list", to: "posms#index", defaults: {format: :json}
   get "posms/recap_category", to: "posms#posm_per_category", defaults: {format: :json}
+  get "posms/list_category", to: "posms#list_user_levels", defaults: {format: :json}
+  get "posms/:id", to: "posms#show", defaults: {format: :json}
   post "posms/inventory/create", to: "posm_store_inventories#create", defaults: {format: :json}
   post "posms/create", to: "posms#create", defaults: {format: :json}
+  patch "posms/update/:id", to: "posms#update", defaults: {format: :json}
 
   # Route Posts
   get "posts/list", to: "posts#index", defaults: {format: :json}

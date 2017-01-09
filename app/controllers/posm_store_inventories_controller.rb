@@ -31,12 +31,14 @@ class PosmStoreInventoriesController < ApplicationController
       @posm_store_inventory.posm = posm_data
       @posm_store_inventory.user = current_user
 
-      if @posm_store_inventory.save
-        render :show, status: :created
-        posm_data.update(quantity: posm_data.quantity - params.fetch(:quantity).to_i)
-      else
-        @message = @posm_store_inventory.errors
-        render :error, status: :unprocessable_entity
+      @posm_store_inventory.transaction do
+        if @posm_store_inventory.save
+          posm_data.update(quantity: posm_data.quantity - params.fetch(:quantity).to_i)
+          render :show, status: :created
+        else
+          @message = @posm_store_inventory.errors
+          render :error, status: :unprocessable_entity
+        end
       end
     else
       @message = "store or posm not available on db"

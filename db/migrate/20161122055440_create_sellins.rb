@@ -12,6 +12,7 @@ class CreateSellins < ActiveRecord::Migration[5.0]
       t.integer :source_store, null: false
       t.integer :target_store, null: false
       t.string :csv_ref, null: true
+      t.datetime :transaction_date, null: false, default: Time.now
 
 
       t.datetime :deleted_at, null: true

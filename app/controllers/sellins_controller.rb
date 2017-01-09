@@ -43,7 +43,7 @@ class SellinsController < ApplicationController
   def input_sellin_from_csv
     csv_file = CsvUploader.new
     csv_file.store!(params.fetch(:csv))
-    csv_data = SmarterCSV.process(open(csv_file.url))
+    csv_data = SmarterCSV.process(open(csv_file.url), value_converters: {transaction_date: DateConverter})
     if csv_data.present?
       saved_data = []
 
@@ -89,7 +89,7 @@ class SellinsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def sellin_params
-    params.permit(:service_tag, :quarter_year, :quarter, :quarter_week, :item_type, :part_number, :product_type, :product_name, :source_store, :target_store)
+    params.permit(:service_tag, :quarter_year, :quarter, :quarter_week, :item_type, :part_number, :product_type, :product_name, :source_store, :target_store, :transaction_date)
     sellin_data = {
         service_tag: params.fetch(:service_tag),
         quarter_year: params.fetch(:quarter_year).to_i,

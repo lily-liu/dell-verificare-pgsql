@@ -14,6 +14,11 @@ class PosmsController < ApplicationController
     end
   end
 
+  def list_user_levels
+    @levels = Posm.categories
+    render :level, status: :ok
+  end
+
   # GET /posms/1
   # GET /posms/1.json
   def show

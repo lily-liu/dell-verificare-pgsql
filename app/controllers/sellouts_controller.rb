@@ -79,7 +79,7 @@ class SelloutsController < ApplicationController
   def import_sellout
     csv_file = CsvUploader.new
     csv_file.store!(params.fetch(:csv))
-    csv_data = SmarterCSV.process(open(csv_file.url))
+    csv_data = SmarterCSV.process(open(csv_file.url), value_converters: {sales_date: DateConverter})
 
 
     if csv_data.present?
@@ -87,7 +87,6 @@ class SelloutsController < ApplicationController
 
       csv_data.each do |data|
         sellouts_tmp = Sellout.new(data)
-        sales_time = data[:sales_date].to_time
         sellouts_tmp.csv_ref = csv_file.url
         sellouts_tmp.added_by = current_user
         sellouts_tmp.quarter_year = current_quarter_year(sales_time)

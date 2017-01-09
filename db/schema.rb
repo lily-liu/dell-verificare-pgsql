@@ -65,16 +65,17 @@ ActiveRecord::Schema.define(version: 20161202042759) do
   end
 
   create_table "inventories", force: :cascade do |t|
-    t.string   "service_tag",             null: false
-    t.integer  "status",      default: 0
+    t.string   "service_tag",                  null: false
+    t.integer  "status",           default: 0
     t.integer  "sellin_id"
     t.integer  "store_id"
     t.integer  "added_by"
     t.integer  "user_id"
     t.string   "csv_ref"
+    t.datetime "transaction_date"
     t.datetime "deleted_at"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.index ["sellin_id"], name: "index_inventories_on_sellin_id", using: :btree
     t.index ["service_tag"], name: "index_inventories_on_service_tag", unique: true, using: :btree
     t.index ["store_id"], name: "index_inventories_on_store_id", using: :btree
@@ -163,20 +164,21 @@ ActiveRecord::Schema.define(version: 20161202042759) do
   end
 
   create_table "sellins", force: :cascade do |t|
-    t.string   "service_tag",  null: false
-    t.integer  "quarter_year", null: false
-    t.integer  "quarter",      null: false
-    t.integer  "quarter_week", null: false
-    t.integer  "item_type",    null: false
+    t.string   "service_tag",                                      null: false
+    t.integer  "quarter_year",                                     null: false
+    t.integer  "quarter",                                          null: false
+    t.integer  "quarter_week",                                     null: false
+    t.integer  "item_type",                                        null: false
     t.string   "part_number"
     t.string   "product_type"
     t.string   "product_name"
-    t.integer  "source_store", null: false
-    t.integer  "target_store", null: false
+    t.integer  "source_store",                                     null: false
+    t.integer  "target_store",                                     null: false
     t.string   "csv_ref"
+    t.datetime "transaction_date", default: '2017-01-09 09:56:50', null: false
     t.datetime "deleted_at"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
     t.index ["service_tag"], name: "index_sellins_on_service_tag", unique: true, using: :btree
   end
 
@@ -193,7 +195,7 @@ ActiveRecord::Schema.define(version: 20161202042759) do
     t.float    "price_usd"
     t.string   "proof",        default: "default.png",         null: false
     t.string   "csv_ref"
-    t.datetime "sales_date",   default: '2017-01-09 04:23:43', null: false
+    t.datetime "sales_date",   default: '2017-01-09 09:56:51', null: false
     t.datetime "deleted_at"
     t.datetime "created_at",                                   null: false
     t.datetime "updated_at",                                   null: false

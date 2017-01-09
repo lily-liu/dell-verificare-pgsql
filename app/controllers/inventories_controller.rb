@@ -67,6 +67,11 @@ class InventoriesController < ApplicationController
     inventory_data = Inventory.find_by service_tag: params.fetch(:service_tag, nil).to_s
     if sellin_data.present? && store_data.present?
       @inventory = Inventory.new(inventory_params)
+      if params[:transaction_date].present?
+        @inventory.transaction_date = params.fetch(:transaction_date).to_time
+      else
+        @inventory.transaction_date = Time.now
+      end
       @inventory.status = 0
       if params[:added_by].present?
         @inventory.user = User.find(params.fetch(:added_by).to_i)

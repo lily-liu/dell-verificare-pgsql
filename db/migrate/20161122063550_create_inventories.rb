@@ -8,6 +8,7 @@ class CreateInventories < ActiveRecord::Migration[5.0]
       t.integer :added_by, null:true
       t.belongs_to :user, index: true, foreign_key: true
       t.string :csv_ref, null: true
+      t.datetime :transaction_date, null: true
 
       t.datetime :deleted_at, null: true
       t.timestamps
