@@ -414,7 +414,7 @@ PosmStoreInventory.create!(
 )
 
 Visibility.create!(
-    store_id: 1,
+    store_id: 3,
     user_id: 2,
     remark: "v1",
     category: 0,
@@ -422,7 +422,7 @@ Visibility.create!(
 )
 
 Visibility.create!(
-    store_id: 1,
+    store_id: 3,
     user_id: 2,
     remark: "v2",
     category: 0,
