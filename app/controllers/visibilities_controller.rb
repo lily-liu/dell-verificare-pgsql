@@ -4,7 +4,7 @@ class VisibilitiesController < ApplicationController
   # include ActionController::Streaming
   # include Zipline
   before_action :set_visibility, only: [:show, :update, :destroy]
-  # before_action :authenticate_user
+  before_action :authenticate_user
 
   # GET /visibilities
   # GET /visibilities.json
