@@ -53,6 +53,12 @@ class InventoriesController < ApplicationController
     render :index, status: :ok
   end
 
+  def bulk_search_service_tag
+    search = params.fetch(:q).to_s.split(/\s*,\s*/)
+    @inventories = Inventory.where(service_tag: search)
+    render :index, status: :ok
+  end
+
   # POST /inventories
   # POST /inventories.json
   def create

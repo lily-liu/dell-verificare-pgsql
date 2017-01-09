@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   get "inventories/recap_store_cam", to: "inventories#inventories_each_cam_per_store", defaults: {format: :json}
   get "inventories/export_list", to: "inventories#inventories_export", defaults: {format: :json}
   get "inventories/search", to: "inventories#search_service_tag", defaults: {format: :json}
+  get "inventories/bulk_search", to: "inventories#bulk_search_service_tag", defaults: {format: :json}
   post "inventories/create", to: "inventories#create", defaults: {format: :json}
   post "inventories/import", to: "inventories#import_inventory", defaults: {format: :json}
 
@@ -95,6 +96,7 @@ Rails.application.routes.draw do
   get "sellins/list", to: "sellins#index", defaults: {format: :json}
   get "sellins/export", to: "sellins#sellin_csv_export"
   get "sellins/search", to: "sellins#search_service_tag", defaults: {format: :json}
+  get "sellins/bulk_search", to: "sellins#bulk_search_service_tag", defaults: {format: :json}
   get "sellins/:id", to: "sellins#show", defaults: {format: :json}
   post "sellins/import", to: "sellins#input_sellin_from_csv", defaults: {format: :json}
   patch "sellins/update/:id", to: "sellins#update", defaults: {format: :json}

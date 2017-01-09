@@ -19,6 +19,12 @@ class SellinsController < ApplicationController
     render :index, status: :ok
   end
 
+  def bulk_search_service_tag
+    search = params.fetch(:q).to_s.split(/\s*,\s*/)
+    @sellins = Sellin.where(service_tag: search)
+    render :index, status: :ok
+  end
+
   # # GET /sellins/:id
   # def show
   # end
