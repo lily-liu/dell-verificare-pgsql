@@ -91,7 +91,7 @@ class VisibilitiesController < ApplicationController
       tempZip.binmode
       tempZip.write zip_stream.read
       tempZip.rewind
-      send_data(tempZip.read, type: 'application/zip', filename: "recap-#{Time.now.to_date}.zip")
+      send_data(tempZip.read, type: 'application/zip', filename: "recap-visibilities#{Time.now.to_date}.zip")
     ensure
       tempZip.close
       tempZip.unlink

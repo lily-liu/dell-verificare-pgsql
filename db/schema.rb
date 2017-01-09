@@ -193,7 +193,7 @@ ActiveRecord::Schema.define(version: 20161202042759) do
     t.float    "price_usd"
     t.string   "proof",        default: "default.png",         null: false
     t.string   "csv_ref"
-    t.datetime "sales_date",   default: '2016-12-30 09:17:49', null: false
+    t.datetime "sales_date",   default: '2017-01-09 04:23:43', null: false
     t.datetime "deleted_at"
     t.datetime "created_at",                                   null: false
     t.datetime "updated_at",                                   null: false
