@@ -415,7 +415,7 @@ PosmStoreInventory.create!(
 
 Visibility.create!(
     store_id: 3,
-    user_id: 2,
+    user_id: 3,
     remark: "v1",
     category: 0,
     visibility: File.open(Rails.root + "public/uploads/kona.jpg")
@@ -423,7 +423,7 @@ Visibility.create!(
 
 Visibility.create!(
     store_id: 3,
-    user_id: 2,
+    user_id: 3,
     remark: "v2",
     category: 0,
     visibility: File.open(Rails.root + "public/uploads/kona.jpg")
