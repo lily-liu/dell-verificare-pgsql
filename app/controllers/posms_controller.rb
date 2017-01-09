@@ -69,10 +69,11 @@ class PosmsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def posm_params
-    params.permit(:name, :quantity)
+    params.permit(:name, :quantity, :category)
     issue_data = {
         name: params.fetch(:name).to_s,
-        quantity: params.fetch(:quantity).to_i
+        quantity: params.fetch(:quantity).to_i,
+        category: params.fetch(:category).to_i
     }
   end
 end
