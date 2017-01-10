@@ -1,7 +1,7 @@
 require 'open-uri'
 class SelloutsController < ApplicationController
   before_action :set_sellout, only: [:show, :update, :destroy]
-  before_action :authenticate_user
+  # before_action :authenticate_user
 
 
   # GET /sellouts
@@ -106,7 +106,10 @@ class SelloutsController < ApplicationController
   end
 
   def export_sellout
-    @export = Sellout.where('updated_at > ?', 1.week.ago).to_a
+    year = params.fetch(:quarter_year, Time.now.year).to_i
+    quarter = params.fetch(:quarter, 1).to_i
+    week = params.fetch(:quarter_week, 1).to_i
+    @export = Sellout.where('quarter_year = ? AND quarter = ? AND quarter_week = ?', year, quarter, week).to_a
     send_data(@export.to_csv(except: [:created_at, :updated_at, :deleted_at, :proof, :price_idr, :price_usd, :added_by]), type: 'text/csv', filename: "sellout-list-#{Time.now.to_date}.csv")
   end
 
@@ -169,9 +172,13 @@ class SelloutsController < ApplicationController
   end
 
   def sellout_report_export_csv
+    year = params.fetch(:quarter_year, Time.now.year).to_i
+    quarter = params.fetch(:quarter, 1).to_i
+    week = params.fetch(:quarter_week, 1).to_i
     @export = Sellout.joins([:store, {user: :manager}])
                   .joins(store: [{city: :region}])
                   .joins(inventory: :sellin)
+                  .where('sellouts.quarter_year = ? AND sellouts.quarter = ? AND sellouts.quarter_week = ?', year, quarter, week)
                   .select('sellouts.created_at AS transaction_date, stores.store_uid, stores.name AS store_name, stores.store_category, stores.store_building AS building_name, stores.address AS store_address, stores.phone AS store_phone, stores.email AS store_email, stores.store_owner, managers.name AS cam_name, users.name AS pic_name, users.level AS user_level, regions.name AS region_name, regions.position AS region, cities.name AS city_name, sellins.service_tag, sellins.part_number, sellins.product_type, sellins.product_name, sellins.source_store AS distributor, sellins.target_store AS master_dealer, sellouts.quarter_year, sellouts.quarter, sellouts.quarter_week')
     csv_data = ReportBuilder.build(@export)
     send_data(csv_data, type: 'text/csv', filename: "report-sellouts-#{Time.now.to_date}.csv")

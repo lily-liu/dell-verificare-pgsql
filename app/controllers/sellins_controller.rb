@@ -1,7 +1,7 @@
 require 'open-uri'
 class SellinsController < ApplicationController
   before_action :set_sellin, only: [:update, :show]
-  before_action :authenticate_user
+  # before_action :authenticate_user
 
   # GET /sellins/list
   def index
@@ -63,7 +63,10 @@ class SellinsController < ApplicationController
   end
 
   def sellin_csv_export
-    @export = Sellin.all.to_a
+    year = params.fetch(:quarter_year, Time.now.year).to_i
+    quarter = params.fetch(:quarter, 1).to_i
+    week = params.fetch(:quarter_week, 1).to_i
+    @export = Sellin.where('quarter_year = ? AND quarter = ? AND quarter_week = ?', year, quarter, week).to_a
     send_data(@export.to_csv(except: [:created_at, :updated_at, :deleted_at, :id, :csv_ref]), type: 'text/csv: charset=utf-8; header=present', filename: "report-" + Time.now.to_datetime.to_s + ".csv")
   end
 
