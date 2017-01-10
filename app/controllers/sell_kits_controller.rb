@@ -17,7 +17,7 @@ class SellKitsController < ApplicationController
   end
 
   def index
-    @sell_kits = SellKit.where("category = ? AND family = ?", category, family)
+    @sell_kits = SellKit.all
     if @sell_kits.present?
       render :index, status: :ok
     else
