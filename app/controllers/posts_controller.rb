@@ -26,7 +26,7 @@ class PostsController < ApplicationController
     @post.level = 0
 
     if @post.save
-      @push_response = push_notif(@post.title, @post.content, @post)
+      @push_response = push_notif(@post)
       render :show, status: :created
     else
       @message = @post.errors
@@ -42,7 +42,7 @@ class PostsController < ApplicationController
     @post.level = 1
 
     if @post.save
-      @push_response = push_notif(@post.title, @post.content, @post)
+      @push_response = push_notif(@post)
       render :show, status: :created
     else
       @message = @post.errors
@@ -58,7 +58,7 @@ class PostsController < ApplicationController
   end
 
   # to push notification to android
-  def push_notif(title, message, data)
+  def push_notif(post)
     if ENV['ONESIGNAL_APP_ID'].present? && ENV['ONESIGNAL_API_KEY'].present?
       app_id = ENV['ONESIGNAL_APP_ID']
       api_key = ENV['ONESIGNAL_API_KEY']
@@ -68,9 +68,9 @@ class PostsController < ApplicationController
     end
     params = {
         app_id: app_id,
-        headings: {en: title},
-        contents: {en: message},
-        data: {data: data},
+        headings: {en: post.title},
+        contents: {en: post.content},
+        data: {status: 'success', message: 'post', data: post},
         included_segments: ['All']
     }
     uri = URI.parse('https://onesignal.com/api/v1/notifications')
