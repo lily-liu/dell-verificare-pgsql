@@ -27,7 +27,6 @@ class PostsController < ApplicationController
 
     if @post.save
       @push_response = push_notif(@post.content)
-      # render json: @push_response
       render :show, status: :created
     else
       @message = @post.errors

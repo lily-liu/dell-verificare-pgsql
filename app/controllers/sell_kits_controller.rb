@@ -4,11 +4,21 @@ class SellKitsController < ApplicationController
 
   # GET /product_knowledges
   # GET /product_knowledges.json
-  def index
+  def show_fltered_list
     category = params.fetch(category, nil).to_i
     family = params.fetch(family, nil).to_i
     if category.present? && family.present?
       @sell_kits = SellKit.where("category = ? AND family = ?", category, family)
+      render :index, status: :ok
+    else
+      @message = "no category or family match"
+      render :error, status: :bad_request
+    end
+  end
+
+  def index
+    @sell_kits = SellKit.where("category = ? AND family = ?", category, family)
+    if @sell_kits.present?
       render :index, status: :ok
     else
       @message = "no category or family match"
