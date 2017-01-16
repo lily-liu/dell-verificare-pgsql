@@ -63,6 +63,11 @@ class PosmStoreInventoriesController < ApplicationController
     @posm_store_inventory.destroy
   end
 
+  def posm_inventory_csv_export
+    @export = PosmStoreInventory.all.to_a
+    send_data(@export.to_csv(except: [:created_at, :updated_at, :deleted_at]), type: 'text/csv', filename: "store-list-#{Time.now.to_date}.csv")
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_posm_store_inventory
