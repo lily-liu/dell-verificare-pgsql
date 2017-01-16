@@ -82,9 +82,15 @@ class UsersController < ApplicationController
         saved_data << users_tmp
       end
 
-      @users = User.import(saved_data)
-      @success_input = User.where(id: @users.ids)
-      render :import, status: :ok
+      begin
+        @users = User.import(saved_data)
+        @success_input = User.where(id: @users.ids)
+        render :import, status: :ok
+      rescue StandardError => e
+        @message = e
+        render :error, status: :internal_server_error
+      end
+
     else
       @message = "csv file is empty"
       render :error, status: :internal_server_error

@@ -33,10 +33,14 @@ class InventoriesController < ApplicationController
         inventories_tmp.added_by = current_user
         saved_data << inventories_tmp
       end
-
-      @inventories = Inventory.import(saved_data)
-      @success_input = Inventory.where(id: @inventories.ids)
-      render :import, status: :ok
+      begin
+        @inventories = Inventory.import(saved_data)
+        @success_input = Inventory.where(id: @inventories.ids)
+        render :import, status: :ok
+      rescue StandardError => e
+        @message = e
+        render :error, status: :internal_server_error
+      end
     else
       @message = "csv file is empty"
       render :error, status: :internal_server_error

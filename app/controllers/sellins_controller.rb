@@ -52,10 +52,14 @@ class SellinsController < ApplicationController
         sellins_tmp.csv_ref = csv_file.url
         saved_data << sellins_tmp
       end
-
-      @sellins = Sellin.import(saved_data)
-      @success_input = Sellin.where(id: @sellins.ids)
-      render :import, status: :ok
+      begin
+        @sellins = Sellin.import(saved_data)
+        @success_input = Sellin.where(id: @sellins.ids)
+        render :import, status: :ok
+      rescue StandardError => e
+        @message = e
+        render :error, status: :internal_server_error
+      end
     else
       @message = "csv file is empty"
       render :error, status: :internal_server_error

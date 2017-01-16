@@ -96,9 +96,15 @@ class SelloutsController < ApplicationController
         sellouts_tmp.price_usd = 0
         saved_data << sellouts_tmp
       end
-      @sellouts = Sellout.import!(saved_data)
-      @success_input = Sellout.where(id: @sellouts.ids)
-      render :import, status: :ok
+
+      begin
+        @sellouts = Sellout.import!(saved_data)
+        @success_input = Sellout.where(id: @sellouts.ids)
+        render :import, status: :ok
+      rescue StandardError => e
+        @message = e
+        render :error, status: :internal_server_error
+      end
     else
       @message = "csv file is empty"
       render :error, status: :internal_server_error

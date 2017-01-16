@@ -74,9 +74,14 @@ class CitiesController < ApplicationController
         saved_data << cities_tmp
       end
 
-      @cities = City.import(saved_data)
-      @success_input = City.where(id: @users.ids)
-      render :import, status: :ok
+      begin
+        @cities = City.import(saved_data)
+        @success_input = City.where(id: @users.ids)
+        render :import, status: :ok
+      rescue StandardError => e
+        @message = e
+        render :error, status: :internal_server_error
+      end
     else
       @message = "csv file is empty"
       render :error, status: :internal_server_error

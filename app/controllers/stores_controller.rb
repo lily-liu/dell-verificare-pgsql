@@ -103,9 +103,15 @@ class StoresController < ApplicationController
         stores_tmp = Store.new(data)
         saved_data << stores_tmp
       end
-      @stores = Store.import!(saved_data)
-      @success_input = Store.where(id: @stores.ids)
-      render :import, status: :ok
+
+      begin
+        @stores = Store.import!(saved_data)
+        @success_input = Store.where(id: @stores.ids)
+        render :import, status: :ok
+      rescue StandardError => e
+        @message = e
+        render :error, status: :internal_server_error
+      end
     else
       @message = "csv file is empty"
       render :error, status: :internal_server_error
