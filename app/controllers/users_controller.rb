@@ -72,7 +72,8 @@ class UsersController < ApplicationController
   def import_user
     csv_file = CsvUploader.new
     csv_file.store!(params.fetch(:csv))
-    csv_data = SmarterCSV.process(open(csv_file.url), value_converters: {password_digest: PasswordConverter})
+
+    csv_data = SmarterCSV.process(open(csv_file.url), {value_converters: {password_digest: PasswordConverter}, col_sep: ';'})
     if csv_data.present?
       saved_data = []
 

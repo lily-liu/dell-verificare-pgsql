@@ -23,7 +23,7 @@ class InventoriesController < ApplicationController
   def import_inventory
     csv_file = CsvUploader.new
     csv_file.store!(params.fetch(:csv))
-    csv_data = SmarterCSV.process(open(csv_file.url))
+    csv_data = SmarterCSV.process(open(csv_file.url), col_sep: ';')
     if csv_data.present?
       saved_data = []
 

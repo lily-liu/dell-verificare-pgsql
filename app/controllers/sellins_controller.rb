@@ -43,7 +43,7 @@ class SellinsController < ApplicationController
   def input_sellin_from_csv
     csv_file = CsvUploader.new
     csv_file.store!(params.fetch(:csv))
-    csv_data = SmarterCSV.process(open(csv_file.url), value_converters: {transaction_date: DateConverter})
+    csv_data = SmarterCSV.process(open(csv_file.url), {value_converters: {transaction_date: DateConverter}, col_sep: ';'})
     if csv_data.present?
       saved_data = []
 

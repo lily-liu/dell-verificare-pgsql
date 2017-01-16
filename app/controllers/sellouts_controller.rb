@@ -79,7 +79,7 @@ class SelloutsController < ApplicationController
   def import_sellout
     csv_file = CsvUploader.new
     csv_file.store!(params.fetch(:csv))
-    csv_data = SmarterCSV.process(open(csv_file.url), value_converters: {sales_date: DateConverter})
+    csv_data = SmarterCSV.process(open(csv_file.url), {value_converters: {sales_date: DateConverter}, col_sep: ';'})
 
 
     if csv_data.present?
