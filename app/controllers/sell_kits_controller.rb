@@ -5,8 +5,8 @@ class SellKitsController < ApplicationController
   # GET /product_knowledges
   # GET /product_knowledges.json
   def show_fltered_list
-    category = params.fetch(category, nil).to_i
-    family = params.fetch(family, nil).to_i
+    category = params.fetch(:category, nil).to_i
+    family = params.fetch(:family, nil).to_i
     if category.present? && family.present?
       @sell_kits = SellKit.where("category = ? AND family = ?", category, family)
       render :index, status: :ok
