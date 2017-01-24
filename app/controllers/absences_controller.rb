@@ -16,7 +16,7 @@ class AbsencesController < ApplicationController
   # POST /absences.json
   def create
     user = current_user
-    store_data = Store.find_by store_uid: params.fetch(:store_uid)
+    store_data = Store.find_by store_uid: params.fetch(:store_uid, "STR-000")
     if user.present? && store_data.present? && params.fetch(:absence_type) !=nil
       existing_absence_in = Absence.where("created_at > ? AND absence_type = ? AND user_id = ? AND store_id = ?", 2.hour.ago, 1, current_user.id.to_i, store_data.id.to_i).first
       existing_absence_out = Absence.where("created_at > ? AND absence_type = ? AND user_id = ? AND store_id = ?", 2.hour.ago, 2, current_user.id.to_i, store_data.id.to_i).first

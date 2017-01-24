@@ -23,12 +23,111 @@ Manager.create!(
 )
 
 User.create!(
-    username: 'admin',
+    username: 'admin1',
     password_digest: BCrypt::Password.create("password"),
     level: 0,
     manager_id: 1,
-    name: 'admin name',
-    email: 'admin@email.com',
+    name: 'admin1 name',
+    email: 'admin1@email.com',
+    phone: "8989898989",
+    gender: 1
+)
+
+User.create!(
+    username: 'admin2',
+    password_digest: BCrypt::Password.create("password"),
+    level: 0,
+    manager_id: 1,
+    name: 'admin2 name',
+    email: 'admin2@email.com',
+    phone: "8989898989",
+    gender: 1
+)
+
+User.create!(
+    username: 'admin3',
+    password_digest: BCrypt::Password.create("password"),
+    level: 0,
+    manager_id: 1,
+    name: 'admin3 name',
+    email: 'admin3@email.com',
+    phone: "8989898989",
+    gender: 1
+)
+
+User.create!(
+    username: 'admin4',
+    password_digest: BCrypt::Password.create("password"),
+    level: 0,
+    manager_id: 1,
+    name: 'admin4 name',
+    email: 'admin4@email.com',
+    phone: "8989898989",
+    gender: 1
+)
+
+User.create!(
+    username: 'admin5',
+    password_digest: BCrypt::Password.create("password"),
+    level: 0,
+    manager_id: 1,
+    name: 'admin5 name',
+    email: 'admin5@email.com',
+    phone: "8989898989",
+    gender: 1
+)
+
+User.create!(
+    username: 'admin6',
+    password_digest: BCrypt::Password.create("password"),
+    level: 0,
+    manager_id: 1,
+    name: 'admin6 name',
+    email: 'admin6@email.com',
+    phone: "8989898989",
+    gender: 1
+)
+
+User.create!(
+    username: 'admin7',
+    password_digest: BCrypt::Password.create("password"),
+    level: 0,
+    manager_id: 1,
+    name: 'admin7 name',
+    email: 'admin7@email.com',
+    phone: "8989898989",
+    gender: 1
+)
+
+User.create!(
+    username: 'admin8',
+    password_digest: BCrypt::Password.create("password"),
+    level: 0,
+    manager_id: 1,
+    name: 'admin8 name',
+    email: 'admin8@email.com',
+    phone: "8989898989",
+    gender: 1
+)
+
+User.create!(
+    username: 'admin9',
+    password_digest: BCrypt::Password.create("password"),
+    level: 0,
+    manager_id: 1,
+    name: 'admin9 name',
+    email: 'admin9@email.com',
+    phone: "8989898989",
+    gender: 1
+)
+
+User.create!(
+    username: 'admin10',
+    password_digest: BCrypt::Password.create("password"),
+    level: 0,
+    manager_id: 1,
+    name: 'admin10 name',
+    email: 'admin10@email.com',
     phone: "8989898989",
     gender: 1
 )
@@ -39,7 +138,7 @@ User.create!(
     level: 1,
     manager_id: 1,
     name: 'admin name',
-    email: 'admin1@email.com',
+    email: 'dashboard@email.com',
     phone: "8989898989",
     gender: 1
 )
@@ -50,7 +149,7 @@ User.create!(
     level: 2,
     manager_id: 1,
     name: 'admin name',
-    email: 'admin2@email.com',
+    email: 'am@email.com',
     phone: "8989898989",
     gender: 1
 )
@@ -61,7 +160,7 @@ User.create!(
     level: 3,
     manager_id: 1,
     name: 'admin name',
-    email: 'admin3@email.com',
+    email: 'promoter@email.com',
     phone: "8989898989",
     gender: 1
 )
@@ -72,7 +171,7 @@ User.create!(
     level: 3,
     manager_id: 2,
     name: 'admin name',
-    email: 'admin32@email.com',
+    email: 'promoter2@email.com',
     phone: "8989898989",
     gender: 1
 )
@@ -83,7 +182,7 @@ User.create!(
     level: 4,
     manager_id: 2,
     name: 'admin name',
-    email: 'admin4@email.com',
+    email: 'merchandiser@email.com',
     phone: "8989898989",
     gender: 1
 )
@@ -94,7 +193,7 @@ User.create!(
     level: 5,
     manager_id: 2,
     name: 'admin name',
-    email: 'admin5@email.com',
+    email: 'sr@email.com',
     phone: "8989898989",
     gender: 1
 )
@@ -105,7 +204,7 @@ User.create!(
     level: 6,
     manager_id: 2,
     name: 'admin name',
-    email: 'admin6@email.com',
+    email: 'store@email.com',
     phone: "8989898989",
     gender: 1
 )
@@ -136,6 +235,19 @@ City.create!(
 City.create!(
     name: 'Bandung',
     region_id: 1
+)
+
+Store.create!(
+    store_uid: "STR-000",
+    city_id: 1,
+    name: 'Default Store',
+    address: 'Default Address',
+    phone: '0000000',
+    email: 'nostore@noemail.com',
+    level: 2,
+    store_owner: 'Default Owner',
+    store_building: 'Default Building',
+    store_category: 1
 )
 
 Store.create!(

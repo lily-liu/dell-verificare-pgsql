@@ -4,7 +4,7 @@ class PostsController < ApplicationController
 
   # GET /posts   => Index Post
   def index
-    @posts = Post.where(:level => 0)
+    @posts = Post.where(:level => 0).order(created_at: :desc)
     if @posts.present?
       render :index, status: :ok
     else
