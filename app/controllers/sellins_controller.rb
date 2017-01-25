@@ -53,8 +53,8 @@ class SellinsController < ApplicationController
         saved_data << sellins_tmp
       end
       begin
-        @sellins = Sellin.import(saved_data)
-        @success_input = Sellin.where(id: @sellins.ids)
+        # @sellins = Sellin.import(saved_data)
+        # @success_input = Sellin.where(id: @sellins.ids)
         render :import, status: :ok
       rescue StandardError => e
         @message = e
