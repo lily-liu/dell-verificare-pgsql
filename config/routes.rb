@@ -60,7 +60,7 @@ Rails.application.routes.draw do
 
   # Route Posts
   get "posts/list", to: "posts#index", defaults: {format: :json}
-  get "posts/list_comments", to: "posts#index_comments", defaults: {format: :json}
+  get "posts/list_comments/:post_id", to: "posts#list_comments", defaults: {format: :json}
   get "posts/notif", to: "posts#push_notif", defaults: {format: :json}
   get "posts/:id", to: "posts#show", defaults: {format: :json}
   post "posts/create", to: "posts#create_post", defaults: {format: :json}

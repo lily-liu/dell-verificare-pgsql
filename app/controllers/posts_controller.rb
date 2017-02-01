@@ -23,6 +23,17 @@ class PostsController < ApplicationController
     end
   end
 
+  def list_comments
+    @post = Post.find(params.fetch(:post_id).to_i)
+    @comments = @post.comments
+    if @post.present?
+      render :comments, status: :ok
+    else
+      @message = "no post found"
+      render :error, status: :not_found
+    end
+  end
+
   # GET /posts/:id
   def show
     @post = Post.find(params.fetch(:id, nil))
