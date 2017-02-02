@@ -105,6 +105,7 @@ Rails.application.routes.draw do
   get "sellins/search", to: "sellins#search_service_tag", defaults: {format: :json}
   get "sellins/bulk_search", to: "sellins#bulk_search_service_tag", defaults: {format: :json}
   get "sellins/:id", to: "sellins#show", defaults: {format: :json}
+  post "sellins/listed/:draw", to: "sellins#index", defaults: {format: :json}
   post "sellins/import", to: "sellins#input_sellin_from_csv", defaults: {format: :json}
   patch "sellins/update/:id", to: "sellins#update", defaults: {format: :json}
 
