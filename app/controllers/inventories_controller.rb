@@ -6,7 +6,9 @@ class InventoriesController < ApplicationController
   # GET /inventories
   # GET /inventories.json
   def index
-    @inventories = Inventory.all
+    @page = params.fetch(:p).to_i
+    @inventories = Inventory.page(@page).per(1000)
+    @total = Inventory.count
     if @inventories.present?
       render :index, status: :ok
     else
@@ -53,11 +55,13 @@ class InventoriesController < ApplicationController
   end
 
   def search_service_tag
+    @total = Inventory.count
     @inventories = Inventory.where('service_tag LIKE ? OR service_tag LIKE ? OR service_tag LIKE ? OR service_tag LIKE ?', "%#{params[:q]}%", "#{params[:q]}%", "%#{params[:q]}", params[:q])
     render :index, status: :ok
   end
 
   def bulk_search_service_tag
+    @total = Inventory.count
     search = params.fetch(:q).to_s.split(/\s*,\s*/)
     @inventories = Inventory.where(service_tag: search)
     render :index, status: :ok

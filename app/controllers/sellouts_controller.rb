@@ -7,7 +7,9 @@ class SelloutsController < ApplicationController
   # GET /sellouts
   # GET /sellouts.json
   def index
-    @sellouts = Sellout.all
+    @page = params.fetch(:p).to_i
+    @sellouts = Sellout.page(@page).per(1000)
+    @total = Sellout.count
     if @sellouts.present?
       render :index, status: :ok
     else
@@ -120,11 +122,13 @@ class SelloutsController < ApplicationController
   end
 
   def search_service_tag
+    @total = Sellout.count
     @sellouts = Sellout.where('service_tag LIKE ? OR service_tag LIKE ? OR service_tag LIKE ? OR service_tag LIKE ?', "%#{params[:q]}%", "#{params[:q]}%", "%#{params[:q]}", params[:q])
     render :index, status: :ok
   end
 
   def bulk_search_service_tag
+    @total = Sellout.count
     search = params.fetch(:q).to_s.split(/\s*,\s*/)
     @sellouts = Sellout.where(service_tag: search)
     render :index, status: :ok

@@ -5,8 +5,9 @@ class SellinsController < ApplicationController
 
   # GET /sellins/list
   def index
-    @draw = params.fetch(:draw).to_i
-    @sellins = Sellin.page(@draw).per(1000)
+    @page = params.fetch(:p).to_i
+    @total = Sellin.count
+    @sellins = Sellin.page(@page).per(1000)
     if @sellins.present?
       render :index, status: :ok
     else
@@ -16,11 +17,13 @@ class SellinsController < ApplicationController
   end
 
   def search_service_tag
+    @total = Sellin.count
     @sellins = Sellin.where('service_tag LIKE ? OR service_tag LIKE ? OR service_tag LIKE ? OR service_tag LIKE ?', "%#{params[:q]}%", "#{params[:q]}%", "%#{params[:q]}", params[:q])
     render :index, status: :ok
   end
 
   def bulk_search_service_tag
+    @total = Sellin.count
     search = params.fetch(:q).to_s.split(/\s*,\s*/)
     @sellins = Sellin.where(service_tag: search)
     render :index, status: :ok
