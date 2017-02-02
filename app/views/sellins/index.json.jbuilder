@@ -1,6 +1,6 @@
 json.status "success"
 json.message "sellin"
-json.draw @draw
+json.draw @draw.to_s
 json.prev @draw - 1
 json.next @draw + 1
 json.recordsTotal 100
