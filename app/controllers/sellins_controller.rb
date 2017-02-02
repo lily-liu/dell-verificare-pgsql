@@ -6,7 +6,7 @@ class SellinsController < ApplicationController
   # GET /sellins/list
   def index
     @draw = params.fetch(:draw).to_i
-    @sellins = Sellin.page(@draw).per(100)
+    @sellins = Sellin.page(@draw).per(1000)
     if @sellins.present?
       render :index, status: :ok
     else
