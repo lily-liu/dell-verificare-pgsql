@@ -45,7 +45,7 @@ class AbsencesController < ApplicationController
   end
 
   def export_absence
-    @export = Absence.where(created_at: 1.week.ago)
+    @export = Absence.where(created_at: 1.month.ago)
     send_data(@export.to_a.to_csv, type: 'text/csv', filename: "absence-recap-#{Time.now.to_date}.csv")
   end
 
