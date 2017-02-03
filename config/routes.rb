@@ -31,7 +31,7 @@ Rails.application.routes.draw do
   get "inventories/export_list", to: "inventories#inventories_export", defaults: {format: :json}
   get "inventories/search", to: "inventories#search_service_tag", defaults: {format: :json}
   get "inventories/bulk_search", to: "inventories#bulk_search_service_tag", defaults: {format: :json}
-  post "inventories/create", to: "inventories#asd", defaults: {format: :json}
+  post "inventories/create", to: "inventories#create", defaults: {format: :json}
   post "inventories/import", to: "inventories#import_inventory", defaults: {format: :json}
 
   # route For product knowledge
