@@ -58,7 +58,7 @@ class SelloutsController < ApplicationController
             render :show, status: :created
           end
         rescue ActiveRecord::RecordNotUnique
-          @conflict_sellout = ConflictedSellout.create(user_id: current_user.id, store_id: store_data.id, service_tag: params.fetch(:service_tag, nil).to_s, cause: 1, solved: !nil)
+          @conflict_sellout = ConflictedSellout.create!(user_id: current_user.id, store_id: store_data.id, service_tag: params.fetch(:service_tag, nil).to_s, cause: 1, solved: !nil)
           @message = "sellout already inputted"
           render :error, status: :unauthorized
         rescue StandardError => e
@@ -70,11 +70,11 @@ class SelloutsController < ApplicationController
         render :error, status: :bad_request
       end
     elsif !sellin_data.present?
-      @conflict_sellout = ConflictedSellout.create(user_id: current_user.id, store_id: store_data.id, service_tag: params.fetch(:service_tag, nil).to_s, cause: 0, solved: !nil)
+      @conflict_sellout = ConflictedSellout.create!(user_id: current_user.id, store_id: store_data.id, service_tag: params.fetch(:service_tag, nil).to_s, cause: 0, solved: !nil)
       @message = "no sellin avaliable on the store for the service tag"
       render :error, status: :not_found
     else
-      @conflict_sellout = ConflictedSellout.create(user_id: current_user.id, store_id: store_data.id, service_tag: params.fetch(:service_tag, nil).to_s, cause: 2, solved: !nil)
+      @conflict_sellout = ConflictedSellout.create!(user_id: current_user.id, store_id: store_data.id, service_tag: params.fetch(:service_tag, nil).to_s, cause: 2, solved: !nil)
       @message = "no inventory avaliable on the store for the service tag"
       render :error, status: :not_found
     end
