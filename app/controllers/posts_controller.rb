@@ -25,8 +25,8 @@ class PostsController < ApplicationController
 
   def list_comments
     @post = Post.find(params.fetch(:post_id).to_i)
-    @comments = @post.comments
-    if @post.present?
+    if @post.present? && @post.level == 0
+      @comments = @post.comments
       render :comments, status: :ok
     else
       @message = "no post found"
