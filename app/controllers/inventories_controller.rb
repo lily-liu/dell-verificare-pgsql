@@ -92,18 +92,18 @@ class InventoriesController < ApplicationController
         @inventory.save
         render :show, status: :created
       rescue ActiveRecord::RecordNotUnique
-        inventory_data = Inventory.find_by service_tag: params.fetch(:service_tag).to_s
-        @inventory = inventory_data
-        @conflict_inventory = ConflictedInventory.create(user_id: current_user.id, store_id: store_data.id, service_tag: params.fetch(:service_tag, nil).to_s, cause: 1, solved: false)
-        @inventory.update(user: current_user, store: store_data, status: 2)
-        render :show, status: :ok
+        inventory = Inventory.find_by service_tag: params.fetch(:service_tag).to_s
+        @inventory = inventory.update(user: current_user, store: store_data, status: 2)
+        @conflict_inventory = ConflictedInventory.create!(user: current_user, store: store_data, service_tag: params.fetch(:service_tag, nil).to_s, cause: :inventory_already_added, solved: !nil)
+        render json: ConflictedInventory.all
+          # render :show, status: :ok
       rescue StandardError => e
         @message = e
         render :error, status: :internal_server_error
       end
 
     else
-      @conflict_inventory = ConflictedInventory.create(user_id: current_user.id, store_id: store_data.id, service_tag: params.fetch(:service_tag, nil).to_s, cause: 0, solved: false)
+      @conflict_inventory = ConflictedInventory.create(user_id: current_user.id, store_id: store_data.id, service_tag: params.fetch(:service_tag, nil).to_s, cause: :no_sellin, solved: !nil)
       @message = "no sellin data for that service tag"
       render :error, status: :not_found
     end
@@ -150,5 +150,4 @@ class InventoriesController < ApplicationController
         service_tag: params.fetch(:service_tag, nil).to_s
     }
   end
-
 end
