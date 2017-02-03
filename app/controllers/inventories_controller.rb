@@ -92,8 +92,8 @@ class InventoriesController < ApplicationController
         @inventory.save
         render :show, status: :created
       rescue ActiveRecord::RecordNotUnique
-        inventory = Inventory.find_by service_tag: params.fetch(:service_tag).to_s
-        @inventory = inventory.update(user: current_user, store: store_data, status: 2)
+        @inventory = Inventory.find_by service_tag: params.fetch(:service_tag).to_s
+        @inventory.update(user: current_user, store: store_data, status: 2)
         @conflict_inventory = ConflictedInventory.create!(user: current_user, store: store_data, service_tag: params.fetch(:service_tag, nil).to_s, cause: :inventory_already_added, solved: !nil)
         render :show, status: :ok
       rescue StandardError => e
