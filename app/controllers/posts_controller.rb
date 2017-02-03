@@ -25,7 +25,7 @@ class PostsController < ApplicationController
 
   def list_comments
     @post = Post.find(params.fetch(:post_id).to_i)
-    if @post.present? && @post.level == '0'
+    if @post.present? && @post.level.to_i == 0
       @comments = @post.comments
       render :comments, status: :ok
     else
