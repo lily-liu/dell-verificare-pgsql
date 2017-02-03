@@ -72,7 +72,6 @@ class InventoriesController < ApplicationController
   def create
     sellin_data = Sellin.find_by service_tag: params.fetch(:service_tag, nil).to_s
     store_data = Store.find(params.fetch(:store_id, nil).to_i)
-    inventory_data = Inventory.find_by service_tag: params.fetch(:service_tag, nil).to_s
     if sellin_data.present? && store_data.present?
       @inventory = Inventory.new(inventory_params)
       if params[:transaction_date].present?
@@ -93,6 +92,7 @@ class InventoriesController < ApplicationController
         @inventory.save
         render :show, status: :created
       rescue ActiveRecord::RecordNotUnique
+        inventory_data = Inventory.find_by service_tag: params.fetch(:service_tag).to_s
         @inventory = inventory_data
         @conflict_inventory = ConflictedInventory.create(user_id: current_user.id, store_id: store_data.id, service_tag: params.fetch(:service_tag, nil).to_s, cause: 1, solved: false)
         @inventory.update(user: current_user, store: store_data, status: 2)
