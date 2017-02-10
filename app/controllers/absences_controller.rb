@@ -3,7 +3,7 @@ class AbsencesController < ApplicationController
   before_action :authenticate_user
 
   def index
-    @absences = Absence.all
+    @absences = Absence.all.order(created_at: :desc)
     if @absences.present?
       render :index, status: :ok
     else
