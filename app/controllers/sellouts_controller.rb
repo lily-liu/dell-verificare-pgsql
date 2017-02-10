@@ -46,7 +46,7 @@ class SelloutsController < ApplicationController
         else
           @sellout.user = current_user
         end
-        @ssellout.sales_date = sales_time
+        @sellout.sales_date = sales_time
         @sellout.quarter_year = current_quarter_year(sales_time)
         @sellout.quarter = current_quarter_months(sales_time)
         @sellout.quarter_week = current_quarter_week(sales_time)
