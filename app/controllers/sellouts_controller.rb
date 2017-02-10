@@ -242,7 +242,7 @@ class SelloutsController < ApplicationController
 
   def current_quarter_months(date)
     quarters = [[2, 3, 4], [5, 6, 7], [8, 9, 10], [11, 12, 1]]
-    quarters.index(quarters[(date.month - 1) / 3])
+    quarters.index(quarters[(date.month - 1) / 3]) + 1
   end
 
   def current_quarter_year(date)
