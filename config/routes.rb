@@ -113,6 +113,7 @@ Rails.application.routes.draw do
   get "cities/export", to: "cities#cities_csv_export"
   get "cities/:id", to: "cities#show", defaults: {format: :json}
   post "cities/create", to: "cities#create", defaults: {format: :json}
+  post "cities/import", to: "cities#import_city", defaults: {format: :json}
 
 
   # route for region

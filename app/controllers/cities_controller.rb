@@ -62,7 +62,7 @@ class CitiesController < ApplicationController
     send_data(@export.to_csv(except: [:created_at, :updated_at, :deleted_at]), type: 'text/csv', filename: "city-list-#{Time.now.to_date}.csv")
   end
 
-  def import_user
+  def import_city
     csv_file = CsvUploader.new
     csv_file.store!(params.fetch(:csv))
     csv_data = SmarterCSV.process(open(csv_file.url), col_sep: ';')
