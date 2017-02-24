@@ -116,12 +116,12 @@ class SelloutsController < ApplicationController
   end
 
   def export_sellout
-    year_from = params.fetch(:quarter_year_from, Time.now.year).to_i
-    year_to = params.fetch(:quarter_year_to, Time.now.year).to_i
-    quarter_from = params.fetch(:quarter_from, 1).to_i
-    quarter_to = params.fetch(:quarter_to, 1).to_i
-    week_from = params.fetch(:quarter_week_from, 1).to_i
-    week_to = params.fetch(:quarter_week_to, 1).to_i
+    year_from = params.fetch(:quarter_year_from).to_i
+    year_to = params.fetch(:quarter_year_to).to_i
+    quarter_from = params.fetch(:quarter_from).to_i
+    quarter_to = params.fetch(:quarter_to).to_i
+    week_from = params.fetch(:quarter_week_from).to_i
+    week_to = params.fetch(:quarter_week_to).to_i
     @export = Sellout.where(quarter_year: (year_from...year_to)).where(quarter: (quarter_from...quarter_to)).where(quarter_week: (week_from...week_to)).to_a
     send_data(@export.to_csv(except: [:created_at, :updated_at, :deleted_at, :proof, :price_idr, :price_usd, :added_by]), type: 'text/csv', filename: "sellout-list-#{Time.now.to_date}.csv")
   end
