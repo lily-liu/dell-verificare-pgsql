@@ -2,7 +2,7 @@ class ReportBuilder < Julia::Builder
   column 'Transaction Date', :transaction_date
   column 'Store ID', :store_uid
   column 'Store name', :store_name
-  column 'Store category', -> { "#{Store.categories.key(store_category)}" }
+  column 'Store category', -> { "#{Store.store_categories.key(store_category)}" }
   column 'Store building', :building_name
   column 'Store address', :store_address
   column 'Store phone', :store_phone
