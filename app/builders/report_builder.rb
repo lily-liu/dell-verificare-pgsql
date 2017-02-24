@@ -2,7 +2,7 @@ class ReportBuilder < Julia::Builder
   column 'Transaction Date', :transaction_date
   column 'Store ID', :store_uid
   column 'Store name', :store_name
-  column 'Store category', :store_category
+  column 'Store category', -> { "#{Store.categories.key(store_category)}" }
   column 'Store building', :building_name
   column 'Store address', :store_address
   column 'Store phone', :store_phone
@@ -10,7 +10,7 @@ class ReportBuilder < Julia::Builder
   column 'Store owner', :store_owner
   column 'CAM name', :cam_name
   column 'PIC name', :pic_name
-  column 'PIC level', :user_level
+  column 'PIC level', -> { "#{User.levels.key(user_level)}" }
   column 'Region name', :region_name
   column 'Region', :region
   column 'City name', :city_name
