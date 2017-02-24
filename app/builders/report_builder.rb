@@ -18,8 +18,8 @@ class ReportBuilder < Julia::Builder
   column 'Part Number', :part_number
   column 'Product type', :product_type
   column 'Product name', :product_name
-  column 'Distributor', -> { "#{Store.find(distributor).name}" }
-  column 'Master dealer', -> { "#{Store.find(master_dealer).name}" }
+  column 'Distributor', :distributor
+  column 'Master dealer', :master_dealer
   column 'Quarter year', :quarter_year
   column 'Quarter', :quarter
   column 'Quarter week', :quarter_week
