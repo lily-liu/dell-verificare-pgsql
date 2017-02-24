@@ -1,7 +1,7 @@
 require 'open-uri'
 class SelloutsController < ApplicationController
   before_action :set_sellout, only: [:show, :update, :destroy]
-  # before_action :authenticate_user
+  before_action :authenticate_user
 
 
   # GET /sellouts
