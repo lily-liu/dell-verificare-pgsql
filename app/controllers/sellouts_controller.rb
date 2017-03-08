@@ -193,7 +193,11 @@ class SelloutsController < ApplicationController
     quarter_to = params.fetch(:quarter_to, 1).to_i
     week_from = params.fetch(:quarter_week_from, 1).to_i
     week_to = params.fetch(:quarter_week_to, 1).to_i
-    @report = Store.select(:name).joins(sellouts: [{user: :manager}]).joins(:sellouts).where(managers: {id: params.fetch(:manager_id).to_i}).where('sellouts.quarter_year': (year_from..year_to)).where('sellouts.quarter': (quarter_from..quarter_to)).where('sellouts.quarter_week': (week_from..week_to)).group(:name).count
+    if params[:quarter_year_from].present? && params[:quarter_year_to].present? &&params[:quarter_from].present? && params[:quarter_to].present? && params[:quarter_week_from].present? && params[:quarter_week_to].present?
+      @report = Store.select(:name).joins(sellouts: [{user: :manager}]).joins(:sellouts).where(managers: {id: params.fetch(:manager_id).to_i}).where('sellouts.quarter_year': (year_from..year_to)).where('sellouts.quarter': (quarter_from..quarter_to)).where('sellouts.quarter_week': (week_from..week_to)).group(:name).count
+    else
+      @report = Store.select(:name).joins(sellouts: [{user: :manager}]).joins(:sellouts).where(managers: {id: params.fetch(:manager_id).to_i}).group(:name).count
+    end
     render :report, status: :ok
   end
 
@@ -204,7 +208,11 @@ class SelloutsController < ApplicationController
     quarter_to = params.fetch(:quarter_to, 1).to_i
     week_from = params.fetch(:quarter_week_from, 1).to_i
     week_to = params.fetch(:quarter_week_to, 1).to_i
-    @report = Manager.select(:name).joins(users: :sellouts).where('sellouts.quarter_year': (year_from..year_to)).where('sellouts.quarter': (quarter_from..quarter_to)).where('sellouts.quarter_week': (week_from..week_to)).group(:name).count
+    if params[:quarter_year_from].present? && params[:quarter_year_to].present? &&params[:quarter_from].present? && params[:quarter_to].present? && params[:quarter_week_from].present? && params[:quarter_week_to].present?
+      @report = Manager.select(:name).joins(users: :sellouts).where('sellouts.quarter_year': (year_from..year_to)).where('sellouts.quarter': (quarter_from..quarter_to)).where('sellouts.quarter_week': (week_from..week_to)).group(:name).count
+    else
+      @report = Manager.select(:name).joins(users: :sellouts).group(:name).count
+    end
     render :report, status: :ok
   end
 
@@ -215,7 +223,11 @@ class SelloutsController < ApplicationController
     quarter_to = params.fetch(:quarter_to, 1).to_i
     week_from = params.fetch(:quarter_week_from, 1).to_i
     week_to = params.fetch(:quarter_week_to, 1).to_i
-    @report = Region.select(:name).joins(cities: [{stores: :sellouts}]).where('sellouts.quarter_year': (year_from..year_to)).where('sellouts.quarter': (quarter_from..quarter_to)).where('sellouts.quarter_week': (week_from..week_to)).group(:name).count
+    if params[:quarter_year_from].present? && params[:quarter_year_to].present? &&params[:quarter_from].present? && params[:quarter_to].present? && params[:quarter_week_from].present? && params[:quarter_week_to].present?
+      @report = Region.select(:name).joins(cities: [{stores: :sellouts}]).where('sellouts.quarter_year': (year_from..year_to)).where('sellouts.quarter': (quarter_from..quarter_to)).where('sellouts.quarter_week': (week_from..week_to)).group(:name).count
+    else
+      @report = Region.select(:name).joins(cities: [{stores: :sellouts}]).group(:name).count
+    end
     render :report, status: :ok
   end
 
@@ -226,7 +238,11 @@ class SelloutsController < ApplicationController
     quarter_to = params.fetch(:quarter_to, 1).to_i
     week_from = params.fetch(:quarter_week_from, 1).to_i
     week_to = params.fetch(:quarter_week_to, 1).to_i
-    @report = Store.select(:name).joins(:sellouts).joins(city: :region).where(regions: {id: params.fetch(:region_id).to_i}).where('sellouts.quarter_year': (year_from..year_to)).where('sellouts.quarter': (quarter_from..quarter_to)).where('sellouts.quarter_week': (week_from..week_to)).group(:name).count
+    if params[:quarter_year_from].present? && params[:quarter_year_to].present? &&params[:quarter_from].present? && params[:quarter_to].present? && params[:quarter_week_from].present? && params[:quarter_week_to].present?
+      @report = Store.select(:name).joins(:sellouts).joins(city: :region).where(regions: {id: params.fetch(:region_id).to_i}).where('sellouts.quarter_year': (year_from..year_to)).where('sellouts.quarter': (quarter_from..quarter_to)).where('sellouts.quarter_week': (week_from..week_to)).group(:name).count
+    else
+      @report = Store.select(:name).joins(:sellouts).joins(city: :region).where(regions: {id: params.fetch(:region_id).to_i}).group(:name).count
+    end
     render :report, status: :ok
   end
 
