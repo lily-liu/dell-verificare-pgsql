@@ -45,7 +45,7 @@ class AbsencesController < ApplicationController
   end
 
   def export_absence
-    export_data = Absence.joins(:store).joins(:user).where('absences.created_at >= ?',  3.month.ago).select('absences.absence_type, absences.remark, absences.created_at, users.username, stores.name')
+    export_data = Absence.joins(:store).joins(:user).where('absences.created_at >= ?',  3.month.ago).select('absences.absence_type, absences.remark, absences.created_at, users.name as username, stores.name')
     @export = AbsenceBuilder.build(export_data)
     send_data(@export, type: 'text/csv', filename: "absence-recap-#{Time.now.to_date}.csv")
   end

@@ -7,7 +7,7 @@ class SellinsController < ApplicationController
   def index
     @page = params.fetch(:p).to_i
     @total = Sellin.count
-    @sellins = Sellin.page(@page).per(1000)
+    @sellins = Sellin.order(updated_at: :desc).page(@page).per(1000)
     if @sellins.present?
       render :index, status: :ok
     else
@@ -77,7 +77,7 @@ class SellinsController < ApplicationController
     quarter_to = params.fetch(:quarter_to, 1).to_i
     week_from = params.fetch(:quarter_week_from, 1).to_i
     week_to = params.fetch(:quarter_week_to, 1).to_i
-    @export = Sellin.where(quarter_year: (year_from...year_to)).where(quarter: (quarter_from...quarter_to)).where(quarter_week: (week_from...week_to)).to_a
+    @export = Sellin.where(quarter_year: (year_from..year_to)).where(quarter: (quarter_from..quarter_to)).where(quarter_week: (week_from..week_to)).to_a
     send_data(@export.to_csv(except: [:created_at, :updated_at, :deleted_at, :id, :csv_ref]), type: 'text/csv: charset=utf-8; header=present', filename: "report-" + Time.now.to_datetime.to_s + ".csv")
   end
 

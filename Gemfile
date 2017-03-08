@@ -53,7 +53,6 @@ gem 'julia_builder'
 # export image gem
 gem 'aws-sdk'
 gem 'rubyzip'
-# gem 'zipline'
 
 # paginator gem
 gem 'kaminari'

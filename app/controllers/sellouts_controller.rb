@@ -8,7 +8,7 @@ class SelloutsController < ApplicationController
   # GET /sellouts.json
   def index
     @page = params.fetch(:p).to_i
-    @sellouts = Sellout.page(@page).per(1000)
+    @sellouts = Sellout.order(updated_at: :desc).page(@page).per(1000)
     @total = Sellout.count
     if @sellouts.present?
       render :index, status: :ok
@@ -122,7 +122,7 @@ class SelloutsController < ApplicationController
     quarter_to = params.fetch(:quarter_to).to_i
     week_from = params.fetch(:quarter_week_from).to_i
     week_to = params.fetch(:quarter_week_to).to_i
-    @export = Sellout.where(quarter_year: (year_from...year_to)).where(quarter: (quarter_from...quarter_to)).where(quarter_week: (week_from...week_to)).to_a
+    @export = Sellout.where(quarter_year: (year_from..year_to)).where(quarter: (quarter_from..quarter_to)).where(quarter_week: (week_from..week_to)).to_a
     send_data(@export.to_csv(except: [:created_at, :updated_at, :deleted_at, :proof, :price_idr, :price_usd, :added_by]), type: 'text/csv', filename: "sellout-list-#{Time.now.to_date}.csv")
   end
 
@@ -166,23 +166,67 @@ class SelloutsController < ApplicationController
     end
   end
 
+  # def sellouts_each_cam_per_store
+  #   @report = Store.select(:name).joins(sellouts: [{user: :manager}]).joins(:sellouts).where(managers: {id: params.fetch(:manager_id).to_i}).group(:name).count
+  #   render :report, status: :ok
+  # end
+  #
+  # def sellouts_per_cam
+  #   @report = Manager.select(:name).joins(users: :sellouts).group(:name).count
+  #   render :report, status: :ok
+  # end
+  #
+  # def sellouts_per_region
+  #   @report = Region.select(:name).joins(cities: [{stores: :sellouts}]).group(:name).count
+  #   render :report, status: :ok
+  # end
+  #
+  # def sellouts_each_store_per_region
+  #   @report = Store.select(:name).joins(:sellouts).joins(city: :region).where(regions: {id: params.fetch(:region_id).to_i}).group(:name).count
+  #   render :report, status: :ok
+  # end
+
   def sellouts_each_cam_per_store
-    @report = Store.select(:name).joins(sellouts: [{user: :manager}]).joins(:sellouts).where(managers: {id: params.fetch(:manager_id).to_i}).group(:name).count
+    year_from = params.fetch(:quarter_year_from, Time.now.year).to_i
+    year_to = params.fetch(:quarter_year_to, Time.now.year).to_i
+    quarter_from = params.fetch(:quarter_from, 1).to_i
+    quarter_to = params.fetch(:quarter_to, 1).to_i
+    week_from = params.fetch(:quarter_week_from, 1).to_i
+    week_to = params.fetch(:quarter_week_to, 1).to_i
+    @report = Store.select(:name).joins(sellouts: [{user: :manager}]).joins(:sellouts).where(managers: {id: params.fetch(:manager_id).to_i}).where('sellouts.quarter_year': (year_from..year_to)).where('sellouts.quarter': (quarter_from..quarter_to)).where('sellouts.quarter_week': (week_from..week_to)).group(:name).count
     render :report, status: :ok
   end
 
   def sellouts_per_cam
-    @report = Manager.select(:name).joins(users: :sellouts).group(:name).count
+    year_from = params.fetch(:quarter_year_from, Time.now.year).to_i
+    year_to = params.fetch(:quarter_year_to, Time.now.year).to_i
+    quarter_from = params.fetch(:quarter_from, 1).to_i
+    quarter_to = params.fetch(:quarter_to, 1).to_i
+    week_from = params.fetch(:quarter_week_from, 1).to_i
+    week_to = params.fetch(:quarter_week_to, 1).to_i
+    @report = Manager.select(:name).joins(users: :sellouts).where('sellouts.quarter_year': (year_from..year_to)).where('sellouts.quarter': (quarter_from..quarter_to)).where('sellouts.quarter_week': (week_from..week_to)).group(:name).count
     render :report, status: :ok
   end
 
   def sellouts_per_region
-    @report = Region.select(:name).joins(cities: [{stores: :sellouts}]).group(:name).count
+    year_from = params.fetch(:quarter_year_from, Time.now.year).to_i
+    year_to = params.fetch(:quarter_year_to, Time.now.year).to_i
+    quarter_from = params.fetch(:quarter_from, 1).to_i
+    quarter_to = params.fetch(:quarter_to, 1).to_i
+    week_from = params.fetch(:quarter_week_from, 1).to_i
+    week_to = params.fetch(:quarter_week_to, 1).to_i
+    @report = Region.select(:name).joins(cities: [{stores: :sellouts}]).where('sellouts.quarter_year': (year_from..year_to)).where('sellouts.quarter': (quarter_from..quarter_to)).where('sellouts.quarter_week': (week_from..week_to)).group(:name).count
     render :report, status: :ok
   end
 
   def sellouts_each_store_per_region
-    @report = Store.select(:name).joins(:sellouts).joins(city: :region).where(regions: {id: params.fetch(:region_id).to_i}).group(:name).count
+    year_from = params.fetch(:quarter_year_from, Time.now.year).to_i
+    year_to = params.fetch(:quarter_year_to, Time.now.year).to_i
+    quarter_from = params.fetch(:quarter_from, 1).to_i
+    quarter_to = params.fetch(:quarter_to, 1).to_i
+    week_from = params.fetch(:quarter_week_from, 1).to_i
+    week_to = params.fetch(:quarter_week_to, 1).to_i
+    @report = Store.select(:name).joins(:sellouts).joins(city: :region).where(regions: {id: params.fetch(:region_id).to_i}).where('sellouts.quarter_year': (year_from..year_to)).where('sellouts.quarter': (quarter_from..quarter_to)).where('sellouts.quarter_week': (week_from..week_to)).group(:name).count
     render :report, status: :ok
   end
 
@@ -197,7 +241,7 @@ class SelloutsController < ApplicationController
     @export = Sellout.joins([:store, {user: :manager}])
                   .joins(store: [{city: :region}])
                   .joins(inventory: :sellin)
-                  .where(quarter_year: (year_from...year_to)).where(quarter: (quarter_from...quarter_to)).where(quarter_week: (week_from...week_to))
+                  .where(quarter_year: (year_from..year_to)).where(quarter: (quarter_from..quarter_to)).where(quarter_week: (week_from..week_to))
                   .select('sellouts.created_at AS transaction_date, stores.store_uid, stores.name AS store_name, stores.store_category, stores.store_building AS building_name, stores.address AS store_address, stores.phone AS store_phone, stores.email AS store_email, stores.store_owner, managers.name AS cam_name, users.name AS pic_name, users.level AS user_level, regions.name AS region_name, regions.position AS region, cities.name AS city_name, sellins.service_tag, sellins.part_number, sellins.product_type, sellins.product_name, sellins.source_store AS distributor, sellins.target_store AS master_dealer, sellouts.quarter_year, sellouts.quarter, sellouts.quarter_week')
     csv_data = ReportBuilder.build(@export)
     send_data(csv_data, type: 'text/csv', filename: "report-sellouts-#{Time.now.to_date}.csv")

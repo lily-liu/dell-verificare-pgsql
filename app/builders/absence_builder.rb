@@ -1,6 +1,6 @@
 class AbsenceBuilder < Julia::Builder
   asd = :created_at
-  column 'Username', :username
+  column 'User Name', :username
   column 'Store Name', :name
   column 'Absence Type', :absence_type
   column 'Absence Date', -> { "#{created_at.to_date}" }
