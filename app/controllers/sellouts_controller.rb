@@ -187,29 +187,19 @@ class SelloutsController < ApplicationController
   # end
 
   def sellouts_each_cam_per_store
-    year_from = params.fetch(:quarter_year_from, Time.now.year).to_i
-    year_to = params.fetch(:quarter_year_to, Time.now.year).to_i
-    quarter_from = params.fetch(:quarter_from, 1).to_i
-    quarter_to = params.fetch(:quarter_to, 1).to_i
-    week_from = params.fetch(:quarter_week_from, 1).to_i
-    week_to = params.fetch(:quarter_week_to, 1).to_i
-    if params[:quarter_year_from].present? && params[:quarter_year_to].present? &&params[:quarter_from].present? && params[:quarter_to].present? && params[:quarter_week_from].present? && params[:quarter_week_to].present?
-      @report = Store.select(:name).joins(sellouts: [{user: :manager}]).joins(:sellouts).where(managers: {id: params.fetch(:manager_id).to_i}).where('sellouts.quarter_year': (year_from..year_to)).where('sellouts.quarter': (quarter_from..quarter_to)).where('sellouts.quarter_week': (week_from..week_to)).group(:name).count
+    get_date_filter_range
+    if date_filter_range_presence == true
+      @report = Store.select(:name).joins(sellouts: [{user: :manager}]).joins(:sellouts).where(managers: {id: params.fetch(:manager_id).to_i}).where('sellouts.quarter_year': (@year_from..@year_to)).where('sellouts.quarter': (@quarter_from..@quarter_to)).where('sellouts.quarter_week': (@week_from..@week_to)).group(:name).count
     else
       @report = Store.select(:name).joins(sellouts: [{user: :manager}]).joins(:sellouts).where(managers: {id: params.fetch(:manager_id).to_i}).group(:name).count
     end
-    render :report, status: :ok
+    # render :report, status: :ok
   end
 
   def sellouts_per_cam
-    year_from = params.fetch(:quarter_year_from, Time.now.year).to_i
-    year_to = params.fetch(:quarter_year_to, Time.now.year).to_i
-    quarter_from = params.fetch(:quarter_from, 1).to_i
-    quarter_to = params.fetch(:quarter_to, 1).to_i
-    week_from = params.fetch(:quarter_week_from, 1).to_i
-    week_to = params.fetch(:quarter_week_to, 1).to_i
-    if params[:quarter_year_from].present? && params[:quarter_year_to].present? &&params[:quarter_from].present? && params[:quarter_to].present? && params[:quarter_week_from].present? && params[:quarter_week_to].present?
-      @report = Manager.select(:name).joins(users: :sellouts).where('sellouts.quarter_year': (year_from..year_to)).where('sellouts.quarter': (quarter_from..quarter_to)).where('sellouts.quarter_week': (week_from..week_to)).group(:name).count
+    get_date_filter_range
+    if date_filter_range_presence == true
+      @report = Manager.select(:name).joins(users: :sellouts).where('sellouts.quarter_year': (@year_from..@year_to)).where('sellouts.quarter': (@quarter_from..@quarter_to)).where('sellouts.quarter_week': (@week_from..@week_to)).group(:name).count
     else
       @report = Manager.select(:name).joins(users: :sellouts).group(:name).count
     end
@@ -217,14 +207,9 @@ class SelloutsController < ApplicationController
   end
 
   def sellouts_per_region
-    year_from = params.fetch(:quarter_year_from, Time.now.year).to_i
-    year_to = params.fetch(:quarter_year_to, Time.now.year).to_i
-    quarter_from = params.fetch(:quarter_from, 1).to_i
-    quarter_to = params.fetch(:quarter_to, 1).to_i
-    week_from = params.fetch(:quarter_week_from, 1).to_i
-    week_to = params.fetch(:quarter_week_to, 1).to_i
-    if params[:quarter_year_from].present? && params[:quarter_year_to].present? &&params[:quarter_from].present? && params[:quarter_to].present? && params[:quarter_week_from].present? && params[:quarter_week_to].present?
-      @report = Region.select(:name).joins(cities: [{stores: :sellouts}]).where('sellouts.quarter_year': (year_from..year_to)).where('sellouts.quarter': (quarter_from..quarter_to)).where('sellouts.quarter_week': (week_from..week_to)).group(:name).count
+    get_date_filter_range
+    if date_filter_range_presence == true
+      @report = Region.select(:name).joins(cities: [{stores: :sellouts}]).where('sellouts.quarter_year': (@year_from..@year_to)).where('sellouts.quarter': (@quarter_from..@quarter_to)).where('sellouts.quarter_week': (@week_from..@week_to)).group(:name).count
     else
       @report = Region.select(:name).joins(cities: [{stores: :sellouts}]).group(:name).count
     end
@@ -232,14 +217,9 @@ class SelloutsController < ApplicationController
   end
 
   def sellouts_each_store_per_region
-    year_from = params.fetch(:quarter_year_from, Time.now.year).to_i
-    year_to = params.fetch(:quarter_year_to, Time.now.year).to_i
-    quarter_from = params.fetch(:quarter_from, 1).to_i
-    quarter_to = params.fetch(:quarter_to, 1).to_i
-    week_from = params.fetch(:quarter_week_from, 1).to_i
-    week_to = params.fetch(:quarter_week_to, 1).to_i
-    if params[:quarter_year_from].present? && params[:quarter_year_to].present? &&params[:quarter_from].present? && params[:quarter_to].present? && params[:quarter_week_from].present? && params[:quarter_week_to].present?
-      @report = Store.select(:name).joins(:sellouts).joins(city: :region).where(regions: {id: params.fetch(:region_id).to_i}).where('sellouts.quarter_year': (year_from..year_to)).where('sellouts.quarter': (quarter_from..quarter_to)).where('sellouts.quarter_week': (week_from..week_to)).group(:name).count
+    get_date_filter_range
+    if date_filter_range_presence == true
+      @report = Store.select(:name).joins(:sellouts).joins(city: :region).where(regions: {id: params.fetch(:region_id).to_i}).where('sellouts.quarter_year': (@year_from..@year_to)).where('sellouts.quarter': (@quarter_from..@quarter_to)).where('sellouts.quarter_week': (@week_from..@week_to)).group(:name).count
     else
       @report = Store.select(:name).joins(:sellouts).joins(city: :region).where(regions: {id: params.fetch(:region_id).to_i}).group(:name).count
     end
@@ -247,17 +227,11 @@ class SelloutsController < ApplicationController
   end
 
   def sellout_report_export_csv
-
-    year_from = params.fetch(:quarter_year_from, Time.now.year).to_i
-    year_to = params.fetch(:quarter_year_to, Time.now.year).to_i
-    quarter_from = params.fetch(:quarter_from, 1).to_i
-    quarter_to = params.fetch(:quarter_to, 1).to_i
-    week_from = params.fetch(:quarter_week_from, 1).to_i
-    week_to = params.fetch(:quarter_week_to, 1).to_i
+    get_date_filter_range
     @export = Sellout.joins([:store, {user: :manager}])
                   .joins(store: [{city: :region}])
                   .joins(inventory: :sellin)
-                  .where(quarter_year: (year_from..year_to)).where(quarter: (quarter_from..quarter_to)).where(quarter_week: (week_from..week_to))
+                  .where('sellouts.quarter_year': (@year_from..@year_to)).where('sellouts.quarter': (@quarter_from..@quarter_to)).where('sellouts.quarter_week': (@week_from..@week_to))
                   .select('sellouts.created_at AS transaction_date, stores.store_uid, stores.name AS store_name, stores.store_category, stores.store_building AS building_name, stores.address AS store_address, stores.phone AS store_phone, stores.email AS store_email, stores.store_owner, managers.name AS cam_name, users.name AS pic_name, users.level AS user_level, regions.name AS region_name, regions.position AS region, cities.name AS city_name, sellins.service_tag, sellins.part_number, sellins.product_type, sellins.product_name, sellins.source_store AS distributor, sellins.target_store AS master_dealer, sellouts.quarter_year, sellouts.quarter, sellouts.quarter_week')
     csv_data = ReportBuilder.build(@export)
     send_data(csv_data, type: 'text/csv', filename: "report-sellouts-#{Time.now.to_date}.csv")
@@ -325,6 +299,23 @@ class SelloutsController < ApplicationController
   # this function is part of legacy system
   def current_quarter_week(date)
     ((((date.to_i - 7171200)/86400) / 7).round % 13) + 1
+  end
+
+  def date_filter_range_presence
+    if params[:quarter_year_from].present? && params[:quarter_year_to].present? &&params[:quarter_from].present? && params[:quarter_to].present? && params[:quarter_week_from].present? && params[:quarter_week_to].present?
+      return true
+    else
+      return false
+    end
+  end
+
+  def get_date_filter_range
+    @year_from = params.fetch(:quarter_year_from, Time.now.year).to_i
+    @year_to = params.fetch(:quarter_year_to, Time.now.year).to_i
+    @quarter_from = params.fetch(:quarter_from, 1).to_i
+    @quarter_to = params.fetch(:quarter_to, 1).to_i
+    @week_from = params.fetch(:quarter_week_from, 1).to_i
+    @week_to = params.fetch(:quarter_week_to, 1).to_i
   end
 
 end

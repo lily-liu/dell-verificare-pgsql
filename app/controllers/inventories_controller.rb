@@ -126,12 +126,20 @@ class InventoriesController < ApplicationController
   end
 
   def inventories_per_cam
-    @report = Manager.select(:name).joins(users: :inventories).group(:name).count
+    get_date_filter_range
+    if date_filter_range_presence == true
+    else
+      @report = Manager.select(:name).joins(users: :inventories).where('inventories.quarter_year': (@year_from..@year_to)).where('inventories.quarter': (@quarter_from..@quarter_to)).where('inventories.quarter_week': (@week_from..@week_to)).group(:name).count
+    end
     render :report, status: :ok
   end
 
   def inventories_each_cam_per_store
-    @report = Store.select(:name).joins(inventories: [{user: :manager}]).joins(:inventories).where(managers: {id: params.fetch(:manager_id).to_i}).group(:name).count
+    get_date_filter_range
+    if date_filter_range_presence == true
+    else
+      @report = Store.select(:name).joins(inventories: [{user: :manager}]).joins(:inventories).where(managers: {id: params.fetch(:manager_id).to_i}).where('inventories.quarter_year': (@year_from..@year_to)).where('inventories.quarter': (@quarter_from..@quarter_to)).where('inventories.quarter_week': (@week_from..@week_to)).group(:name).count
+    end
     render :report, status: :ok
   end
 
@@ -148,5 +156,22 @@ class InventoriesController < ApplicationController
         store_id: params.fetch(:store_id, nil).to_i,
         service_tag: params.fetch(:service_tag, nil).to_s
     }
+  end
+
+  def date_filter_range_presence
+    if params[:quarter_year_from].present? && params[:quarter_year_to].present? &&params[:quarter_from].present? && params[:quarter_to].present? && params[:quarter_week_from].present? && params[:quarter_week_to].present?
+      return true
+    else
+      return false
+    end
+  end
+
+  def get_date_filter_range
+    @year_from = params.fetch(:quarter_year_from, Time.now.year).to_i
+    @year_to = params.fetch(:quarter_year_to, Time.now.year).to_i
+    @quarter_from = params.fetch(:quarter_from, 1).to_i
+    @quarter_to = params.fetch(:quarter_to, 1).to_i
+    @week_from = params.fetch(:quarter_week_from, 1).to_i
+    @week_to = params.fetch(:quarter_week_to, 1).to_i
   end
 end
