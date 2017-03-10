@@ -1,6 +1,6 @@
 class AbsencesController < ApplicationController
   before_action :set_absence, only: [:show]
-  before_action :authenticate_user, except: [:create]
+  before_action :authenticate_user
 
   def index
     @absences = Absence.all.order(created_at: :desc)
