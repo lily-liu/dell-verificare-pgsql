@@ -13,7 +13,8 @@ Rails.application.routes.draw do
   get "sellouts/list", to: "sellouts#index", defaults: {format: :json}
   get "sellouts/recap_cam", to: "sellouts#sellouts_per_cam", defaults: {format: :json}
   get "sellouts/recap_store_cam", to: "sellouts#sellouts_each_cam_per_store", defaults: {format: :json}
-  get "sellouts/recap_region", to: "sellouts#sellouts_per_region", defaults: {format: :json}
+  get "sellouts/recap_region", to: "sellouts#sellouts_per_sku", defaults: {format: :json}
+  get "sellouts/recap_sku", to: "sellouts#sellouts_per_region", defaults: {format: :json}
   get "sellouts/recap_region_store", to: "sellouts#sellouts_each_store_per_region", defaults: {format: :json}
   get "sellouts/export_report", to: "sellouts#sellout_report_export_csv", defaults: {format: :csv}
   get "sellouts/export", to: "sellouts#export_sellout", defaults: {format: :csv}

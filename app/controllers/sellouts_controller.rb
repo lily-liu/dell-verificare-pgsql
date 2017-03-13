@@ -226,6 +226,16 @@ class SelloutsController < ApplicationController
     render :report, status: :ok
   end
 
+  def sellouts_per_sku
+    get_date_filter_range
+    if date_filter_range_presence == true
+      @report = Sellin.select(:product_type).joins(inventories: :sellouts).where('sellouts.quarter_year': (@year_from..@year_to)).where('sellouts.quarter': (@quarter_from..@quarter_to)).where('sellouts.quarter_week': (@week_from..@week_to)).group(:product_type).count
+    else
+      @report = Sellin.select(:product_type).joins(inventories: :sellouts).group(:product_type).count
+    end
+    render :report, status: :ok
+  end
+
   def sellout_report_export_csv
     get_date_filter_range
     @export = Sellout.joins([:store, {user: :manager}])
