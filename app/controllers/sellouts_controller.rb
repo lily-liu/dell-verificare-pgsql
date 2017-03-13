@@ -193,7 +193,7 @@ class SelloutsController < ApplicationController
     else
       @report = Store.select(:name).joins(sellouts: [{user: :manager}]).joins(:sellouts).where(managers: {id: params.fetch(:manager_id).to_i}).group(:name).count
     end
-    # render :report, status: :ok
+    render :report, status: :ok
   end
 
   def sellouts_per_cam
