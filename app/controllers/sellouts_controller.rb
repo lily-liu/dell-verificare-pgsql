@@ -1,7 +1,7 @@
 require 'open-uri'
 class SelloutsController < ApplicationController
   before_action :set_sellout, only: [:show, :update, :destroy]
-  before_action :authenticate_user
+  # before_action :authenticate_user
 
 
   # GET /sellouts
@@ -233,7 +233,7 @@ class SelloutsController < ApplicationController
     else
       @report_unsorted = Sellin.select(:product_type).joins(inventory: :sellout).group(:product_type).count
     end
-    @report = @report_unsorted.sort_by { |k, v| v }
+    @report = @report_unsorted.sort_by { |k, v| v }.reverse.to_h
     render :report, status: :ok
   end
 
