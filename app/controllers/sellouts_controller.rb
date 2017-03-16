@@ -230,8 +230,10 @@ class SelloutsController < ApplicationController
     get_date_filter_range
     if date_filter_range_presence == true
       @report = Sellin.select(:product_type).joins(inventory: :sellout).where('sellouts.quarter_year': (@year_from..@year_to)).where('sellouts.quarter': (@quarter_from..@quarter_to)).where('sellouts.quarter_week': (@week_from..@week_to)).group(:product_type).order(product_type: :desc).count
+      Hash[@report.sort_by { |k,v| v}.reverse]
     else
       @report = Sellin.select(:product_type).joins(inventory: :sellout).group(:product_type).count
+      Hash[@report.sort_by { |k,v| v}.reverse]
     end
     render :report, status: :ok
   end
