@@ -126,20 +126,12 @@ class InventoriesController < ApplicationController
   end
 
   def inventories_per_cam
-    get_date_filter_range
-    if date_filter_range_presence == true
-    else
-      @report = Manager.select(:name).joins(users: :inventories).where('inventories.quarter_year': (@year_from..@year_to)).where('inventories.quarter': (@quarter_from..@quarter_to)).where('inventories.quarter_week': (@week_from..@week_to)).where('inventories.status': 0).group(:name).count
-    end
+    @report = Manager.select(:name).joins(users: :inventories).where('inventories.status': 0).group(:name).count
     render :report, status: :ok
   end
 
   def inventories_each_cam_per_store
-    get_date_filter_range
-    if date_filter_range_presence == true
-    else
-      @report = Store.select(:name).joins(inventories: [{user: :manager}]).joins(:inventories).where(managers: {id: params.fetch(:manager_id).to_i}).where('inventories.quarter_year': (@year_from..@year_to)).where('inventories.quarter': (@quarter_from..@quarter_to)).where('inventories.quarter_week': (@week_from..@week_to)).where('inventories.status': 0).group(:name).count
-    end
+    @report = Store.select(:name).joins(inventories: [{user: :manager}]).joins(:inventories).where(managers: {id: params.fetch(:manager_id).to_i}).where('inventories.status': 0).group(:name).count
     render :report, status: :ok
   end
 
