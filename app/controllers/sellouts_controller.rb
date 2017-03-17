@@ -116,13 +116,11 @@ class SelloutsController < ApplicationController
   end
 
   def export_sellout
-    year_from = params.fetch(:quarter_year_from).to_i
-    year_to = params.fetch(:quarter_year_to).to_i
-    quarter_from = params.fetch(:quarter_from).to_i
-    quarter_to = params.fetch(:quarter_to).to_i
-    week_from = params.fetch(:quarter_week_from).to_i
-    week_to = params.fetch(:quarter_week_to).to_i
-    @export = Sellout.where(quarter_year: (year_from..year_to)).where(quarter: (quarter_from..quarter_to)).where(quarter_week: (week_from..week_to)).to_a
+    if date_filter_range_presence == true
+      @export = Sellout.where(quarter_year: (@year_from..@year_to)).where(quarter: (@quarter_from..@quarter_to)).where(quarter_week: (@week_from..@week_to)).to_a
+    else
+      @export = Sellout.where('updated_at > ?', 3.month.ago).to_a
+    end
     send_data(@export.to_csv(except: [:created_at, :updated_at, :deleted_at, :proof, :price_idr, :price_usd, :added_by]), type: 'text/csv', filename: "sellout-list-#{Time.now.to_date}.csv")
   end
 
@@ -189,40 +187,44 @@ class SelloutsController < ApplicationController
   def sellouts_each_cam_per_store
     get_date_filter_range
     if date_filter_range_presence == true
-      @report = Store.select(:name).joins(sellouts: [{user: :manager}]).joins(:sellouts).where(managers: {id: params.fetch(:manager_id).to_i}).where('sellouts.quarter_year': (@year_from..@year_to)).where('sellouts.quarter': (@quarter_from..@quarter_to)).where('sellouts.quarter_week': (@week_from..@week_to)).group(:name).count
+      @report_unsorted = Store.select(:name).joins(sellouts: [{user: :manager}]).joins(:sellouts).where(managers: {id: params.fetch(:manager_id).to_i}).where('sellouts.quarter_year': (@year_from..@year_to)).where('sellouts.quarter': (@quarter_from..@quarter_to)).where('sellouts.quarter_week': (@week_from..@week_to)).group(:name).count
     else
-      @report = Store.select(:name).joins(sellouts: [{user: :manager}]).joins(:sellouts).where(managers: {id: params.fetch(:manager_id).to_i}).group(:name).count
+      @report_unsorted = Store.select(:name).joins(sellouts: [{user: :manager}]).joins(:sellouts).where(managers: {id: params.fetch(:manager_id).to_i}).group(:name).count
     end
+    @report = @report_unsorted.sort_by { |k, v| v }.reverse.to_h
     render :report, status: :ok
   end
 
   def sellouts_per_cam
     get_date_filter_range
     if date_filter_range_presence == true
-      @report = Manager.select(:name).joins(users: :sellouts).where('sellouts.quarter_year': (@year_from..@year_to)).where('sellouts.quarter': (@quarter_from..@quarter_to)).where('sellouts.quarter_week': (@week_from..@week_to)).group(:name).count
+      @report_unsorted = Manager.select(:name).joins(users: :sellouts).where('sellouts.quarter_year': (@year_from..@year_to)).where('sellouts.quarter': (@quarter_from..@quarter_to)).where('sellouts.quarter_week': (@week_from..@week_to)).group(:name).count
     else
-      @report = Manager.select(:name).joins(users: :sellouts).group(:name).count
+      @report_unsorted = Manager.select(:name).joins(users: :sellouts).group(:name).count
     end
+    @report = @report_unsorted.sort_by { |k, v| v }.reverse.to_h
     render :report, status: :ok
   end
 
   def sellouts_per_region
     get_date_filter_range
     if date_filter_range_presence == true
-      @report = Region.select(:name).joins(cities: [{stores: :sellouts}]).where('sellouts.quarter_year': (@year_from..@year_to)).where('sellouts.quarter': (@quarter_from..@quarter_to)).where('sellouts.quarter_week': (@week_from..@week_to)).group(:name).count
+      @report_unsorted = Region.select(:name).joins(cities: [{stores: :sellouts}]).where('sellouts.quarter_year': (@year_from..@year_to)).where('sellouts.quarter': (@quarter_from..@quarter_to)).where('sellouts.quarter_week': (@week_from..@week_to)).group(:name).count
     else
-      @report = Region.select(:name).joins(cities: [{stores: :sellouts}]).group(:name).count
+      @report_unsorted = Region.select(:name).joins(cities: [{stores: :sellouts}]).group(:name).count
     end
+    @report = @report_unsorted.sort_by { |k, v| v }.reverse.to_h
     render :report, status: :ok
   end
 
   def sellouts_each_store_per_region
     get_date_filter_range
     if date_filter_range_presence == true
-      @report = Store.select(:name).joins(:sellouts).joins(city: :region).where(regions: {id: params.fetch(:region_id).to_i}).where('sellouts.quarter_year': (@year_from..@year_to)).where('sellouts.quarter': (@quarter_from..@quarter_to)).where('sellouts.quarter_week': (@week_from..@week_to)).group(:name).count
+      @report_unsorted = Store.select(:name).joins(:sellouts).joins(city: :region).where(regions: {id: params.fetch(:region_id).to_i}).where('sellouts.quarter_year': (@year_from..@year_to)).where('sellouts.quarter': (@quarter_from..@quarter_to)).where('sellouts.quarter_week': (@week_from..@week_to)).group(:name).count
     else
-      @report = Store.select(:name).joins(:sellouts).joins(city: :region).where(regions: {id: params.fetch(:region_id).to_i}).group(:name).count
+      @report_unsorted = Store.select(:name).joins(:sellouts).joins(city: :region).where(regions: {id: params.fetch(:region_id).to_i}).group(:name).count
     end
+    @report = @report_unsorted.sort_by { |k, v| v }.reverse.to_h
     render :report, status: :ok
   end
 

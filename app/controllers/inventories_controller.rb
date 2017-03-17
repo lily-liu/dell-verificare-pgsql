@@ -50,7 +50,7 @@ class InventoriesController < ApplicationController
   end
 
   def inventories_export
-    @export = Inventory.where('updated_at > ?', 6.month.ago).to_a
+    @export = Inventory.where('updated_at > ?', 3.month.ago).to_a
     send_data(@export.to_csv(except: [:created_at, :updated_at, :deleted_at, :added_by]), type: 'text/csv', filename: "inventory-list-#{Time.now.to_date}.csv")
   end
 
