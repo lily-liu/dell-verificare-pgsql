@@ -6,7 +6,7 @@ class IssuesController < ApplicationController
   # GET /issues
   # GET /issues.json
   def index
-    @issues = Issue.all
+    @issues = Issue.all.order(created_at: :desc)
     if @issues.present?
       render :index, status: :ok
     else
