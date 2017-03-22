@@ -37,7 +37,7 @@ class InventoriesController < ApplicationController
       end
       begin
         @inventories = Inventory.import(saved_data)
-        @success_input = Inventory.where(id: @inventories.ids)
+        # @success_input = Inventory.where(id: @inventories.ids)
         render :import, status: :ok
       rescue StandardError => e
         @message = e
