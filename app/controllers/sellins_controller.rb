@@ -77,7 +77,7 @@ class SellinsController < ApplicationController
     quarter_to = params.fetch(:quarter_to, nil).to_i
     week_from = params.fetch(:quarter_week_from, nil).to_i
     week_to = params.fetch(:quarter_week_to, nil).to_i
-    @export = Sellin.where(quarter_year: (year_from..year_to)).where(quarter: (quarter_from..quarter_to)).where(quarter_week: (week_from..week_to)).to_a
+    @export = Sellin.where(quarter_year: (year_from..year_to)).where(quarter: (quarter_from..quarter_to)).where(quarter_week: (week_from..week_to)).find_each(batch_size: 10000).to_a.flatten
     send_data(@export.to_csv(except: [:created_at, :updated_at, :deleted_at, :csv_ref]), type: 'text/csv: charset=utf-8; header=present', filename: "report-" + Time.now.to_datetime.to_s + ".csv")
   end
 
