@@ -5,7 +5,7 @@ class PosmStoreInventoriesController < ApplicationController
   # GET /posm_store_inventories
   # GET /posm_store_inventories.json
   def index
-    @posm_store_inventories = PosmStoreInventory.all
+    @posm_store_inventories = PosmStoreInventory.all.order(created_at: :desc)
     if @posm_store_inventories.present?
       render :index, status: :ok
     else

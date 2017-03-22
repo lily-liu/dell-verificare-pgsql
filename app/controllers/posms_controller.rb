@@ -5,7 +5,7 @@ class PosmsController < ApplicationController
   # GET /posms
   # GET /posms.json
   def index
-    @posms = Posm.all
+    @posms = Posm.all.order(created_at: :desc)
     if @posms.present?
       render :index, status: :ok
     else

@@ -9,7 +9,7 @@ class VisibilitiesController < ApplicationController
   # GET /visibilities
   # GET /visibilities.json
   def index
-    @visibilities = Visibility.all
+    @visibilities = Visibility.all.order(created_at: :desc)
     if @visibilities.present?
       render :index, status: :ok
     else
