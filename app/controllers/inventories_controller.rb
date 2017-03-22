@@ -7,7 +7,7 @@ class InventoriesController < ApplicationController
   # GET /inventories.json
   def index
     @page = params.fetch(:p).to_i
-    @inventories = Inventory.order(updated_at: :desc).page(@page).per(1000)
+    @inventories = Inventory.where(status: 0).order(updated_at: :desc).page(@page).per(1000)
     @total = Inventory.count
     if @inventories.present?
       render :index, status: :ok
