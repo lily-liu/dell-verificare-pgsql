@@ -116,6 +116,7 @@ class SelloutsController < ApplicationController
   end
 
   def export_sellout
+    get_date_filter_range
     if date_filter_range_presence == true
       @export = Sellout.where(quarter_year: (@year_from..@year_to)).where(quarter: (@quarter_from..@quarter_to)).where(quarter_week: (@week_from..@week_to)).to_a
     else
