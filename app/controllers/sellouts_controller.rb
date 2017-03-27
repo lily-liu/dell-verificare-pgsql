@@ -185,6 +185,28 @@ class SelloutsController < ApplicationController
   #   render :report, status: :ok
   # end
 
+  def sellout_each_sku_per_cam
+    get_date_filter_range
+    if date_filter_range_presence == true
+      @report_unsorted = Sellout.select('sellins.product_type').joins(inventory: :sellin).joins(user: :manager).where(managers: {id: params.fetch(:manager_id).to_i}).where('sellouts.quarter_year': (@year_from..@year_to)).where('sellouts.quarter': (@quarter_from..@quarter_to)).where('sellouts.quarter_week': (@week_from..@week_to)).group('sellins.product_type').count
+    else
+      @report_unsorted = Sellout.select('sellins.product_type').joins(inventory: :sellin).joins(user: :manager).where(managers: {id: params.fetch(:manager_id).to_i}).group('sellins.product_type').count
+    end
+    @report = @report_unsorted.sort_by { |k, v| v }.reverse.to_h
+    render :report, status: :ok
+  end
+
+  def sellout_each_sku_per_region
+    get_date_filter_range
+    if date_filter_range_presence == true
+      @report_unsorted = Sellout.select('sellins.product_type').joins(inventory: :sellin).joins(store: [{city: :region}]).where(regions: {id: params.fetch(:region_id).to_i}).where('sellouts.quarter_year': (@year_from..@year_to)).where('sellouts.quarter': (@quarter_from..@quarter_to)).where('sellouts.quarter_week': (@week_from..@week_to)).group('sellins.product_type').count
+    else
+      @report_unsorted = Sellout.select('sellins.product_type').joins(inventory: :sellin).joins(store: [{city: :region}]).where(regions: {id: params.fetch(:region_id).to_i}).group('sellins.product_type').count
+    end
+    @report = @report_unsorted.sort_by { |k, v| v }.reverse.to_h
+    render :report, status: :ok
+  end
+
   def sellouts_each_cam_per_store
     get_date_filter_range
     if date_filter_range_presence == true
