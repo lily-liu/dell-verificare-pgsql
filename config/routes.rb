@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   # route for absences
   get "absences/list", to: "absences#index", defaults: {format: :json}
+  get "absences/list_self", to: "absences#index_non_admin", defaults: {format: :json}
   get "absences/export", to: "absences#export_absence", defaults: {format: :csv}
   post "absences/create", to: "absences#create", defaults: {format: :json}
 
