@@ -303,7 +303,7 @@ class SelloutsController < ApplicationController
   def sellout_params
     params.permit(:service_tag, :price_idr, :price_usd, :proof, :store_id, :sold_by, :region_id, :manager_id, :added_by)
     user_data = {
-        service_tag: params.fetch(:service_tag).to_s,
+        service_tag: params.fetch(:service_tag).to_s.upcase,
         price_idr: params.fetch(:price_idr, 0).to_f,
         price_usd: params.fetch(:price_usd, 0).to_f,
         proof: params.fetch(:proof, nil)

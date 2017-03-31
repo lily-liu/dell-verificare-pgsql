@@ -148,7 +148,7 @@ class InventoriesController < ApplicationController
     params.permit(:store_id, :service_tag, :added_by)
     product_data = {
         store_id: params.fetch(:store_id, nil).to_i,
-        service_tag: params.fetch(:service_tag, nil).to_s
+        service_tag: params.fetch(:service_tag, nil).to_s.upcase
     }
   end
 
