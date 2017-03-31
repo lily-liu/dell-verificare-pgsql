@@ -70,7 +70,7 @@ class InventoriesController < ApplicationController
   # POST /inventories
   # POST /inventories.json
   def create
-    sellin_data = Sellin.find_by service_tag: params.fetch(:service_tag, nil).to_s
+    sellin_data = Sellin.find_by service_tag: params.fetch(:service_tag, nil).to_s.upcase
     store_data = Store.find(params.fetch(:store_id, nil).to_i)
     if sellin_data.present? && store_data.present?
       @inventory = Inventory.new(inventory_params)
@@ -92,9 +92,9 @@ class InventoriesController < ApplicationController
         @inventory.save
         render :show, status: :created
       rescue ActiveRecord::RecordNotUnique
-        @inventory = Inventory.find_by service_tag: params.fetch(:service_tag).to_s
+        @inventory = Inventory.find_by service_tag: params.fetch(:service_tag).to_s.upcase
         @inventory.update(user: current_user, store: store_data, status: 2)
-        @conflict_inventory = ConflictedInventory.create!(user: current_user, store: store_data, service_tag: params.fetch(:service_tag, nil).to_s, cause: :inventory_already_added, solved: !nil)
+        @conflict_inventory = ConflictedInventory.create!(user: current_user, store: store_data, service_tag: params.fetch(:service_tag, nil).to_s.upcase, cause: :inventory_already_added, solved: !nil)
         render :show, status: :ok
       rescue StandardError => e
         @message = e
@@ -102,7 +102,7 @@ class InventoriesController < ApplicationController
       end
 
     else
-      @conflict_inventory = ConflictedInventory.create(user_id: current_user.id, store_id: store_data.id, service_tag: params.fetch(:service_tag, nil).to_s, cause: :no_sellin, solved: !nil)
+      @conflict_inventory = ConflictedInventory.create(user_id: current_user.id, store_id: store_data.id, service_tag: params.fetch(:service_tag, nil).to_s.upcase, cause: :no_sellin, solved: !nil)
       @message = "no sellin data for that service tag"
       render :error, status: :not_found
     end
