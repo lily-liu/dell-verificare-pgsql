@@ -30,7 +30,7 @@ class SelloutsController < ApplicationController
     sellin_data = Sellin.where(service_tag: params.fetch(:service_tag, nil).to_s.upcase).first
     store_data = Store.find(params.fetch(:store_id, nil).to_i)
 
-    if inventory_data.present? && store_data.present? && sellin_data.present? && store_data == inventory_data.store
+    if inventory_data.present? && store_data.present? && sellin_data.present?
       if params.fetch(:proof, nil)
         @sellout = Sellout.new(sellout_params)
         if params[:sales_date].present?
