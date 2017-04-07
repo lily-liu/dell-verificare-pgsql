@@ -56,14 +56,14 @@ class InventoriesController < ApplicationController
 
   def search_service_tag
     @total = Inventory.count
-    @inventories = Inventory.where('service_tag LIKE ? OR service_tag LIKE ? OR service_tag LIKE ? OR service_tag LIKE ?', "%#{params[:q]}%", "#{params[:q]}%", "%#{params[:q]}", params[:q])
+    @inventories = Inventory.where('service_tag LIKE ? OR service_tag LIKE ? OR service_tag LIKE ? OR service_tag LIKE ?', "%#{params[:q]}%", "#{params[:q]}%", "%#{params[:q]}", params[:q]).where.(status: 0)
     render :index, status: :ok
   end
 
   def bulk_search_service_tag
     @total = Inventory.count
     search = params.fetch(:q).to_s.split(/\s*,\s*/)
-    @inventories = Inventory.where(service_tag: search)
+    @inventories = Inventory.where(service_tag: search).where.(status: 0)
     render :index, status: :ok
   end
 

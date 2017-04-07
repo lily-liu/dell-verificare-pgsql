@@ -75,7 +75,7 @@ class SelloutsController < ApplicationController
       render :error, status: :not_found
     else
       @conflict_sellout = ConflictedSellout.create!(user_id: current_user.id, store_id: store_data.id, service_tag: params.fetch(:service_tag, nil).to_s.upcase, cause: 2, solved: !nil)
-      @message = "no inventory avaliable on the store for the service tag"
+      @message = "inventory store and sellout store is different"
       render :error, status: :not_found
     end
   end
