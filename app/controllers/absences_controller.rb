@@ -28,26 +28,7 @@ class AbsencesController < ApplicationController
     user = current_user
     store_data = Store.find_by store_uid: params.fetch(:store_uid, "STR-000").to_s
     if user.present? && store_data.present? && params.fetch(:absence_type) !=nil
-      existing_absence_in = Absence.where("created_at > ? AND absence_type = ? AND user_id = ? AND store_id = ?", 8.hour.ago, 1, current_user.id.to_i, store_data.id.to_i).first
-      existing_absence_out = Absence.where("created_at > ? AND absence_type = ? AND user_id = ? AND store_id = ?", 8.hour.ago, 2, current_user.id.to_i, store_data.id.to_i).first
-      case params.fetch(:absence_type).to_i
-        when 2
-          if existing_absence_in.present? && !existing_absence_out.present?
-            save_absence(user, store_data, absence_params)
-          else
-            @message = "cant absence out without absence in or absence out multiple times"
-            render :error, status: :unauthorized
-          end
-        when 1
-          if !existing_absence_in.present? && !existing_absence_out.present?
-            save_absence(user, store_data, absence_params)
-          else
-            @message = "cant absence in same store multiple times"
-            render :error, status: :unauthorized
-          end
-        else
-          save_absence(user, store_data, absence_params)
-      end
+      save_absence(user, store_data, absence_params)
     else
       @message = "no username match in database or store not recognized"
       render :error, status: :not_found
