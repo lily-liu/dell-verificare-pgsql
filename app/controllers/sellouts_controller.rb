@@ -192,6 +192,8 @@ class SelloutsController < ApplicationController
     else
       @report_unsorted = Sellout.select('sellins.product_type').joins(inventory: :sellin).joins(user: :manager).where(managers: {id: params.fetch(:manager_id).to_i}).group('sellins.product_type').count
     end
+    total_data = Sellout.all.count
+    @report_unsorted[:total] = total_data
     @report = @report_unsorted.sort_by { |k, v| v }.reverse.to_h
     render :report, status: :ok
   end
@@ -203,6 +205,8 @@ class SelloutsController < ApplicationController
     else
       @report_unsorted = Sellout.select('sellins.product_type').joins(inventory: :sellin).joins(store: [{city: :region}]).where(regions: {id: params.fetch(:region_id).to_i}).group('sellins.product_type').count
     end
+    total_data = Sellout.all.count
+    @report_unsorted[:total] = total_data
     @report = @report_unsorted.sort_by { |k, v| v }.reverse.to_h
     render :report, status: :ok
   end
@@ -214,6 +218,8 @@ class SelloutsController < ApplicationController
     else
       @report_unsorted = Store.select(:name).joins(sellouts: [{user: :manager}]).joins(:sellouts).where(managers: {id: params.fetch(:manager_id).to_i}).group(:name).count
     end
+    total_data = Sellout.all.count
+    @report_unsorted[:total] = total_data
     @report = @report_unsorted.sort_by { |k, v| v }.reverse.to_h
     render :report, status: :ok
   end
@@ -225,6 +231,8 @@ class SelloutsController < ApplicationController
     else
       @report_unsorted = Manager.select(:name).joins(users: :sellouts).group(:name).count
     end
+    total_data = Sellout.all.count
+    @report_unsorted[:total] = total_data
     @report = @report_unsorted.sort_by { |k, v| v }.reverse.to_h
     render :report, status: :ok
   end
@@ -236,6 +244,8 @@ class SelloutsController < ApplicationController
     else
       @report_unsorted = Region.select(:name).joins(cities: [{stores: :sellouts}]).group(:name).count
     end
+    total_data = Sellout.all.count
+    @report_unsorted[:total] = total_data
     @report = @report_unsorted.sort_by { |k, v| v }.reverse.to_h
     render :report, status: :ok
   end
@@ -247,6 +257,8 @@ class SelloutsController < ApplicationController
     else
       @report_unsorted = Store.select(:name).joins(:sellouts).joins(city: :region).where(regions: {id: params.fetch(:region_id).to_i}).group(:name).count
     end
+    total_data = Sellout.all.count
+    @report_unsorted[:total] = total_data
     @report = @report_unsorted.sort_by { |k, v| v }.reverse.to_h
     render :report, status: :ok
   end
@@ -258,6 +270,8 @@ class SelloutsController < ApplicationController
     else
       @report_unsorted = Sellin.select(:product_type).joins(inventory: :sellout).group(:product_type).count
     end
+    total_data = Sellout.all.count
+    @report_unsorted[:total] = total_data
     @report = @report_unsorted.sort_by { |k, v| v }.reverse.to_h
     render :report, status: :ok
   end

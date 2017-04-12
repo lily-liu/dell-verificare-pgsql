@@ -127,12 +127,16 @@ class InventoriesController < ApplicationController
 
   def inventories_per_cam
     @report_unsorted = Manager.select(:name).joins(users: :inventories).where('inventories.status': 1).group(:name).count
+    total_data = Inventory.all.count
+    @report_unsorted[:total] = total_data
     @report = @report_unsorted.sort_by { |k, v| v }.reverse.to_h
     render :report, status: :ok
   end
 
   def inventories_each_cam_per_store
     @report_unsorted = Store.select(:name).joins(inventories: [{user: :manager}]).joins(:inventories).where(managers: {id: params.fetch(:manager_id).to_i}).where('inventories.status': 1).group(:name).count
+    total_data = Inventory.all.count
+    @report_unsorted[:total] = total_data
     @report = @report_unsorted.sort_by { |k, v| v }.reverse.to_h
     render :report, status: :ok
   end
