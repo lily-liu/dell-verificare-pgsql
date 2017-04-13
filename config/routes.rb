@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   get "sellouts/recap_store_cam", to: "sellouts#sellouts_each_cam_per_store", defaults: {format: :json}
   get "sellouts/recap_sku", to: "sellouts#sellouts_per_sku", defaults: {format: :json}
   get "sellouts/recap_region", to: "sellouts#sellouts_per_region", defaults: {format: :json}
+  get "sellouts/recap_region_monthly", to: "sellouts#sellouts_per_region_monthly", defaults: {format: :json}
   get "sellouts/recap_region_store", to: "sellouts#sellouts_each_store_per_region", defaults: {format: :json}
   get "sellouts/recap_sku_cam", to: "sellouts#sellout_each_sku_per_cam", defaults: {format: :json}
   get "sellouts/recap_sku_region", to: "sellouts#sellout_each_sku_per_region", defaults: {format: :json}
