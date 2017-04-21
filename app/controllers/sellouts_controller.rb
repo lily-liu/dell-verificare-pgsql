@@ -194,7 +194,7 @@ class SelloutsController < ApplicationController
       @report_unsorted = Sellout.select('sellins.product_type').joins(inventory: :sellin).joins(user: :manager).where(managers: {id: params.fetch(:manager_id).to_i}).group('sellins.product_type').count
       total_data = Sellout.select('sellins.product_type').joins(inventory: :sellin).joins(user: :manager).where(managers: {id: params.fetch(:manager_id).to_i}).count
     end
-    @report_unsorted[:total] = total_data
+    # @report_unsorted[:total] = total_data
     @report = @report_unsorted.sort_by { |k, v| v }.reverse.to_h
     render :report, status: :ok
   end
@@ -208,7 +208,7 @@ class SelloutsController < ApplicationController
       @report_unsorted = Sellout.select('sellins.product_type').joins(inventory: :sellin).joins(store: [{city: :region}]).where(regions: {id: params.fetch(:region_id).to_i}).group('sellins.product_type').count
       total_data = Sellout.select('sellins.product_type').joins(inventory: :sellin).joins(store: [{city: :region}]).where(regions: {id: params.fetch(:region_id).to_i}).count
     end
-    @report_unsorted[:total] = total_data
+    # @report_unsorted[:total] = total_data
     @report = @report_unsorted.sort_by { |k, v| v }.reverse.to_h
     render :report, status: :ok
   end
@@ -222,7 +222,7 @@ class SelloutsController < ApplicationController
       @report_unsorted = Store.select(:name).joins(sellouts: [{user: :manager}]).joins(:sellouts).where(managers: {id: params.fetch(:manager_id).to_i}).group(:name).count
       total_data = Store.select(:name).joins(sellouts: [{user: :manager}]).joins(:sellouts).where(managers: {id: params.fetch(:manager_id).to_i}).count
     end
-    @report_unsorted[:total] = total_data
+    # @report_unsorted[:total] = total_data
     @report = @report_unsorted.sort_by { |k, v| v }.reverse.to_h
     render :report, status: :ok
   end
@@ -236,13 +236,14 @@ class SelloutsController < ApplicationController
       @report_unsorted = Manager.select(:name).joins(users: :sellouts).group(:name).count
       total_data = Manager.select(:name).joins(users: :sellouts).count
     end
-    @report_unsorted[:total] = total_data
+    # @report_unsorted[:total] = total_data
     @report = @report_unsorted.sort_by { |k, v| v }.reverse.to_h
     render :report, status: :ok
   end
 
   def sellouts_per_cam_monthly
-    year = params.fetch(:year, Date.today.year).to_i
+    year = params.fetch(:year, Date.today.year + 1).to_i
+    year += 1
     if params[:month].present?
       month_start = Date.new(year, params.fetch(:month, Time.now.month).to_i)
       month_end = month_start.end_of_month
@@ -252,13 +253,14 @@ class SelloutsController < ApplicationController
     end
     @report_unsorted = Manager.select(:name).joins(users: :sellouts).where('sellouts.updated_at': (month_start..month_end)).group(:name).count
     total_data = Manager.select(:name).joins(users: :sellouts).where('sellouts.updated_at': (month_start..month_end)).count
-    @report_unsorted[:total] = total_data
+    # @report_unsorted[:total] = total_data
     @report = @report_unsorted.sort_by { |k, v| v }.reverse.to_h
     render :report, status: :ok
   end
 
   def sellouts_per_region_monthly
-    year = params.fetch(:year, Date.today.year).to_i
+    year = params.fetch(:year, Date.today.year + 1).to_i
+    year += 1
     if params[:month].present?
       month_start = Date.new(year, params.fetch(:month, Time.now.month).to_i)
       month_end = month_start.end_of_month
@@ -268,7 +270,7 @@ class SelloutsController < ApplicationController
     end
     @report_unsorted = Region.select(:name).joins(cities: [{stores: :sellouts}]).where('sellouts.updated_at': (month_start..month_end)).group(:name).count
     total_data = Region.select(:name).joins(cities: [{stores: :sellouts}]).where('sellouts.updated_at': (month_start..month_end)).count
-    @report_unsorted[:total] = total_data
+    # @report_unsorted[:total] = total_data
     @report = @report_unsorted.sort_by { |k, v| v }.reverse.to_h
     render :report, status: :ok
   end
@@ -282,7 +284,7 @@ class SelloutsController < ApplicationController
       @report_unsorted = Region.select(:name).joins(cities: [{stores: :sellouts}]).group(:name).count
       total_data = Region.select(:name).joins(cities: [{stores: :sellouts}]).count
     end
-    @report_unsorted[:total] = total_data
+    # @report_unsorted[:total] = total_data
     @report = @report_unsorted.sort_by { |k, v| v }.reverse.to_h
     render :report, status: :ok
   end
@@ -296,7 +298,7 @@ class SelloutsController < ApplicationController
       @report_unsorted = Store.select(:name).joins(:sellouts).joins(city: :region).where(regions: {id: params.fetch(:region_id).to_i}).group(:name).count
       total_data = Store.select(:name).joins(:sellouts).joins(city: :region).where(regions: {id: params.fetch(:region_id).to_i}).count
     end
-    @report_unsorted[:total] = total_data
+    # @report_unsorted[:total] = total_data
     @report = @report_unsorted.sort_by { |k, v| v }.reverse.to_h
     render :report, status: :ok
   end
@@ -310,7 +312,35 @@ class SelloutsController < ApplicationController
       @report_unsorted = Sellin.select(:product_type).joins(inventory: :sellout).group(:product_type).count
       total_data = Sellin.select(:product_type).joins(inventory: :sellout).count
     end
-    @report_unsorted[:total] = total_data
+    # @report_unsorted[:total] = total_data
+    @report = @report_unsorted.sort_by { |k, v| v }.reverse.to_h
+    render :report, status: :ok
+  end
+
+  def sellouts_per_sku_best10
+    get_date_filter_range
+    if date_filter_range_presence == true
+      @report_unsorted = Sellin.select(:product_type).joins(inventory: :sellout).where('sellouts.quarter_year': (@year_from..@year_to)).where('sellouts.quarter': (@quarter_from..@quarter_to)).where('sellouts.quarter_week': (@week_from..@week_to)).group(:product_type).count().order(count_product_type: :desc).limit(10)
+      total_data = Sellin.select(:product_type).joins(inventory: :sellout).where('sellouts.quarter_year': (@year_from..@year_to)).where('sellouts.quarter': (@quarter_from..@quarter_to)).where('sellouts.quarter_week': (@week_from..@week_to)).count
+    else
+      @report_unsorted = Sellin.select(:product_type).joins(inventory: :sellout).group(:product_type).count
+      total_data = Sellin.select(:product_type).joins(inventory: :sellout).count
+    end
+    # @report_unsorted[:total] = total_data
+    @report = @report_unsorted.sort_by { |k, v| v }.reverse.to_h
+    render :report, status: :ok
+  end
+
+  def sellouts_per_sku_worst10
+    get_date_filter_range
+    if date_filter_range_presence == true
+      @report_unsorted = Sellin.select(:product_type).joins(inventory: :sellout).where('sellouts.quarter_year': (@year_from..@year_to)).where('sellouts.quarter': (@quarter_from..@quarter_to)).where('sellouts.quarter_week': (@week_from..@week_to)).group(:product_type).count().order(count_product_type: :desc).limit(10)
+      total_data = Sellin.select(:product_type).joins(inventory: :sellout).where('sellouts.quarter_year': (@year_from..@year_to)).where('sellouts.quarter': (@quarter_from..@quarter_to)).where('sellouts.quarter_week': (@week_from..@week_to)).count
+    else
+      @report_unsorted = Sellin.select(:product_type).joins(inventory: :sellout).group(:product_type).count
+      total_data = Sellin.select(:product_type).joins(inventory: :sellout).count
+    end
+    # @report_unsorted[:total] = total_data
     @report = @report_unsorted.sort_by { |k, v| v }.reverse.to_h
     render :report, status: :ok
   end
