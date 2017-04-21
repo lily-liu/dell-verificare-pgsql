@@ -323,7 +323,7 @@ class SelloutsController < ApplicationController
       @report_unsorted = Sellin.select(:product_type).joins(inventory: :sellout).where('sellouts.quarter_year': (@year_from..@year_to)).where('sellouts.quarter': (@quarter_from..@quarter_to)).where('sellouts.quarter_week': (@week_from..@week_to)).group(:product_type).count().order(count_product_type: :desc).limit(10)
       total_data = Sellin.select(:product_type).joins(inventory: :sellout).where('sellouts.quarter_year': (@year_from..@year_to)).where('sellouts.quarter': (@quarter_from..@quarter_to)).where('sellouts.quarter_week': (@week_from..@week_to)).count
     else
-      @report_unsorted = Sellin.select(:product_type).joins(inventory: :sellout).group(:product_type).count
+      @report_unsorted = Sellin.select(:product_type).joins(inventory: :sellout).group(:product_type).count().order(count_product_type: :desc).limit(10)
       total_data = Sellin.select(:product_type).joins(inventory: :sellout).count
     end
     # @report_unsorted[:total] = total_data
@@ -335,7 +335,7 @@ class SelloutsController < ApplicationController
     get_date_filter_range
     if date_filter_range_presence == true
       @report_unsorted = Sellin.select(:product_type).joins(inventory: :sellout).where('sellouts.quarter_year': (@year_from..@year_to)).where('sellouts.quarter': (@quarter_from..@quarter_to)).where('sellouts.quarter_week': (@week_from..@week_to)).group(:product_type).count().order(count_product_type: :desc).limit(10)
-      total_data = Sellin.select(:product_type).joins(inventory: :sellout).where('sellouts.quarter_year': (@year_from..@year_to)).where('sellouts.quarter': (@quarter_from..@quarter_to)).where('sellouts.quarter_week': (@week_from..@week_to)).count
+      total_data = Sellin.select(:product_type).joins(inventory: :sellout).where('sellouts.quarter_year': (@year_from..@year_to)).where('sellouts.quarter': (@quarter_from..@quarter_to)).where('sellouts.quarter_week': (@week_from..@week_to)).count().order(count_product_type: :desc).limit(10)
     else
       @report_unsorted = Sellin.select(:product_type).joins(inventory: :sellout).group(:product_type).count
       total_data = Sellin.select(:product_type).joins(inventory: :sellout).count
