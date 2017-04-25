@@ -17,6 +17,18 @@ class InventoriesController < ApplicationController
     end
   end
 
+  def index_per_user
+    @page = params.fetch(:p).to_i
+    @inventories = Inventory.where(status: 0).where(user_id: current_user.id).order(updated_at: :desc).page(@page).per(1000)
+    @total = Inventory.count
+    if @inventories.present?
+      render :index, status: :ok
+    else
+      @message = "no inventory found"
+      render :error, status: :not_found
+    end
+  end
+
   # GET /inventories/1
   # GET /inventories/1.json
   def show

@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   # route for sellout
   get "sellouts/list", to: "sellouts#index", defaults: {format: :json}
+  get "sellouts/list_per_user", to: "sellouts#index_per_user", defaults: {format: :json}
   get "sellouts/recap_cam", to: "sellouts#sellouts_per_cam", defaults: {format: :json}
   get "sellouts/recap_cam_monthly", to: "sellouts#sellouts_per_cam_monthly", defaults: {format: :json}
   get "sellouts/recap_store_cam", to: "sellouts#sellouts_each_cam_per_store", defaults: {format: :json}
@@ -34,6 +35,7 @@ Rails.application.routes.draw do
 
   # route for inventory
   get "inventories/list", to: "inventories#index", defaults: {format: :json}
+  get "inventories/list_per_user", to: "inventories#index_per_user", defaults: {format: :json}
   get "inventories/recap_cam", to: "inventories#inventories_per_cam", defaults: {format: :json}
   get "inventories/recap_store_cam", to: "inventories#inventories_each_cam_per_store", defaults: {format: :json}
   get "inventories/export_list", to: "inventories#inventories_export", defaults: {format: :json}

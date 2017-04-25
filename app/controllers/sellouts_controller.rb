@@ -18,6 +18,18 @@ class SelloutsController < ApplicationController
     end
   end
 
+  def index_per_user
+    @page = params.fetch(:p).to_i
+    @sellouts = Sellout.where(user_id: current_user.id).order(updated_at: :desc).page(@page).per(1000)
+    @total = Sellout.count
+    if @sellouts.present?
+      render :index, status: :ok
+    else
+      @message = "no sellout found"
+      render :error, status: :not_found
+    end
+  end
+
   # GET /sellouts/1
   # GET /sellouts/1.json
   def show
