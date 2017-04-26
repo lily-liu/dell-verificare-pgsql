@@ -254,15 +254,10 @@ class SelloutsController < ApplicationController
   end
 
   def sellouts_per_cam_monthly
-    year = params.fetch(:year, Date.today.year + 1).to_i
+    year = params.fetch(:year, Date.today.year).to_i
     year += 1
-    if params[:month].present?
-      month_start = Date.new(year, params.fetch(:month, Time.now.month).to_i)
-      month_end = month_start.end_of_month
-    else
-      month_start = Date.new(year, 1)
-      month_end = Date.new(year, 12)
-    end
+    month_start = Date.new(year, params.fetch(:month, Time.now.month).to_i)
+    month_end = month_start.end_of_month
     @report_unsorted = Manager.select(:name).joins(users: :sellouts).where('sellouts.updated_at': (month_start..month_end)).group(:name).count
     total_data = Manager.select(:name).joins(users: :sellouts).where('sellouts.updated_at': (month_start..month_end)).count
     # @report_unsorted[:total] = total_data
@@ -271,15 +266,10 @@ class SelloutsController < ApplicationController
   end
 
   def sellouts_per_region_monthly
-    year = params.fetch(:year, Date.today.year + 1).to_i
+    year = params.fetch(:year, Date.today.year).to_i
     year += 1
-    if params[:month].present?
-      month_start = Date.new(year, params.fetch(:month, Time.now.month).to_i)
-      month_end = month_start.end_of_month
-    else
-      month_start = Date.new(year, 1)
-      month_end = Date.new(year, 12)
-    end
+    month_start = Date.new(year, params.fetch(:month, Time.now.month).to_i)
+    month_end = month_start.end_of_month
     @report_unsorted = Region.select(:name).joins(cities: [{stores: :sellouts}]).where('sellouts.updated_at': (month_start..month_end)).group(:name).count
     total_data = Region.select(:name).joins(cities: [{stores: :sellouts}]).where('sellouts.updated_at': (month_start..month_end)).count
     # @report_unsorted[:total] = total_data
