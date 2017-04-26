@@ -1,7 +1,7 @@
 require 'open-uri'
 class SelloutsController < ApplicationController
   before_action :set_sellout, only: [:show, :update, :destroy]
-  before_action :authenticate_user
+  # before_action :authenticate_user
 
 
   # GET /sellouts
@@ -258,9 +258,7 @@ class SelloutsController < ApplicationController
     year += 1
     month_start = Date.new(year, params.fetch(:month, Time.now.month).to_i)
     month_end = month_start.end_of_month
-    @report_unsorted = Manager.select(:name).joins(users: :sellouts).where('sellouts.updated_at': (month_start..month_end)).group(:name).count
-    total_data = Manager.select(:name).joins(users: :sellouts).where('sellouts.updated_at': (month_start..month_end)).count
-    # @report_unsorted[:total] = total_data
+    @report_unsorted = Manager.select(:name).joins(users: :sellouts).where('sellouts.updated_at': (month_start..month_end)).group(:name).count('sellouts.id')
     @report = @report_unsorted.sort_by { |k, v| v }.reverse.to_h
     render :report, status: :ok
   end
@@ -270,9 +268,7 @@ class SelloutsController < ApplicationController
     year += 1
     month_start = Date.new(year, params.fetch(:month, Time.now.month).to_i)
     month_end = month_start.end_of_month
-    @report_unsorted = Region.select(:name).joins(cities: [{stores: :sellouts}]).where('sellouts.updated_at': (month_start..month_end)).group(:name).count
-    total_data = Region.select(:name).joins(cities: [{stores: :sellouts}]).where('sellouts.updated_at': (month_start..month_end)).count
-    # @report_unsorted[:total] = total_data
+    @report_unsorted = Region.select(:name).joins(cities: [{stores: :sellouts}]).where('sellouts.updated_at': (month_start..month_end)).group(:name).count('sellouts.id')
     @report = @report_unsorted.sort_by { |k, v| v }.reverse.to_h
     render :report, status: :ok
   end
