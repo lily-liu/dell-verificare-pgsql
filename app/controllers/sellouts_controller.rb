@@ -340,6 +340,20 @@ class SelloutsController < ApplicationController
     @report = @report_unsorted.sort_by { |k, v| v }.reverse.to_h
     render :report, status: :ok
   end
+  
+  def sellouts_sku_per_price_category
+    filter = SkuFilter.where(price_category: params.fetch(:price_category)).pluck('sku');
+    get_date_filter_range
+    if date_filter_range_presence == true
+      @report_unsorted = Sellin.select(:product_name).joins(inventory: :sellout).where('sellouts.quarter_year': (@year_from..@year_to)).where('sellouts.quarter': (@quarter_from..@quarter_to)).where('sellouts.quarter_week': (@week_from..@week_to)).where(product_name: filter).group(:product_name).order(product_name: :desc).count
+      total_data = Sellin.select(:product_name).joins(inventory: :sellout).where('sellouts.quarter_year': (@year_from..@year_to)).where('sellouts.quarter': (@quarter_from..@quarter_to)).where('sellouts.quarter_week': (@week_from..@week_to)).count
+    else
+      @report_unsorted = Sellin.select(:product_name).joins(inventory: :sellout).where(product_name: filter).group(:product_name).order(product_name: :desc).count
+      total_data = Sellin.select(:product_name).joins(inventory: :sellout).count
+    end
+    @report = @report_unsorted.sort_by { |k, v| v }.reverse.to_h
+    render :report, status: :ok
+  end
 
   def sellout_report_export_csv
     get_date_filter_range
@@ -371,6 +385,7 @@ class SelloutsController < ApplicationController
   #   @report = Region.select(:name).joins(cities: [{stores: :sellouts}]).group(:name).count
   #   send_data(@report.to_a.to_csv, type: 'text/csv', filename: "recap-sellouts-per-store-region-#{Time.now.to_date}.csv")
   # end
+  
 
   private
   # Use callbacks to share common setup or constraints between actions.

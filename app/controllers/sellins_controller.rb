@@ -69,6 +69,12 @@ class SellinsController < ApplicationController
       render :error, status: :internal_server_error
     end
   end
+  
+  def get_filter_sku
+    @asd = SkuFilter.where(price_category: 'LPB').pluck('sku');
+    @xxx = Sellin.where(product_name: @asd);
+    render json: @xxx
+  end
 
   def sellin_csv_export
     year_from = params.fetch(:quarter_year_from, nil).to_i

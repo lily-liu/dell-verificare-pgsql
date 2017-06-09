@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161202042759) do
+ActiveRecord::Schema.define(version: 20170609060151) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -175,7 +175,7 @@ ActiveRecord::Schema.define(version: 20161202042759) do
     t.integer  "source_store",                                     null: false
     t.integer  "target_store",                                     null: false
     t.string   "csv_ref"
-    t.datetime "transaction_date", default: '2017-01-09 09:56:50', null: false
+    t.datetime "transaction_date", default: '2017-06-09 05:41:45', null: false
     t.datetime "deleted_at"
     t.datetime "created_at",                                       null: false
     t.datetime "updated_at",                                       null: false
@@ -195,7 +195,7 @@ ActiveRecord::Schema.define(version: 20161202042759) do
     t.float    "price_usd"
     t.string   "proof",        default: "default.png",         null: false
     t.string   "csv_ref"
-    t.datetime "sales_date",   default: '2017-01-09 09:56:51', null: false
+    t.datetime "sales_date",   default: '2017-06-09 05:41:45', null: false
     t.datetime "deleted_at"
     t.datetime "created_at",                                   null: false
     t.datetime "updated_at",                                   null: false
@@ -203,6 +203,14 @@ ActiveRecord::Schema.define(version: 20161202042759) do
     t.index ["service_tag"], name: "index_sellouts_on_service_tag", unique: true, using: :btree
     t.index ["store_id"], name: "index_sellouts_on_store_id", using: :btree
     t.index ["user_id"], name: "index_sellouts_on_user_id", using: :btree
+  end
+
+  create_table "sku_filters", force: :cascade do |t|
+    t.string   "sku"
+    t.string   "price_category"
+    t.datetime "deleted_at"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   create_table "stores", force: :cascade do |t|
