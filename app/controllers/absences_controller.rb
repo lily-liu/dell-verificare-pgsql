@@ -1,9 +1,10 @@
 class AbsencesController < ApplicationController
   before_action :set_absence, only: [:show]
-  before_action :authenticate_user
+  # before_action :authenticate_user
 
   def index
-    @absences = Absence.all.order(created_at: :desc)
+    @page = params.fetch(:p,1).to_i
+    @absences = Absence.all.order(created_at: :desc).page(@page).per(1000)
     if @absences.present?
       render :index, status: :ok
     else
